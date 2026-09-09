@@ -1,0 +1,85 @@
+---
+import MissionAndVisionCard from "./MissionAndVisionCard.astro";
+import SectionHeading from "../SectionHeading.astro";
+import type { Brand } from "@/types";
+import SectionSubHeading from "../SectionSubHeading.astro";
+import { cn } from "@/lib/utils";
+import type { AboutPage } from "@/types/pages";
+import { Compass, Target } from "lucide-react";
+
+type Props = {
+    section: AboutPage["acf"]["mission_and_vision"];
+    variant?: Brand;
+};
+
+const styles = {
+    acu: {
+        container: "bg-acu-card/30 border-b border-acu-border/60",
+    },
+    acm: {
+        container: "bg-acm-card/30 border-b border-acm-border/60",
+    },
+    acc: {
+        container: "bg-acc-card/30 border-b border-acc-border/60",
+    },
+    default: {
+        container: "bg-muted/40 border-b border-border/60",
+    },
+};
+
+const { section, variant = "default" } = Astro.props;
+
+const currentStyles = styles[variant];
+---
+
+<section
+    class={cn(
+        `py-20 md:py-28 scroll-reveal relative overflow-hidden`,
+        currentStyles.container,
+    )}
+>
+    <div
+        class="absolute top-1/2 left-1/4 -translate-y-1/2 size-96 bg-primary/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"
+    >
+    </div>
+    <div
+        class="absolute bottom-10 right-1/4 size-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300"
+    >
+    </div>
+
+    <div
+        class="px-6 mx-auto max-w-6xl w-full flex flex-col items-center relative z-10"
+    >
+        <div class="scroll-reveal text-center">
+            <SectionHeading
+                variant={variant}
+                className="inline-block text-center"
+            >
+                {section.title}
+            </SectionHeading>
+
+            <SectionSubHeading
+                variant={variant}
+                className="text-center mt-3 mb-12"
+            >
+                {section.subtitle}
+            </SectionSubHeading>
+        </div>
+
+        <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 w-full items-stretch"
+        >
+            <div class="scroll-reveal-left delay-100 h-full">
+                <MissionAndVisionCard card={section.mission} variant={variant}>
+                    <Target />
+                </MissionAndVisionCard>
+            </div>
+
+            <div class="scroll-reveal-right delay-200 h-full">
+                <MissionAndVisionCard card={section.vision} variant={variant}>
+                    <Compass />
+                </MissionAndVisionCard>
+            </div>
+        </div>
+    </div>
+</section>

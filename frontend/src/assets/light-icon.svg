@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+    <defs>
+        <clipPath id="acu-stone-icon-clip">
+            <circle cx="100" cy="100" r="84" />
+        </clipPath>
+    </defs>
+    <circle cx="100" cy="100" r="84" fill="#f5f5f4" />
+    <g fill="none" stroke="#78716c" clip-path="url(#acu-stone-icon-clip)">
+        <ellipse cx="100" cy="100" stroke-width="1" rx="84" ry="26" />
+        <ellipse cx="100" cy="100" stroke-width=".8" rx="84" ry="52" />
+        <path stroke-width="1" d="M16 100h168" />
+        <ellipse cx="100" cy="100" stroke-width=".7" rx="36" ry="84" />
+    </g>
+    <g stroke="#44403c" stroke-linecap="round" clip-path="url(#acu-stone-icon-clip)">
+        <path stroke-width="7" d="M100 28 60 158m40-130 40 130" />
+        <path stroke-width="5.5" d="M76 108h48" />
+    </g>
+    <circle cx="60" cy="158" r="4" fill="#6366f1" />
+    <circle cx="100" cy="158" r="4" fill="#ef4444" />
+    <circle cx="140" cy="158" r="4" fill="#10b981" />
+    <path fill="none" stroke="#57534e" stroke-linecap="round" stroke-width="5" d="M172 42a84 84 0 1 0 0 116" />
+    <circle cx="100" cy="100" r="84" fill="none" stroke="#78716c" stroke-width="1.5" />
+</svg>

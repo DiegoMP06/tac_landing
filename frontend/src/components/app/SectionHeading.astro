@@ -1,0 +1,31 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+
+type Props = {
+    variant?: Brand;
+    className?: string;
+} & astroHTML.JSX.HTMLAttributes;
+
+const styles = {
+    acu: "text-acu-secondary dark:text-acu-secondary before:bg-acu-secondary",
+    acm: "text-acm-secondary dark:text-acm-secondary before:bg-acm-secondary",
+    acc: "text-acc-secondary dark:text-acc-secondary before:bg-acc-secondary",
+    default: "text-secondary dark:text-secondary before:bg-secondary",
+};
+
+const { variant = "default", className = "", ...props } = Astro.props;
+
+const currentStyles = styles[variant] || styles.default;
+---
+
+<h2
+    class={cn(
+        `font-primary relative ml-10 uppercase text-xs sm:text-sm font-bold tracking-widest before:content-[''] before:w-8 before:inline-block before:absolute before:h-0.5 before:-left-10 before:top-1/2 before:-translate-y-1/2`,
+        currentStyles,
+        className,
+    )}
+    {...props}
+>
+    <slot />
+</h2>

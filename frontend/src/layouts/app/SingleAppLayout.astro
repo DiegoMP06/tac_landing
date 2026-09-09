@@ -1,0 +1,21 @@
+---
+import Footer from "@/components/ac/Footer.astro";
+import Header from "@/components/ac/Header.astro";
+import Layout from "@/layouts/Layout.astro";
+
+type Props = {
+    title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<Layout title={`The Americas Conference | ${title}`}>
+    <Header />
+
+    <div class="flex-1">
+        <slot />
+    </div>
+
+    <Footer />
+</Layout>

@@ -1,0 +1,271 @@
+---
+import HighlightItem from "@/components/app/extras/HighlightItem.astro";
+import LocationMap from "@/components/app/leaflet/LocationMap.astro";
+import BenefitItem from "@/components/app/programs/BenefitItem.astro";
+import ExtrasLayout from "@/layouts/app/ExtrasLayout.astro";
+import { cn } from "@/lib/utils";
+import { BrandSchema } from "@/schemas";
+import type { Program } from "@/types/programs";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { actions } from "astro:actions";
+import { Award, Clock, ExternalLink, Laptop, MapPin, Sparkles, Target } from "lucide-react";
+
+const { slug = "", brand } = Astro.params;
+
+const brandValidate = BrandSchema.safeParse(brand);
+
+if (!brandValidate.success) {
+    return Astro.redirect("/404");
+}
+
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+
+const { data, error } = await Astro.callAction(
+    actions.programs.getAndIndexProgram,
+    {
+        slug,
+        locale,
+        brand: brandValidate.data,
+    },
+);
+
+if (error || !data) {
+    return Astro.redirect("/404");
+}
+
+const program = data as Program;
+
+let durationDisplay = "";
+if (program.acf.duration_type === "duration_per_months" && program.acf.duration_per_months) {
+    durationDisplay = `${program.acf.duration_per_months} ${program.acf.duration_per_months === 1 ? "mes" : "meses"}`;
+} else if (program.acf.duration_type === "duration_per_weeks" && program.acf.duration_per_weeks) {
+    durationDisplay = `${program.acf.duration_per_weeks} ${program.acf.duration_per_weeks === 1 ? "semana" : "semanas"}`;
+} else if (program.acf.start_date && program.acf.end_date) {
+    durationDisplay = `${program.acf.start_date} - ${program.acf.end_date}`;
+} else if (program.acf.start_date) {
+    durationDisplay = program.acf.start_date;
+} else {
+    durationDisplay = "Consultar fechas";
+}
+
+const BRAND_THEMES = {
+    acu: {
+        btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-md shadow-acu-secondary/20",
+        badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
+        icon: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
+    },
+    acm: {
+        btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-md shadow-acm-secondary/20",
+        badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
+        icon: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
+    },
+    acc: {
+        btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-md shadow-acc-secondary/20",
+        badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
+        icon: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
+    },
+    default: {
+        btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-md shadow-secondary/20",
+        badge: "bg-secondary/20 text-secondary border-secondary/40",
+        icon: "bg-secondary/15 text-secondary border-secondary/30",
+    },
+};
+
+const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
+---
+
+<ExtrasLayout
+    {...{
+        title: program.title.rendered,
+        subtitle: program.acf.subtitle,
+        description: program.acf.description,
+        featured_image: program.images,
+        cta: program.acf.cta,
+        variant: brandValidate.data,
+    }}
+>
+    <main class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-10 lg:gap-12 items-start">
+            
+            <!-- Left Column: Main Content, Benefits & Highlights -->
+            <div class="space-y-16 min-w-0">
+                <!-- Main HTML Content -->
+                <article class="prose prose-lg dark:prose-invert max-w-none text-foreground/90 leading-relaxed">
+                    <div set:html={program.content.rendered} />
+                </article>
+
+                <!-- Benefits Section -->
+                <section class="space-y-6 pt-6 border-t border-border/80">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class={cn("size-10 rounded-xl flex items-center justify-center shrink-0 border", brandStyle.icon)}>
+                                <Award className="size-5" />
+                            </div>
+                            <div>
+                                <h3 class="font-heading font-bold text-2xl text-foreground">
+                                    {t("AC.pages.programs.benefits.title")}
+                                </h3>
+                                <p class="text-xs text-muted-foreground">Lo que obtendrás al participar</p>
+                            </div>
+                        </div>
+
+                        {program.acf.benefits.length > 0 && (
+                            <span class={cn("px-3 py-1 rounded-full text-xs font-semibold border", brandStyle.badge)}>
+                                {program.acf.benefits.length} {program.acf.benefits.length === 1 ? 'beneficio' : 'beneficios'}
+                            </span>
+                        )}
+                    </div>
+
+                    {
+                        program.acf.benefits.length > 0 ? (
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {program.acf.benefits.map((benefit) => (
+                                    <BenefitItem benefit={benefit} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="p-10 rounded-2xl border border-dashed border-border text-center bg-card/40">
+                                <Award className="size-10 text-muted-foreground/50 mx-auto mb-3" />
+                                <p class="text-muted-foreground text-sm font-medium">
+                                    {t("AC.pages.programs.benefits.empty")}
+                                </p>
+                            </div>
+                        )
+                    }
+                </section>
+
+                <!-- Highlights Section -->
+                <section class="space-y-6 pt-6 border-t border-border/80">
+                    <div class="flex items-center gap-3">
+                        <div class={cn("size-10 rounded-xl flex items-center justify-center shrink-0 border", brandStyle.icon)}>
+                            <Sparkles className="size-5" />
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-bold text-2xl text-foreground">
+                                {t("AC.pages.programs.highlights.title")}
+                            </h3>
+                            <p class="text-xs text-muted-foreground">Puntos clave del programa</p>
+                        </div>
+                    </div>
+
+                    {
+                        program.acf.highlights.length > 0 ? (
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {program.acf.highlights.map((highlight) => (
+                                    <HighlightItem highlight={highlight} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="p-10 rounded-2xl border border-dashed border-border text-center bg-card/40">
+                                <Sparkles className="size-10 text-muted-foreground/50 mx-auto mb-3" />
+                                <p class="text-muted-foreground text-sm font-medium">
+                                    {t("AC.pages.programs.highlights.empty")}
+                                </p>
+                            </div>
+                        )
+                    }
+                </section>
+            </div>
+
+            <!-- Right Column: Glassmorphic Sticky Sidebar -->
+            <aside class="sticky top-24 space-y-6">
+                <div class="rounded-3xl border border-border/80 bg-card/90 backdrop-blur-xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6">
+                    <h3 class="font-heading font-bold text-xl text-foreground pb-4 border-b border-border/60 flex items-center gap-2">
+                        <span>{t("AC.pages.programs.info")}</span>
+                    </h3>
+
+                    <div class="space-y-5">
+                        <!-- Duration -->
+                        <div class="flex items-start gap-3.5">
+                            <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                                <Clock className="size-4" />
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                    {t("AC.pages.programs.duration")}
+                                </p>
+                                <p class="text-sm font-bold text-foreground mt-0.5">
+                                    {durationDisplay}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Modality -->
+                        <div class="flex items-start gap-3.5">
+                            <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                                <Laptop className="size-4" />
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                    {t("AC.pages.programs.mode")}
+                                </p>
+                                <div class="mt-1">
+                                    <span class={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border", brandStyle.badge)}>
+                                        {program.acf.modality}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Target Audience -->
+                        {program.acf.target_audience && (
+                            <div class="flex items-start gap-3.5">
+                                <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                                    <Target className="size-4" />
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                        {t("AC.pages.programs.target")}
+                                    </p>
+                                    <p class="text-sm font-medium text-foreground mt-0.5 leading-snug">
+                                        {program.acf.target_audience}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        <!-- Online Link (If available) -->
+                        {program.acf.online_link && (
+                            <div class="pt-2">
+                                <a
+                                    href={program.acf.online_link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class={cn("w-full py-3 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 group cursor-pointer", brandStyle.btn)}
+                                >
+                                    <span>Ver programa en línea</span>
+                                    <ExternalLink className="size-4 group-hover:translate-x-0.5 transition-transform" />
+                                </a>
+                            </div>
+                        )}
+
+                        <!-- Location -->
+                        {program.acf.location?.address && (
+                            <div class="flex items-start gap-3.5 pt-2 border-t border-border/60">
+                                <div class="size-9 rounded-lg bg-sky-500/10 text-sky-500 border border-sky-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                    <MapPin className="size-4" />
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                        {t("AC.pages.programs.location")}
+                                    </p>
+                                    <p class="text-sm font-medium text-foreground mt-0.5 leading-snug">
+                                        {program.acf.location.address}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <!-- Location Map -->
+                    {program.acf.location && (
+                        <div class="rounded-2xl overflow-hidden border border-border/60 shadow-sm">
+                            <LocationMap location={program.acf.location} />
+                        </div>
+                    )}
+                </div>
+            </aside>
+        </div>
+    </main>
+</ExtrasLayout>

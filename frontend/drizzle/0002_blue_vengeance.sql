@@ -1,0 +1,1 @@
+ALTER TABLE "embeddings" ADD COLUMN "dimensions" integer DEFAULT 768 NOT NULL;

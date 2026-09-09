@@ -1,0 +1,38 @@
+---
+import type { HomePage } from "@/types/pages";
+import CommitmentCard from "./CommitmentCard.astro";
+import type { Brand } from "@/types";
+import SectionHeading from "../SectionHeading.astro";
+import SectionSubHeading from "../SectionSubHeading.astro";
+
+type Props = {
+    section: HomePage["acf"]["commitments"];
+    variant?: Brand;
+};
+
+const delays = ["delay-150", "delay-300", "delay-450"];
+
+const { section, variant = "default" } = Astro.props;
+---
+
+<section class="mx-auto max-w-6xl w-full my-20 md:my-28 px-6 scroll-reveal">
+    <div class="scroll-reveal">
+        <SectionHeading variant={variant}>
+            {section.title}
+        </SectionHeading>
+
+        <SectionSubHeading variant={variant}>
+            {section.subtitle}
+        </SectionSubHeading>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {
+            section.cards.map((card, idx) => (
+                <div class={`scroll-reveal ${delays[idx] || "delay-450"}`}>
+                    <CommitmentCard variant={variant} card={card} />
+                </div>
+            ))
+        }
+    </div>
+</section>

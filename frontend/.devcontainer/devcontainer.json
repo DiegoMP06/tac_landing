@@ -1,0 +1,21 @@
+{
+  "name": "The Americas Conference - Alpine Astro Frontend",
+
+  "dockerComposeFile": [
+    "../../compose.yaml"
+  ],
+
+  "service": "frontend",
+  "workspaceFolder": "/app",
+
+  "remoteUser": "lomi",
+
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": []
+    }
+  },
+
+  "shutdownAction": "none"
+}

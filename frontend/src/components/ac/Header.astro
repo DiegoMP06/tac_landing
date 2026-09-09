@@ -1,0 +1,84 @@
+---
+import Icon from "@/assets/icon.svg";
+import { useTranslations } from "@/utils/i18n";
+import MainHeader from "../app/MainHeader.astro";
+import MainMobileNav from "../app/MainMobileNav.astro";
+import NavLink from "../app/NavLink.astro";
+import ThemeToggleButton from "../app/ThemeToggleButton.astro";
+import MobileNavLink from "../app/MobileNavLink.astro";
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as never);
+---
+
+<MainHeader>
+    <a class="cursor-pointer flex gap-2 items-center font-bold" href="/">
+        <img
+            src={Icon.src}
+            alt={t("AC.utils.icon.alt")}
+            width={Icon.width}
+            height={Icon.height}
+            class="size-10 aspect-square w-10 h-10 rounded-full"
+            loading="eager"
+        />
+        <span class="hidden sm:block font-heading">
+            The Americas Conference
+        </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-2">
+        <NavLink href="/">
+            {t("AC.header.nav.home")}
+        </NavLink>
+
+        <NavLink href="/about">
+            {t("AC.header.nav.about")}
+        </NavLink>
+
+        <NavLink href="/acu" variant="acu">
+            {t("AC.header.nav.ACU")}
+        </NavLink>
+
+        <NavLink href="/acm" variant="acm">
+            {t("AC.header.nav.ACM")}
+        </NavLink>
+
+        <NavLink href="/acc" variant="acc">
+            {t("AC.header.nav.ACC")}
+        </NavLink>
+
+        <NavLink href="/contact">
+            {t("AC.header.nav.contact")}
+        </NavLink>
+    </nav>
+
+    <nav class="flex gap-2">
+        <MainMobileNav>
+            <MobileNavLink href="/">
+                {t("AC.header.nav.home")}
+            </MobileNavLink>
+
+            <MobileNavLink href="/about">
+                {t("AC.header.nav.about")}
+            </MobileNavLink>
+
+            <MobileNavLink href="/acu" variant="acu">
+                {t("AC.header.nav.ACU")}
+            </MobileNavLink>
+
+            <MobileNavLink href="/acm" variant="acm">
+                {t("AC.header.nav.ACM")}
+            </MobileNavLink>
+
+            <MobileNavLink href="/acc" variant="acc">
+                {t("AC.header.nav.ACC")}
+            </MobileNavLink>
+
+            <MobileNavLink href="/contact">
+                {t("AC.header.nav.contact")}
+            </MobileNavLink>
+        </MainMobileNav>
+
+        <ThemeToggleButton />
+    </nav>
+</MainHeader>

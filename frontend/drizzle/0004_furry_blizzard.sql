@@ -1,0 +1,1 @@
+ALTER TABLE "embeddings" ADD CONSTRAINT "embeddings_cache_id_idx" UNIQUE("cache_id","content_hash");

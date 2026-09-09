@@ -1,0 +1,100 @@
+---
+import { useTranslations } from "@/utils/i18n";
+import MainFooter from "../app/MainFooter.astro";
+import Icon from "@/assets/acu/icon.svg";
+import FooterNavLink from "../app/FooterNavLink.astro";
+
+const { lang } = Astro.params;
+
+const t = useTranslations(lang as never);
+---
+
+<MainFooter>
+    <div>
+        <a href="/acu">
+            <h3
+                class="flex gap-2 items-center text-lg font-bold text-acu-foreground"
+            >
+                <img
+                    src={Icon.src}
+                    alt={t("ACU.utils.icon.alt")}
+                    class="size-12 w-12 h-12 aspect-square rounded-full"
+                    width={Icon.width}
+                    height={Icon.height}
+                    loading="lazy"
+                />
+
+                The Americas Conference of Universities
+            </h3>
+        </a>
+
+        <p class="text-muted-foreground prose-sm">
+            {t("ACU.footer.nav.phrase")}
+        </p>
+    </div>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acu-muted-foreground">
+            The Americas Conference of Universities
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/acu/about" variant="acu"
+                >{t("ACU.footer.nav.links.about")}</FooterNavLink
+            >
+            <FooterNavLink href="/acu/programs" variant="acu"
+                >{t("ACU.footer.nav.links.programs")}</FooterNavLink
+            >
+            <FooterNavLink href="/acu/events" variant="acu"
+                >{t("ACU.footer.nav.links.events")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acu-muted-foreground">
+            The Americas Conference
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/"
+                >{t("ACU.footer.nav.links.home")}</FooterNavLink
+            >
+            <FooterNavLink href="/contact"
+                >{t("ACU.footer.nav.links.contact")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acu-muted-foreground">
+            {t("ACU.footer.nav.links.family")}
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acu" href="/acu"
+                >{t("ACU.footer.nav.links.acu")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc"
+                >{t("ACU.footer.nav.links.acc")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm"
+                >{t("ACU.footer.nav.links.acm")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <div
+        slot="copy"
+        class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 md:justify-between"
+    >
+        <p class="text-muted-foreground text-xs font-semibold">
+            {t("ACU.footer.copy.rights")}
+            &copy;{new Date().getFullYear()}
+        </p>
+
+        <p class="text-acu-muted-foreground text-xs font-semibold">
+            ACU · An Education Platform
+        </p>
+    </div>
+</MainFooter>

@@ -1,0 +1,114 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+import type { FeaturedImageAtt } from "@/types/images";
+import type { Page } from "@/types/pages";
+import { useFeaturedImage } from "@/utils/image";
+import { Picture } from "astro:assets";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type Props = {
+    page: Page;
+    variant?: Brand;
+};
+
+const STYLES = {
+    acu: {
+        title: "text-acu-secondary before:bg-acu-secondary font-bold",
+        subtitle: "text-acu-foreground",
+        content: "text-acu-muted-foreground",
+        phrase: "bg-acu-secondary/15 text-acu-secondary border-l-4 border-acu-secondary font-semibold",
+    },
+    acc: {
+        title: "text-acc-secondary before:bg-acc-secondary font-bold",
+        subtitle: "text-acc-foreground",
+        content: "text-acc-muted-foreground",
+        phrase: "bg-acc-secondary/15 text-acc-secondary border-l-4 border-acc-secondary font-semibold",
+    },
+    acm: {
+        title: "text-acm-secondary before:bg-acm-secondary font-bold",
+        subtitle: "text-acm-foreground",
+        content: "text-acm-muted-foreground",
+        phrase: "bg-acm-secondary/15 text-acm-secondary border-l-4 border-acm-secondary font-semibold",
+    },
+    default: {
+        title: "text-secondary before:bg-secondary font-bold",
+        subtitle: "text-foreground",
+        content: "text-muted-foreground",
+        phrase: "bg-secondary/15 text-secondary border-l-4 border-secondary font-semibold",
+    },
+};
+
+const { page, variant = "default" } = Astro.props;
+
+const image = useFeaturedImage(page.images)("large") as FeaturedImageAtt;
+
+const currentStyles = STYLES[variant];
+---
+
+<main
+    transition:animate="fade"
+    transition:name="main-content"
+    class="mx-auto max-w-6xl w-full my-20 md:my-28 px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center scroll-reveal"
+>
+    <div class="scroll-reveal-left space-y-4">
+        <h2
+            class={cn(
+                `font-primary text-xs tracking-widest relative ml-10 uppercase font-bold before:content-[''] before:w-8 before:inline-block before:absolute before:h-0.5 before:-left-10 before:top-1/2 before:-translate-y-1/2`,
+                currentStyles.title,
+            )}
+        >
+            {page.acf.content.title}
+        </h2>
+
+        <h3
+            class={cn(
+                `font-heading font-extrabold text-3xl sm:text-4xl tracking-tight leading-snug`,
+                currentStyles.subtitle,
+            )}
+        >
+            {page.acf.content.subtitle}
+        </h3>
+
+        <div
+            class={cn(
+                `prose prose-lg dark:prose-invert leading-relaxed font-normal pt-2`,
+                currentStyles.content,
+            )}
+            set:html={page.content.rendered}
+        />
+
+        <div
+            class={cn(
+                `mt-8 p-6 rounded-2xl border-l-4 italic font-semibold shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1`,
+                currentStyles.phrase,
+            )}
+        >
+            {page.acf.content.phrase}
+        </div>
+    </div>
+
+    <div class="scroll-reveal-right delay-200">
+        <div
+            class="group relative rounded-3xl overflow-hidden border border-border/80 shadow-2xl bg-card/60 backdrop-blur-md p-2"
+        >
+            <div class="rounded-2xl overflow-hidden aspect-square">
+                {
+                    image ? (
+                        <Picture
+                            src={image.url}
+                            width={image.width}
+                            height={image.height}
+                            alt={page.acf.hero.subtitle}
+                            formats={["avif", "webp"]}
+                            loading="eager"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                    ) : (
+                        <Skeleton className="rounded-2xl h-full aspect-square" />
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</main>

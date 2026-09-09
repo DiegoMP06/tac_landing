@@ -1,0 +1,24 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+
+type Props = {
+    variant?: Brand;
+    className?: string;
+} & astroHTML.JSX.HTMLAttributes;
+
+const styles = {
+    acu: "text-acu-foreground",
+    acm: "text-acm-foreground",
+    acc: "text-acc-foreground",
+    default: "text-foreground",
+};
+
+const { variant = "default", className = "", ...props } = Astro.props;
+
+const currentStyles = styles[variant] || styles.default;
+---
+
+<h3 class={cn(`font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-8 leading-tight`, currentStyles, className)} {...props}>
+    <slot />
+</h3>

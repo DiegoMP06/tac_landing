@@ -1,0 +1,19 @@
+---
+import type { AboutPage } from "@/types/pages";
+import WhatWeDoSection from "../about/WhatWeDoSection.astro";
+import MissionAndVisionSection from "../about/MissionAndVisionSection.astro";
+import type { Brand } from "@/types";
+
+type Props = {
+    page: AboutPage;
+    variant?: Brand;
+};
+
+const { page, variant = "default" } = Astro.props;
+
+const { mission_and_vision, what_we_do } = page.acf;
+---
+
+<MissionAndVisionSection section={mission_and_vision} variant={variant} />
+
+<WhatWeDoSection section={what_we_do} variant={variant} />

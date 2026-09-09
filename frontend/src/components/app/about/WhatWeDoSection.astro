@@ -1,0 +1,80 @@
+---
+import type { AboutPage } from "@/types/pages";
+import WhatWeDoCard from "./WhatWeDoCard.astro";
+import type { Brand } from "@/types";
+import SectionHeading from "../SectionHeading.astro";
+import SectionSubHeading from "../SectionSubHeading.astro";
+import { cn } from "@/lib/utils";
+
+type Props = {
+    variant?: Brand;
+    section: AboutPage["acf"]["what_we_do"];
+};
+
+const styles = {
+    acu: {
+        container: "bg-background",
+        content: "text-acu-foreground",
+    },
+    acm: {
+        container: "bg-background",
+        content: "text-acm-foreground",
+    },
+    acc: {
+        container: "bg-background",
+        content: "text-acc-foreground",
+    },
+    default: {
+        container: "bg-background",
+        content: "text-foreground",
+    },
+};
+
+const delays = [
+    "delay-100",
+    "delay-200",
+    "delay-300",
+    "delay-400",
+    "delay-500",
+    "delay-600",
+];
+
+const { section, variant = "default" } = Astro.props;
+
+const currentStyles = styles[variant];
+---
+
+<section class={cn("py-20 md:py-28 scroll-reveal", currentStyles.container)}>
+    <div class="px-6 max-w-6xl w-full mx-auto">
+        <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center mb-10 scroll-reveal"
+        >
+            <div>
+                <SectionHeading variant={variant}>
+                    {section.title}
+                </SectionHeading>
+
+                <SectionSubHeading variant={variant} className="mt-3 mb-0">
+                    {section.subtitle}
+                </SectionSubHeading>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+                section.cards.map((card, index) => (
+                    <div
+                        class={`scroll-reveal ${delays[index] || "delay-600"}`}
+                    >
+                        <WhatWeDoCard
+                            card={card}
+                            index={index + 1}
+                            total={section.cards.length}
+                            variant={variant}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

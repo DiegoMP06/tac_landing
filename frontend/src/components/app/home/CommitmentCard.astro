@@ -1,0 +1,97 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+import type { Card } from "@/types/pages";
+import { useFeaturedImage } from "@/utils/image";
+
+type Props = {
+    card: Card;
+    variant?: Brand;
+};
+
+const styles = {
+    acu: {
+        container:
+            "bg-acu-card/60 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-xl hover:shadow-acu-secondary/10",
+        iconContainer:
+            "bg-acu-secondary/15 border-acu-secondary/30 text-acu-secondary",
+        iconHtml: "text-acu-secondary",
+        title: "text-acu-foreground group-hover:text-acu-secondary",
+        content: "text-acu-foreground/75 dark:text-acu-muted-foreground",
+    },
+    acm: {
+        container:
+            "bg-acm-card/60 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-xl hover:shadow-acm-secondary/10",
+        iconContainer:
+            "bg-acm-secondary/15 border-acm-secondary/30 text-acm-secondary",
+        iconHtml: "text-acm-secondary",
+        title: "text-acm-foreground group-hover:text-acm-secondary",
+        content: "text-acm-foreground/75 dark:text-acm-muted-foreground",
+    },
+    acc: {
+        container:
+            "bg-acc-card/60 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-xl hover:shadow-acc-secondary/10",
+        iconContainer:
+            "bg-acc-secondary/15 border-acc-secondary/30 text-acc-secondary",
+        iconHtml: "text-acc-secondary",
+        title: "text-acc-foreground group-hover:text-acc-secondary",
+        content: "text-acc-foreground/75 dark:text-acc-muted-foreground",
+    },
+    default: {
+        container:
+            "bg-card border-border hover:border-secondary/80 hover:shadow-xl hover:shadow-secondary/10",
+        iconContainer: "bg-secondary/15 border-secondary/30 text-secondary",
+        iconHtml: "text-secondary",
+        title: "text-foreground group-hover:text-secondary",
+        content: "text-muted-foreground",
+    },
+};
+
+const { card, variant = "default" } = Astro.props;
+
+const currentStyles = styles[variant];
+
+const icon = useFeaturedImage(card.icon)();
+---
+
+<div
+    class={cn(
+        `group p-7 rounded-2xl border transition-all duration-300 hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between`,
+        currentStyles.container,
+    )}
+>
+    <div>
+        <div
+            class={cn(
+                `inline-flex items-center justify-center mb-5 p-3 rounded-xl border shadow-sm group-hover:scale-105 transition-transform duration-300`,
+                currentStyles.iconContainer,
+            )}
+        >
+            <span
+                class={cn(
+                    `size-6 block [&>svg]:w-full [&>svg]:h-full`,
+                    currentStyles.iconHtml,
+                )}
+                set:html={icon || ""}
+            />
+        </div>
+
+        <h4
+            class={cn(
+                `text-lg md:text-xl font-heading font-bold mb-3 transition-colors duration-200 leading-snug`,
+                currentStyles.title,
+            )}
+        >
+            {card.title}
+        </h4>
+
+        <p
+            class={cn(
+                `text-sm leading-relaxed font-normal`,
+                currentStyles.content,
+            )}
+        >
+            {card.content}
+        </p>
+    </div>
+</div>

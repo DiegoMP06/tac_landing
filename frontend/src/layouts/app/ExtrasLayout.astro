@@ -1,0 +1,44 @@
+---
+import Footer from "@/components/ac/Footer.astro";
+import Header from "@/components/ac/Header.astro";
+import CTASection from "@/components/app/extras/CTASection.astro";
+import ExtrasHero from "@/components/app/extras/ExtrasHero.astro";
+import Layout from "@/layouts/Layout.astro";
+import type { Brand, CTAType } from "@/types";
+import type { FeaturedImages } from "@/types/images";
+
+type Props = {
+    title: string;
+    description: string;
+    subtitle: string;
+    featured_image: FeaturedImages;
+    cta: CTAType;
+    variant?: Brand;
+    badge?: string;
+};
+
+const { title, description, subtitle, featured_image, cta, variant = "default", badge } = Astro.props;
+---
+
+<Layout title={`The Americas Conference | ${title}`}>
+    <Header />
+
+    <div class="flex-1">
+        <ExtrasHero
+            {...{
+                title,
+                description,
+                subtitle,
+                featured_image,
+                variant,
+                badge,
+            }}
+        />
+
+        <slot />
+
+        <CTASection cta={cta} variant={variant} />
+    </div>
+
+    <Footer />
+</Layout>

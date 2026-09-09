@@ -1,0 +1,333 @@
+---
+import type { HomePage } from "@/types/pages";
+import { BrandsEnum } from "@/enums";
+import SectionHeading from "../SectionHeading.astro";
+import SectionSubHeading from "../SectionSubHeading.astro";
+import type { Brand } from "@/types";
+import { cn } from "@/lib/utils";
+import { ArrowRight, Clock } from "lucide-react";
+
+interface Props {
+    section: HomePage["acf"]["count_down"];
+    variant?: Brand;
+}
+
+const styles = {
+    acu: {
+        container: "bg-acu-card/30 border-y border-acu-border/60",
+        digitCard:
+            "bg-card/90 dark:bg-acu-card/50 border-acu-secondary/30 hover:border-acu-secondary shadow-lg hover:shadow-acu-secondary/20",
+        digitText: "text-acu-secondary dark:text-acu-secondary",
+        glow: "from-acu-secondary/15 via-transparent to-transparent",
+        finishedBanner:
+            "bg-acu-secondary/10 border-acu-secondary/30 text-acu-secondary",
+        btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25",
+    },
+    acm: {
+        container: "bg-acm-card/30 border-y border-acm-border/60",
+        digitCard:
+            "bg-card/90 dark:bg-acm-card/50 border-acm-secondary/30 hover:border-acm-secondary shadow-lg hover:shadow-acm-secondary/20",
+        digitText: "text-acm-secondary dark:text-acm-secondary",
+        glow: "from-acm-secondary/15 via-transparent to-transparent",
+        finishedBanner:
+            "bg-acm-secondary/10 border-acm-secondary/30 text-acm-secondary",
+        btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25",
+    },
+    acc: {
+        container: "bg-acc-card/30 border-y border-acc-border/60",
+        digitCard:
+            "bg-card/90 dark:bg-acc-card/50 border-acc-secondary/30 hover:border-acc-secondary shadow-lg hover:shadow-acc-secondary/20",
+        digitText: "text-acc-secondary dark:text-acc-secondary",
+        glow: "from-acc-secondary/15 via-transparent to-transparent",
+        finishedBanner:
+            "bg-acc-secondary/10 border-acc-secondary/30 text-acc-secondary",
+        btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25",
+    },
+    default: {
+        container: "bg-muted/40 border-y border-border/60",
+        digitCard:
+            "bg-card/90 border-secondary/30 text-secondary hover:border-secondary shadow-lg hover:shadow-secondary/20",
+        digitText: "text-secondary dark:text-secondary",
+        glow: "from-secondary/15 via-transparent to-transparent",
+        finishedBanner: "bg-secondary/10 border-secondary/30 text-secondary",
+        btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25",
+    },
+};
+
+const { section, variant = BrandsEnum.DEFAULT } = Astro.props;
+if (section.enable === false) {
+    return null;
+}
+
+const currentStyles = styles[variant] || styles.default;
+---
+
+<section
+    class={cn(
+        "py-20 md:py-28 relative overflow-hidden scroll-reveal",
+        currentStyles.container,
+    )}
+>
+    <!-- Ambient Glowing Light Orbs -->
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-125 bg-primary/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"
+    >
+    </div>
+    <div
+        class="absolute -bottom-10 right-10 size-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300"
+    >
+    </div>
+
+    <div
+        class="px-6 mx-auto max-w-5xl w-full flex flex-col items-center relative z-10 text-center"
+    >
+        <count-down-data data-date={section.date}></count-down-data>
+
+        <div class="scroll-reveal max-w-3xl w-full">
+            <SectionHeading
+                variant={variant}
+                className="inline-block text-center"
+            >
+                {section.title}
+            </SectionHeading>
+
+            <SectionSubHeading
+                variant={variant}
+                className="text-center mt-3 mb-6"
+            >
+                {section.subtitle}
+            </SectionSubHeading>
+
+            {section.content && (
+                <p
+                    class="text-base sm:text-lg text-muted-foreground leading-relaxed font-normal mb-10 sm:mb-14 max-w-2xl mx-auto"
+                >
+                    {section.content}
+                </p>
+            )}
+            
+            <!-- Finished Banner State -->
+            <div
+                id="finish-countdown"
+                class="hidden p-6 sm:p-8 rounded-3xl border backdrop-blur-xl text-center max-w-md mx-auto shadow-lg animate-scale-up"
+            >
+                <div
+                    class="inline-flex items-center justify-center size-12 rounded-2xl bg-secondary/20 mb-3 text-secondary"
+                >
+                    <Clock className="size-6" />
+                </div>
+                <h4 class="text-xl font-heading font-bold text-foreground mb-1">
+                    La oferta ha finalizado
+                </h4>
+                <p class="text-sm text-muted-foreground">
+                    Mantente atento a nuestros próximos eventos y programas.
+                </p>
+            </div>
+
+            <!-- Countdown Cards Grid -->
+            <div
+                id="countdown"
+                class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full max-w-3xl mx-auto items-center justify-center"
+            >
+                <!-- Days -->
+                <div
+                    class={cn(
+                        "group relative p-5 sm:p-7 rounded-2xl sm:rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-center justify-center overflow-hidden",
+                        currentStyles.digitCard,
+                    )}
+                >
+                    <div
+                        class={cn(
+                            "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
+                            currentStyles.glow,
+                        )}
+                    >
+                    </div>
+                    <span
+                        id="countdown-days"
+                        class={cn(
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            currentStyles.digitText,
+                        )}>00</span
+                    >
+                    <span
+                        class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
+                        >Días</span
+                    >
+                </div>
+
+                <!-- Hours -->
+                <div
+                    class={cn(
+                        "group relative p-5 sm:p-7 rounded-2xl sm:rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-center justify-center overflow-hidden",
+                        currentStyles.digitCard,
+                    )}
+                >
+                    <div
+                        class={cn(
+                            "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
+                            currentStyles.glow,
+                        )}
+                    >
+                    </div>
+                    <span
+                        id="countdown-hours"
+                        class={cn(
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            currentStyles.digitText,
+                        )}>00</span
+                    >
+                    <span
+                        class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
+                        >Horas</span
+                    >
+                </div>
+
+                <!-- Minutes -->
+                <div
+                    class={cn(
+                        "group relative p-5 sm:p-7 rounded-2xl sm:rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-center justify-center overflow-hidden",
+                        currentStyles.digitCard,
+                    )}
+                >
+                    <div
+                        class={cn(
+                            "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
+                            currentStyles.glow,
+                        )}
+                    >
+                    </div>
+                    <span
+                        id="countdown-minutes"
+                        class={cn(
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            currentStyles.digitText,
+                        )}>00</span
+                    >
+                    <span
+                        class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
+                        >Minutos</span
+                    >
+                </div>
+
+                <!-- Seconds -->
+                <div
+                    class={cn(
+                        "group relative p-5 sm:p-7 rounded-2xl sm:rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-center justify-center overflow-hidden",
+                        currentStyles.digitCard,
+                    )}
+                >
+                    <div
+                        class={cn(
+                            "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none",
+                            currentStyles.glow,
+                        )}
+                    >
+                    </div>
+                    <span
+                        id="countdown-seconds"
+                        class={cn(
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            currentStyles.digitText,
+                        )}>00</span
+                    >
+                    <span
+                        class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
+                        >Segundos</span
+                    >
+                </div>
+            </div>
+
+            <!-- Optional Redirection Button -->
+            {section.redirect_text && section.redirect_url && (
+                <div class="mt-10 sm:mt-14 flex justify-center">
+                    <a
+                        href={section.redirect_url}
+                        target={section.redirect_url.startsWith("http") ? "_blank" : "_self"}
+                        rel="noopener noreferrer"
+                        class={cn(
+                            "inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95 group",
+                            currentStyles.btn,
+                        )}
+                    >
+                        <span>{section.redirect_text}</span>
+                        <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform duration-300" />
+                    </a>
+                </div>
+            )}
+        </div>
+    </div>
+</section>
+
+<script>
+    class CountDownData extends HTMLElement {
+        private _timerInterval: number | null = null;
+
+        connectedCallback() {
+            this.stopTimer();
+
+            const dataDate = this.dataset.date;
+            if (!dataDate) return;
+
+            const targetDate = new Date(dataDate).getTime();
+            if (isNaN(targetDate)) return;
+
+            // Retrieve live active DOM elements inside parent section
+            const container = this.closest("section") || document;
+            const daysSpan = container.querySelector("#countdown-days");
+            const hoursSpan = container.querySelector("#countdown-hours");
+            const minutesSpan = container.querySelector("#countdown-minutes");
+            const secondsSpan = container.querySelector("#countdown-seconds");
+            const finishDiv = container.querySelector("#finish-countdown");
+            const countdownDiv = container.querySelector("#countdown");
+
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    this.stopTimer();
+                    finishDiv?.classList.remove("hidden");
+                    countdownDiv?.classList.add("hidden");
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor(
+                    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                );
+                const minutes = Math.floor(
+                    (diff % (1000 * 60 * 60)) / (1000 * 60),
+                );
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                if (daysSpan)
+                    daysSpan.textContent = String(days).padStart(2, "0");
+                if (hoursSpan)
+                    hoursSpan.textContent = String(hours).padStart(2, "0");
+                if (minutesSpan)
+                    minutesSpan.textContent = String(minutes).padStart(2, "0");
+                if (secondsSpan)
+                    secondsSpan.textContent = String(seconds).padStart(2, "0");
+            };
+
+            updateTimer();
+            this._timerInterval = window.setInterval(updateTimer, 1000);
+        }
+
+        disconnectedCallback() {
+            this.stopTimer();
+        }
+
+        private stopTimer() {
+            if (this._timerInterval !== null) {
+                clearInterval(this._timerInterval);
+                this._timerInterval = null;
+            }
+        }
+    }
+
+    if (!customElements.get("count-down-data")) {
+        customElements.define("count-down-data", CountDownData);
+    }
+</script>

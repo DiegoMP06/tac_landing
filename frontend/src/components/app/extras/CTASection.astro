@@ -1,0 +1,123 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand, CTAType } from "@/types";
+import type { FeaturedImageAtt } from "@/types/images";
+import { useFeaturedImage } from "@/utils/image";
+import { ArrowRight } from "lucide-react";
+
+type Props = {
+    cta: CTAType;
+    variant?: Brand;
+};
+
+const STYLES = {
+    acu: {
+        background: "bg-acu-background/70 border-acu-border/60",
+        title: "text-acu-foreground dark:text-acu-50",
+        description: "text-acu-foreground/80 dark:text-acu-200",
+        btnPrimary: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
+        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-sm",
+    },
+    acc: {
+        background: "bg-acc-background/70 border-acc-border/60",
+        title: "text-acc-foreground dark:text-acc-50",
+        description: "text-acc-foreground/80 dark:text-acc-200",
+        btnPrimary: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
+        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-sm",
+    },
+    acm: {
+        background: "bg-acm-background/70 border-acm-border/60",
+        title: "text-acm-foreground dark:text-acm-50",
+        description: "text-acm-foreground/80 dark:text-acm-200",
+        btnPrimary: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
+        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-sm",
+    },
+    default: {
+        background: "bg-background/70 border-border/60",
+        title: "text-foreground dark:text-base-50",
+        description: "text-muted-foreground",
+        btnPrimary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
+        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-sm",
+    },
+};
+
+const { cta, variant = "default" } = Astro.props;
+
+const image = useFeaturedImage(cta.hero_image)("large") as FeaturedImageAtt;
+const currentStyles = STYLES[variant] || STYLES.default;
+---
+
+<section class="relative overflow-hidden">
+    <div
+        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover bg-fixed transform scale-105 filter saturate-90"
+        style={{
+            backgroundImage: `url(${image?.url})`,
+        }}
+    >
+    </div>
+    <div
+        class={cn(
+            `absolute border-t border-b z-20 inset-0 backdrop-blur-md transition-colors duration-300`,
+            currentStyles.background,
+        )}
+    >
+    </div>
+
+    <div class="relative z-30">
+        <div
+            class="max-w-4xl w-full mx-auto px-6 py-20 lg:py-24 flex flex-col items-center text-center"
+        >
+            <h3
+                class={cn(
+                    `font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight mb-6 leading-tight`,
+                    currentStyles.title,
+                )}
+            >
+                {cta.title}
+            </h3>
+
+            <div
+                class={cn(
+                    `text-base sm:text-lg leading-relaxed max-w-2xl font-normal mb-8`,
+                    currentStyles.description,
+                )}
+            >
+                {cta.description}
+            </div>
+
+            <!-- Optional Primary & Secondary CTA Buttons -->
+            {((cta.redirect_text && cta.redirect_url) || (cta.secondary_redirect_text && cta.secondary_redirect_url)) && (
+                <div class="flex flex-wrap items-center justify-center gap-4 mt-2">
+                    {cta.redirect_text && cta.redirect_url && (
+                        <a
+                            href={cta.redirect_url}
+                            target={cta.redirect_url.startsWith("http") ? "_blank" : "_self"}
+                            rel="noopener noreferrer"
+                            class={cn(
+                                "px-8 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group",
+                                currentStyles.btnPrimary,
+                            )}
+                        >
+                            <span>{cta.redirect_text}</span>
+                            <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
+                        </a>
+                    )}
+
+                    {cta.secondary_redirect_text && cta.secondary_redirect_url && (
+                        <a
+                            href={cta.secondary_redirect_url}
+                            target={cta.secondary_redirect_url.startsWith("http") ? "_blank" : "_self"}
+                            rel="noopener noreferrer"
+                            class={cn(
+                                "px-8 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
+                                currentStyles.btnSecondary,
+                            )}
+                        >
+                            <span>{cta.secondary_redirect_text}</span>
+                        </a>
+                    )}
+                </div>
+            )}
+        </div>
+    </div>
+</section>

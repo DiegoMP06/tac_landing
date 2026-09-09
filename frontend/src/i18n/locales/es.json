@@ -1,0 +1,218 @@
+{
+    "AC": {
+        "header": {
+            "nav": {
+                "home": "Inicio",
+                "about": "Sobre Nosotros",
+                "ACU": "Universidades",
+                "ACM": "Gobernantes",
+                "ACC": "Comercios",
+                "contact": "Contacto"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "Una plataforma continental que conecta a líderes, instituciones y gobiernos de toda América para impulsar la colaboración, la innovación y el progreso hemisférico.",
+                "links": {
+                    "acu": {
+                        "home": "ACU",
+                        "about": "Sobre ACU",
+                        "programs": "Programas de ACU",
+                        "events": "Eventos de ACU",
+                        "contact": "Contacto"
+                    },
+                    "acm": {
+                        "home": "ACM",
+                        "about": "Sobre ACM",
+                        "programs": "Programas de ACM",
+                        "events": "Eventos de ACM",
+                        "contact": "Contacto"
+                    },
+                    "acc": {
+                        "home": "ACC",
+                        "about": "Sobre ACC",
+                        "programs": "Programas de ACC",
+                        "events": "Eventos de ACC",
+                        "contact": "Contacto"
+                    }
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference. Todos los derechos reservados. Albuquerque, New Mexico, USA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Icono de The Americas Conference of Universities"
+            },
+            "programs": {
+                "empty": "No hay Programas Disponibles."
+            },
+            "events": {
+                "empty": "No hay Eventos Disponibles."
+            }
+        },
+        "pages": {
+            "not-found": {
+                "title": "No Encontrado",
+                "code": "404",
+                "text": "Pagina no Encontrada, inténtalo mas tarde",
+                "redirect": "Presiona aquí para ir al inicio"
+            },
+            "server-error": {
+                "title": "Error Inesperado",
+                "code": "500",
+                "text": "Ocurrió un error inesperado, inténtalo mas tarde",
+                "redirect": "Presiona aquí para ir al inicio"
+            },
+            "programs": {
+                "info": "Información del programa",
+                "duration": "Duración",
+                "mode": "Modalidad",
+                "location": "Ubicación",
+                "target": "Dirigido a",
+                "benefits": {
+                    "title": "Beneficios",
+                    "empty": "No hay Beneficios Disponibles."
+                },
+                "highlights": {
+                    "title": "Destacados",
+                    "empty": "No hay Puntos Destacados Disponibles."
+                }
+            },
+            "events": {
+                "info": "Información del Evento",
+                "date": "Fecha",
+                "location": "Ubicación",
+                "speakers": {
+                    "title": "Ponentes",
+                    "empty": "No hay Ponentes Disponibles."
+                },
+                "highlights": {
+                    "title": "Destacados",
+                    "empty": "No hay Puntos Destacados Disponibles."
+                }
+            }
+        }
+    },
+    "ACU": {
+        "header": {
+            "nav": {
+                "home": "Inicio",
+                "ACU": "Universidades",
+                "about": "Sobre Nosotros",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contacto"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Conference of Universities es la plataforma educativa de The Americas Conference, que conecta a instituciones de educación superior de todo el hemisferio occidental.",
+                "links": {
+                    "home": "Inicio",
+                    "family": "Nuestra Familia",
+                    "about": "Sobre Nosotros",
+                    "acu": "Universidades",
+                    "acm": "Gobernantes",
+                    "acc": "Comercios",
+                    "contact": "Contacto",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference of Universities (ACU). Todos los derechos reservados. Albuquerque, New Mexico, USA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Icono de The Americas Conference of Universities"
+            }
+        }
+    },
+    "ACM": {
+        "header": {
+            "nav": {
+                "home": "Inicio",
+                "ACM": "Gobernantes",
+                "about": "Sobre Nosotros",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contacto"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Conference of Mayors es la plataforma de gobernanza de The Americas Conference, que conecta a municipios y líderes locales de todo el hemisferio occidental.",
+                "links": {
+                    "home": "Inicio",
+                    "family": "Nuestra Familia",
+                    "about": "Sobre Nosotros",
+                    "acu": "Universidades",
+                    "acm": "Gobernantes",
+                    "acc": "Comercios",
+                    "contact": "Contacto",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference of Mayors (ACM). Todos los derechos reservados. Albuquerque, New Mexico, USA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Icono de The Americas Conference of Mayors"
+            }
+        }
+    },
+    "ACC": {
+        "header": {
+            "nav": {
+                "home": "Inicio",
+                "ACC": "Comercios",
+                "about": "Sobre Nosotros",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contacto"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Chambers of Commerce es la plataforma comercial de The Americas Conference, que conecta a empresas, inversores y emprendedores de todo el hemisferio occidental.",
+                "links": {
+                    "home": "Inicio",
+                    "family": "Nuestra Familia",
+                    "about": "Sobre Nosotros",
+                    "acu": "Universidades",
+                    "acm": "Gobernantes",
+                    "acc": "Comercios",
+                    "contact": "Contacto",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Chambers of Commerce (ACC). Todos los derechos reservados. Albuquerque, New Mexico, USA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Icono de The Americas Chambers of Commerce"
+            }
+        }
+    },
+    "chatbot": {
+        "title": "Asistente Inteligente",
+        "placeholder": "Escribe tu mensaje...",
+        "send": "Enviar",
+        "welcome": "¡Hola! ¿En qué puedo ayudarte hoy?",
+        "open": "Abrir Asistente",
+        "close": "Cerrar Asistente",
+        "error": "Ocurrió un error. Por favor intenta de nuevo."
+    },
+    "messages": {
+        "sendEmail": "Se envió un mensaje por parte de {{ name }} al email {{ email }}."
+    }
+}

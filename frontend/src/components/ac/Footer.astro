@@ -1,0 +1,119 @@
+---
+import { useTranslations } from "@/utils/i18n";
+import MainFooter from "../app/MainFooter.astro";
+import Icon from "@/assets/icon.svg";
+import FooterNavLink from "../app/FooterNavLink.astro";
+
+const { lang } = Astro.params;
+
+const t = useTranslations(lang as never);
+---
+
+<MainFooter>
+    <div>
+        <a href="/">
+            <h3 class="flex gap-2 items-center text-lg font-bold">
+                <img
+                    src={Icon.src}
+                    alt={t("AC.utils.icon.alt")}
+                    class="size-12 w-12 h-12 aspect-square rounded-full"
+                    width={Icon.width}
+                    height={Icon.height}
+                    loading="lazy"
+                />
+
+                The Americas Conference
+            </h3>
+        </a>
+
+        <p class="text-muted-foreground prose-sm">
+            {t("AC.footer.nav.phrase")}
+        </p>
+    </div>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acu-muted-foreground">
+            The Americas Conference of Universities
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acu" href="/acu"
+                >{t("AC.footer.nav.links.acu.home")}</FooterNavLink
+            >
+            <FooterNavLink variant="acu" href="/acu/about"
+                >{t("AC.footer.nav.links.acu.about")}</FooterNavLink
+            >
+            <FooterNavLink variant="acu" href="/acu/programs">
+                {t("AC.footer.nav.links.acu.programs")}
+            </FooterNavLink>
+            <FooterNavLink variant="acu" href="/acu/events"
+                >{t("AC.footer.nav.links.acu.events")}</FooterNavLink
+            >
+            <FooterNavLink variant="acu" href="/contacto">
+                {t("AC.footer.nav.links.acu.contact")}
+            </FooterNavLink>
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acm-muted-foreground">
+            The Americas Conference of Mayors
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acm" href="/acm"
+                >{t("AC.footer.nav.links.acm.home")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm/about"
+                >{t("AC.footer.nav.links.acm.about")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm/programs"
+                >{t("AC.footer.nav.links.acm.programs")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm/events"
+                >{t("AC.footer.nav.links.acm.events")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/contacto">
+                {t("AC.footer.nav.links.acm.contact")}
+            </FooterNavLink>
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acc-muted-foreground">
+            The Americas Chamber of Commerce
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acc" href="/acc"
+                >{t("AC.footer.nav.links.acc.home")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc/about"
+                >{t("AC.footer.nav.links.acc.about")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc/programs"
+                >{t("AC.footer.nav.links.acc.programs")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc/events"
+                >{t("AC.footer.nav.links.acc.events")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/contacto">
+                {t("AC.footer.nav.links.acc.contact")}
+            </FooterNavLink>
+        </div>
+    </nav>
+
+    <div
+        slot="copy"
+        class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 md:justify-between"
+    >
+        <p class="text-muted-foreground text-xs font-semibold">
+            {t("AC.footer.copy.rights")}
+            &copy;{new Date().getFullYear()}
+        </p>
+
+        <p class="text-muted-foreground text-xs font-semibold">
+            ACU · ACM · ACC
+        </p>
+    </div>
+</MainFooter>

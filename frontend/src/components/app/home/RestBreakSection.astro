@@ -1,0 +1,87 @@
+---
+import { cn } from "@/lib/utils";
+import { useFeaturedImage } from "@/utils/image";
+import SectionHeading from "../SectionHeading.astro";
+import SectionSubHeading from "../SectionSubHeading.astro";
+import type { HomePage } from "@/types/pages";
+import type { Brand } from "@/types";
+import type { FeaturedImageAtt } from "@/types/images";
+
+type Props = {
+    section: HomePage["acf"]["rest_break"];
+    variant?: Brand;
+};
+
+const styles = {
+    acu: {
+        background:
+            "bg-acu-background/85 dark:bg-acu-background/70 border-acu-border/60",
+        content: "text-acu-foreground/80 dark:text-acu-200",
+    },
+    acm: {
+        background:
+            "bg-acm-background/85 dark:bg-acm-background/70 border-acm-border/60",
+        content: "text-acm-foreground/80 dark:text-acm-200",
+    },
+    acc: {
+        background:
+            "bg-acc-background/85 dark:bg-acc-background/70 border-acc-border/60",
+        content: "text-acc-foreground/80 dark:text-acc-200",
+    },
+    default: {
+        background: "bg-background/85 dark:bg-background/70 border-border/60",
+        content: "text-muted-foreground",
+    },
+};
+
+const { section, variant = "default" } = Astro.props;
+
+const image = useFeaturedImage(section.hero_image)() as FeaturedImageAtt;
+
+const currentStyles = styles[variant];
+---
+
+<section class="relative overflow-hidden border-y border-border/80">
+    <div
+        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover bg-fixed transform scale-105 filter saturate-90 opacity-100"
+        style={{ backgroundImage: `url(${image?.url})` }}
+    >
+    </div>
+    <div
+        class={cn(
+            `absolute inset-0 z-20 border-b border-t backdrop-blur-md transition-colors duration-300`,
+            currentStyles.background,
+        )}
+    >
+    </div>
+
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow"
+    >
+    </div>
+
+    <div class="relative z-30">
+        <div
+            class="max-w-4xl mx-auto w-full px-6 py-20 lg:py-28 flex flex-col items-center text-center scroll-reveal"
+        >
+            <SectionHeading className="text-center" variant={variant}>
+                {section.title}
+            </SectionHeading>
+
+            <SectionSubHeading
+                variant={variant}
+                className="text-center mt-3 mb-6"
+            >
+                {section.subtitle}
+            </SectionSubHeading>
+
+            <div
+                class={cn(
+                    `text-base sm:text-lg leading-relaxed font-normal max-w-2xl scroll-reveal delay-100`,
+                    currentStyles.content,
+                )}
+                set:html={section.content}
+            />
+        </div>
+    </div>
+</section>

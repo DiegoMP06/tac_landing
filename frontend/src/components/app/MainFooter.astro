@@ -1,0 +1,17 @@
+---
+
+---
+
+<footer class="bg-card/80 dark:bg-card/40 border-t border-border/70 pt-14 pb-8 px-6 backdrop-blur-md">
+    <div class="max-w-6xl w-full mx-auto">
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] mb-12 gap-8 lg:gap-12"
+        >
+            <slot />
+        </div>
+
+        <div class="border-t border-border/60 pt-8 text-xs text-muted-foreground">
+            <slot name="copy" />
+        </div>
+    </div>
+</footer>

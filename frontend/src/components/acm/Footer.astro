@@ -1,0 +1,101 @@
+---
+import { useTranslations } from "@/utils/i18n";
+import MainFooter from "../app/MainFooter.astro";
+import Icon from "@/assets/acm/icon.svg";
+import FooterNavLink from "../app/FooterNavLink.astro";
+
+const { lang } = Astro.params;
+
+const t = useTranslations(lang as never);
+---
+
+<MainFooter>
+    <div>
+        <a href="/acm">
+            <h3
+                class="flex gap-2 items-center text-lg font-bold text-acm-foreground"
+            >
+                <img
+                    src={Icon.src}
+                    alt={t("ACM.utils.icon.alt")}
+                    class="size-12 w-12 h-12 aspect-square rounded-full"
+                    width={Icon.width}
+                    height={Icon.height}
+                    loading="lazy"
+                />
+
+                The Americas Conference of Mayors
+            </h3>
+        </a>
+
+        <p class="text-muted-foreground prose-sm">
+            {t("ACM.footer.nav.phrase")}
+        </p>
+    </div>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acm-muted-foreground">
+            The Americas Conference of Mayors
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/acm/about" variant="acm"
+                >{t("ACM.footer.nav.links.about")}</FooterNavLink
+            >
+
+            <FooterNavLink href="/acm/programs" variant="acm"
+                >{t("ACM.footer.nav.links.programs")}</FooterNavLink
+            >
+            <FooterNavLink href="/acm/events" variant="acm"
+                >{t("ACM.footer.nav.links.events")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acm-muted-foreground">
+            The Americas Conference
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/"
+                >{t("ACM.footer.nav.links.home")}</FooterNavLink
+            >
+            <FooterNavLink href="/contact"
+                >{t("ACM.footer.nav.links.contact")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acm-muted-foreground">
+            {t("ACM.footer.nav.links.family")}
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acu" href="/acu"
+                >{t("ACM.footer.nav.links.acu")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc"
+                >{t("ACM.footer.nav.links.acc")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm"
+                >{t("ACM.footer.nav.links.acm")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <div
+        slot="copy"
+        class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 md:justify-between"
+    >
+        <p class="text-muted-foreground text-xs font-semibold">
+            {t("ACM.footer.copy.rights")}
+            &copy;{new Date().getFullYear()}
+        </p>
+
+        <p class="text-acm-muted-foreground text-xs font-semibold">
+            ACM · A Governance Platform
+        </p>
+    </div>
+</MainFooter>

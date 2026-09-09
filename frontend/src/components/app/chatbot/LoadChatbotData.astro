@@ -1,0 +1,19 @@
+---
+import { useLocalePath } from "@/utils/i18n";
+import Chatbot from "@/components/app/chatbot/Chatbot";
+import { actions } from "astro:actions";
+
+const { locale } = useLocalePath(Astro.url);
+
+const { data, error } = await Astro.callAction(
+    actions.chatbot.loadConversation,
+    {},
+);
+---
+
+<Chatbot
+    client:load
+    transition:persist="chatbot-ui"
+    locale={locale}
+    conversation={error ? null : data}
+/>

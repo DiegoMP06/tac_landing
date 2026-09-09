@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+
+import LoadChatbotData from "@/components/app/chatbot/LoadChatbotData.astro";
+import Favicon from "@/components/app/Favicon.astro";
+import GetDefaultTheme from "@/components/app/GetDefaultTheme.astro";
+import type { Brand } from "@/types";
+import { useLocalePath } from "@/utils/i18n";
+import { ClientRouter } from "astro:transitions";
+
+type Props = {
+    title: string;
+    variant?: Brand;
+};
+
+const { title, variant = "default" } = Astro.props;
+const theme = Astro.cookies.get("theme")?.value;
+
+const { locale } = useLocalePath(Astro.url);
+---
+
+<!doctype html>
+<html lang={locale} class={theme === "dark" ? "dark" : ""}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <Favicon variant={variant} />
+
+        <meta name="generator" content={Astro.generator} />
+
+        <ClientRouter />
+
+        <title>{title}</title>
+
+        <GetDefaultTheme />
+    </head>
+    <body class="bg-background min-h-screen flex flex-col">
+        <slot />
+
+        <LoadChatbotData />
+
+        <script is:inline>
+            (function () {
+                const initScrollObserver = () => {
+                    const observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add("is-visible");
+                                }
+                            });
+                        },
+                        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+                    );
+
+                    document
+                        .querySelectorAll(
+                            ".scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .animate-fade-in-up",
+                        )
+                        .forEach((el) => {
+                            observer.observe(el);
+                        });
+                };
+
+                if (document.readyState === "loading") {
+                    document.addEventListener(
+                        "DOMContentLoaded",
+                        initScrollObserver,
+                    );
+                } else {
+                    initScrollObserver();
+                }
+                document.addEventListener(
+                    "astro:page-load",
+                    initScrollObserver,
+                );
+            })();
+        </script>
+    </body>
+</html>

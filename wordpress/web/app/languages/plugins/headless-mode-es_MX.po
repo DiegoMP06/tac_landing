@@ -1,0 +1,49 @@
+# Translation of Plugins - Headless Mode - Stable (latest release) in Spanish (Mexico)
+# This file is distributed under the same license as the Plugins - Headless Mode - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-09-11 15:56:59+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: es_MX\n"
+"Project-Id-Version: Plugins - Headless Mode - Stable (latest release)\n"
+
+#. Author URI of the plugin
+msgid "https://github.com/Shelob9/headless-mode"
+msgstr "https://github.com/Shelob9/headless-mode"
+
+#. Author of the plugin
+msgid "Josh Pollock, Jason Bahl, and Ben Meredith"
+msgstr "Josh Pollock, Jason Bahl y Ben Meredith"
+
+#: headless-mode.php:54
+msgid "If after saving the wp-config.php file, your site is still not redirecting, make sure you've replaced <code>https://hiroy.club</code> above with your front end web address."
+msgstr "Si después de guardar el archivo wp-config.php, tu sitio todavía no está redirigiendo, asegúrate de haber reemplazado la URL <code>https://hiroy.club</code> de arriba con la dirección web de tu vista pública."
+
+#: headless-mode.php:52
+msgid "Add the following to your wp-config.php file to redirect all traffic to the new front end of the site (change the URL before pasting!):"
+msgstr "Añade lo siguiente a tu archivo wp-config.php para redirigir todo el tráfico a la nueva vista pública del sitio (¡cambia la URL antes de pegar!):"
+
+#: headless-mode.php:50
+msgid "Your site is not redirecting."
+msgstr "Su sitio no está redirigiendo."
+
+#: headless-mode.php:45
+msgid "Your site is currently set to redirect to:"
+msgstr "Tu sitio está configurado actualmente para redirigir a:"
+
+#: headless-mode.php:28
+msgid "Headless Mode set up"
+msgstr "Configuración del modo \"Headless\""
+
+#. Description of the plugin
+msgid "This plugin disables access to the front end of your site unless the logged-in user can edit posts. It also automatically accepts requests to REST API or WP_GRAPHQL endpoints."
+msgstr "Este plugin desactiva el acceso a la vista pública de tu sitio a menos que el usuario que haya accedido pueda editar entradas. También acepta automáticamente solicitudes a la REST API o variables de WP_GRAPHQL."
+
+#. Plugin Name of the plugin
+#: headless-mode.php:29 headless-mode.php:43
+msgid "Headless Mode"
+msgstr "Headless Mode"

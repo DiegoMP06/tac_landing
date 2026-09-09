@@ -1,0 +1,77 @@
+---
+import ACUIcon from "@/assets/acu/icon.svg";
+import ACCIcon from "@/assets/acc/icon.svg";
+import ACMIcon from "@/assets/acm/icon.svg";
+import DefaultIcon from "@/assets/icon.svg";
+import type { Brand } from "@/types";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { cn } from "@/lib/utils";
+
+type Props = {
+    variant?: Brand;
+};
+
+const ICON_ATT = {
+    acu: {
+        acronym: "ACU",
+        name: "The Americas Conference of Universities",
+    },
+    acc: {
+        acronym: "ACC",
+        name: "The Americas Chambers of Commerce",
+    },
+    acm: {
+        acronym: "ACM",
+        name: "The Americas Conference of Mayors",
+    },
+    default: {
+        acronym: "AC",
+        name: "The Americas Conference",
+    },
+};
+
+const { variant = "default" } = Astro.props;
+
+const STYLES = {
+    acu: {
+        icon: ACUIcon,
+        iconAcronym: "text-acu-900 dark:text-acu-200",
+        iconName: "text-acu-700 dark:text-acu-400",
+    },
+    acc: {
+        icon: ACCIcon,
+        iconAcronym: "text-acc-900 dark:text-acc-200",
+        iconName: "text-acc-700 dark:text-acc-400",
+    },
+    acm: {
+        icon: ACMIcon,
+        iconAcronym: "text-acm-900 dark:text-acm-200",
+        iconName: "text-acm-700 dark:text-acm-400",
+    },
+    default: {
+        icon: DefaultIcon,
+        iconAcronym: "text-base-900 dark:text-base-200",
+        iconName: "text-base-700 dark:text-base-400",
+    },
+};
+
+const { locale } = useLocalePath(Astro.url);
+
+const t = useTranslations(locale);
+
+const currentIconAtt = ICON_ATT[variant];
+
+const currentStyles = STYLES[variant];
+---
+
+<div class="flex items-center md:justify-center">
+    <div>
+        <img
+            src={currentStyles.icon.src}
+            alt={t("ACU.utils.icon.alt")}
+            width={currentStyles.icon.width}
+            height={currentStyles.icon.height}
+            class="size-56 md:size-72 block aspect-square rounded-full"
+        />
+    </div>
+</div>

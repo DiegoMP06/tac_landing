@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+    <path fill="#011a10" d="M0 0h1200v630H0z" />
+    <path fill="none" stroke="#10b981" stroke-width=".5"
+        d="M150 0v630M300 0v630M450 0v630M600 0v630M750 0v630M900 0v630M1050 0v630M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200"
+        opacity=".05" />
+    <circle cx="980" cy="315" r="340" fill="#021f14" opacity=".9" />
+    <path fill="none" stroke="#059669" stroke-width="1" d="m640 0 680 630m0-630L640 630m0-315h680M980-25v680"
+        opacity=".18" />
+    <g fill="none" opacity=".14">
+        <circle cx="980" cy="315" r="110" stroke="#047857" stroke-width=".8" />
+        <circle cx="980" cy="315" r="230" stroke="#065f46" stroke-width=".6" />
+        <circle cx="980" cy="315" r="310" stroke="#022c22" stroke-width=".5" />
+    </g>
+    <path stroke="#34d399" stroke-linecap="round" stroke-width="11" d="m980 120-92 310m92-310 92 310" opacity=".88" />
+    <path stroke="#34d399" stroke-linecap="round" stroke-width="9" d="M928 306h104" opacity=".88" />
+    <path fill="none" stroke="#a7f3d0" stroke-linecap="round" stroke-width="7" d="M1320-30a340 340 0 1 0 0 690"
+        opacity=".42" />
+    <circle cx="980" cy="315" r="340" fill="none" stroke="#047857" stroke-width="1.5" opacity=".32" />
+    <path fill="#059669" d="M80 130h130v2H80z" /><text x="80" y="168" fill="#34d399"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" letter-spacing="4">INNOVATION · TRADE ·
+        GROWTH</text><text x="80" y="252" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="72"
+        font-weight="700" letter-spacing="-2">The Americas</text><text x="80" y="336" fill="#34d399"
+        font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-2">Chamber
+        of</text><text x="80" y="420" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="72"
+        font-weight="700" letter-spacing="-2">Commerce</text>
+    <path stroke="#064e3b" stroke-width="1" d="M80 450h250" /><text x="80" y="480" fill="#6ee7b7"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" letter-spacing="1">Connecting businesses across
+        North, Central, and South America</text><text x="80" y="580" fill="#065f46"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" letter-spacing="3">ACC · THE AMERICAS CHAMBER
+        OF COMMERCE</text>
+    <path fill="#059669" d="m80 600 4 7-4 7-4-7Z" />
+    <path fill="#047857" d="m98 600 4 7-4 7-4-7Z" />
+    <path fill="#065f46" d="m116 600 4 7-4 7-4-7Z" />
+</svg>

@@ -1,0 +1,38 @@
+---
+import OurImpactCard from "./OurImpactCard.astro";
+import SectionHeading from "../SectionHeading.astro";
+import SectionSubHeading from "../SectionSubHeading.astro";
+import type { HomePage } from "@/types/pages";
+import type { Brand } from "@/types";
+
+type Props = {
+    section: HomePage["acf"]["impact"];
+    variant?: Brand;
+};
+
+const delays = ["delay-150", "delay-300", "delay-450"];
+
+const { section, variant = "default" } = Astro.props;
+---
+
+<section class="my-20 md:my-28 max-w-6xl mx-auto w-full px-6 scroll-reveal">
+    <div class="scroll-reveal">
+        <SectionHeading variant={variant}>
+            {section.title}
+        </SectionHeading>
+
+        <SectionSubHeading variant={variant}>
+            {section.subtitle}
+        </SectionSubHeading>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {
+            section.cards.map((card, index) => (
+                <div class={`scroll-reveal ${delays[index] || "delay-450"}`}>
+                    <OurImpactCard variant={variant} card={card} />
+                </div>
+            ))
+        }
+    </div>
+</section>

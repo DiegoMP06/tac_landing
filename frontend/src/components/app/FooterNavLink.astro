@@ -1,0 +1,35 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+import { useLocalePath } from "@/utils/i18n";
+
+type Props = {
+    variant?: Brand;
+    href: string;
+} & astroHTML.JSX.AnchorHTMLAttributes;
+
+const classes: Record<Brand, string> = {
+    default: "hover:text-foreground hover:translate-x-1.5",
+    acu: "hover:text-acu-primary hover:translate-x-1.5",
+    acm: "hover:text-acm-primary hover:translate-x-1.5",
+    acc: "hover:text-acc-primary hover:translate-x-1.5",
+};
+
+const { class: className, variant = "default", href, ...props } = Astro.props;
+
+const variantClasses = classes[variant];
+
+const { localePath } = useLocalePath(Astro.url);
+---
+
+<a
+    class={cn(
+        "text-sm font-medium transition-all duration-300 ease-in-out text-muted-foreground inline-flex items-center gap-1",
+        variantClasses,
+        className,
+    )}
+    href={localePath(href)}
+    {...props}
+>
+    <slot />
+</a>

@@ -1,0 +1,37 @@
+---
+import type { Brand } from "@/types";
+import type { HomePage } from "@/types/pages";
+import CommitmentsSection from "../home/CommitmentsSection.astro";
+import EventsSection from "../home/EventsSection.astro";
+import OurImpactSection from "../home/OurImpactSection.astro";
+import ProgramsSection from "../home/ProgramsSection.astro";
+import RestBreakSection from "../home/RestBreakSection.astro";
+
+type Props = {
+    page: HomePage;
+    variant?: Brand;
+};
+
+const { page, variant = "acu" } = Astro.props;
+
+const {
+    acf: {
+        count_down,
+        commitments,
+        programs_section,
+        events_section,
+        rest_break,
+        impact,
+    },
+} = page;
+---
+
+<CommitmentsSection section={commitments} variant={variant} />
+
+<ProgramsSection section={programs_section} variant={variant} />
+
+<RestBreakSection section={rest_break} variant={variant} />
+
+<OurImpactSection section={impact} variant={variant} />
+
+<EventsSection section={events_section} variant={variant} />

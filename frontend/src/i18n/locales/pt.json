@@ -1,0 +1,215 @@
+{
+    "AC": {
+        "header": {
+            "nav": {
+                "home": "Início",
+                "about": "Sobre Nós",
+                "ACU": "Universidades",
+                "ACM": "Governantes",
+                "ACC": "Comércio",
+                "contact": "Contato"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "Uma plataforma continental que conecta líderes, instituições e governos de toda a América para impulsionar a colaboração, a inovação e o progresso hemisférico.",
+                "links": {
+                    "acu": {
+                        "home": "ACU",
+                        "about": "Sobre a ACU",
+                        "programs": "Programas da ACU",
+                        "events": "Eventos da ACU",
+                        "contact": "Contato"
+                    },
+                    "acm": {
+                        "home": "ACM",
+                        "about": "Sobre a ACM",
+                        "programs": "Programas da ACM",
+                        "events": "Eventos da ACM",
+                        "contact": "Contato"
+                    },
+                    "acc": {
+                        "home": "ACC",
+                        "about": "Sobre a ACC",
+                        "programs": "Programas da ACC",
+                        "events": "Eventos da ACC",
+                        "contact": "Contato"
+                    }
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference. Todos os direitos reservados. Albuquerque, Novo México, EUA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Ícone da The Americas Conference of Universities"
+            },
+            "programs": {
+                "empty": "Nenhum Programa Disponível."
+            },
+            "events": {
+                "empty": "Nenhum Evento Disponível."
+            }
+        },
+        "pages": {
+            "not-found": {
+                "title": "Não Encontrado",
+                "code": "404",
+                "text": "Página Não Encontrada, tente novamente mais tarde",
+                "redirect": "Clique aqui para ir à página inicial"
+            },
+            "server-error": {
+                "title": "Erro Inesperado",
+                "code": "500",
+                "text": "Ocorreu um erro inesperado, tente novamente mais tarde",
+                "redirect": "Clique aqui para ir à página inicial"
+            },
+            "programs": {
+                "info": "Informações do Programa",
+                "duration": "Duração",
+                "mode": "Modalidade",
+                "location": "Localização",
+                "target": "Público-alvo",
+                "benefits": {
+                    "title": "Benefícios",
+                    "empty": "Nenhum Benefício Disponível."
+                },
+                "highlights": {
+                    "title": "Destaques",
+                    "empty": "Nenhum Destaque Disponível."
+                }
+            },
+            "events": {
+                "info": "Informações do Evento",
+                "date": "Data",
+                "location": "Localização",
+                "speakers": {
+                    "title": "Palestrantes",
+                    "empty": "Nenhum Palestrante Disponível."
+                },
+                "highlights": {
+                    "title": "Destaques",
+                    "empty": "Nenhum Destaque Disponível."
+                }
+            }
+        }
+    },
+    "ACU": {
+        "header": {
+            "nav": {
+                "home": "Início",
+                "ACU": "Universidades",
+                "about": "Sobre Nós",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contato"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Conference of Universities é a plataforma educacional da The Americas Conference, conectando instituições de ensino superior de todo o hemisfério ocidental.",
+                "links": {
+                    "home": "Início",
+                    "family": "Nossa Família",
+                    "about": "Sobre Nós",
+                    "acu": "Universidades",
+                    "acm": "Governantes",
+                    "acc": "Comércio",
+                    "contact": "Contato",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference of Universities (ACU). Todos os direitos reservados. Albuquerque, Novo México, EUA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Ícone da The Americas Conference of Universities"
+            }
+        }
+    },
+    "ACM": {
+        "header": {
+            "nav": {
+                "home": "Início",
+                "ACM": "Governantes",
+                "about": "Sobre Nós",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contato"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Conference of Mayors é a plataforma de governança da The Americas Conference, conectando municípios e líderes locais de todo o hemisfério ocidental.",
+                "links": {
+                    "home": "Início",
+                    "family": "Nossa Família",
+                    "about": "Sobre Nós",
+                    "acu": "Universidades",
+                    "acm": "Governantes",
+                    "acc": "Comércio",
+                    "contact": "Contato",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Conference of Mayors (ACM). Todos os direitos reservados. Albuquerque, Novo México, EUA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Ícone da The Americas Conference of Mayors"
+            }
+        }
+    },
+    "ACC": {
+        "header": {
+            "nav": {
+                "home": "Início",
+                "ACC": "Comércio",
+                "about": "Sobre Nós",
+                "programs": "Programas",
+                "events": "Eventos",
+                "contact": "Contato"
+            }
+        },
+        "footer": {
+            "nav": {
+                "phrase": "The Americas Chambers of Commerce é a plataforma comercial da The Americas Conference, conectando empresas, investidores e empreendedores de todo o hemisfério ocidental.",
+                "links": {
+                    "home": "Início",
+                    "family": "Nossa Família",
+                    "about": "Sobre Nós",
+                    "acu": "Universidades",
+                    "acm": "Governantes",
+                    "acc": "Comércio",
+                    "contact": "Contato",
+                    "programs": "Programas",
+                    "events": "Eventos"
+                }
+            },
+            "copy": {
+                "rights": "The Americas Chambers of Commerce (ACC). Todos os direitos reservados. Albuquerque, Novo México, EUA."
+            }
+        },
+        "utils": {
+            "icon": {
+                "alt": "Ícone da The Americas Chambers of Commerce"
+            }
+        }
+    },
+    "chatbot": {
+        "title": "Assistente Inteligente",
+        "placeholder": "Digite sua mensagem...",
+        "send": "Enviar",
+        "welcome": "Olá! Como posso ajudá-lo hoje?",
+        "open": "Abrir Chatbot",
+        "close": "Fechar Chatbot",
+        "error": "Ocorreu um erro. Por favor, tente novamente."
+    }
+}

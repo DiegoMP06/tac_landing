@@ -1,0 +1,73 @@
+---
+import "leaflet/dist/leaflet.css";
+
+import type { Location } from "@/types";
+
+type Props = {
+    location: Location;
+};
+
+const { location } = Astro.props;
+
+const { lat, lng, zoom, markers } = location!;
+---
+
+<div>
+    <div id="map" class="h-125"></div>
+
+    <location-data
+        data-lat={lat}
+        data-lng={lng}
+        data-marker-lat={markers[0].lat}
+        data-marker-lng={markers[0].lng}
+        data-zoom={zoom}
+        data-label={markers[0].label}></location-data>
+</div>
+
+<script>
+    import L from "leaflet";
+
+    class LocationData extends HTMLElement {
+        map: L.Map | null = null;
+
+        connectedCallback() {
+            const lat = this.dataset.lat;
+            const lng = this.dataset.lng;
+            const markerLat = this.dataset.markerLat;
+            const markerLng = this.dataset.markerLng;
+            const zoom = this.dataset.zoom;
+            const label = this.dataset.label;
+
+            if (!(lat && lng && markerLat && markerLng && zoom && label))
+                return;
+
+            const container = document.getElementById("map") as HTMLElement & {
+                _leaflet_id?: number;
+            };
+
+            if (container && container._leaflet_id) {
+                container._leaflet_id = undefined as unknown as number;
+            }
+
+            this.map = L.map(container).setView([+lat, +lng], +zoom);
+
+            L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            ).addTo(this.map);
+
+            L.marker([+markerLat, +markerLng])
+                .addTo(this.map)
+                .bindPopup(label)
+                .openPopup();
+        }
+
+        disconnectedCallback() {
+            this.map?.remove();
+            this.map = null;
+        }
+    }
+
+    if (!customElements.get("location-data")) {
+        customElements.define("location-data", LocationData);
+    }
+</script>

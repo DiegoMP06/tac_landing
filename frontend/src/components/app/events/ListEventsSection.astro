@@ -1,0 +1,14 @@
+---
+import type { Brand } from "@/types";
+import ListEventsContainer from "./ListEventsContainer.astro";
+
+type Props = {
+    variant?: Brand;
+};
+
+const { variant = "default" } = Astro.props;
+---
+
+<section class="px-4 my-20 max-w-6xl w-full mx-auto">
+    <ListEventsContainer variant={variant} />
+</section>

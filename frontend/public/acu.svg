@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <circle cx="256" cy="256" r="234" fill="#fbfbfd" stroke="#0a1e48" stroke-width="20" />
+    <text x="256" y="300" text-anchor="middle" fill="#0a1e48"
+        font-family="Georgia, 'Times New Roman', serif" font-size="118" font-weight="600"
+        letter-spacing="-2">ACU</text>
+    <rect x="166" y="324" width="180" height="10" rx="5" fill="#d8a72a" />
+</svg>

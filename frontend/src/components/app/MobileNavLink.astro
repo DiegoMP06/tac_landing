@@ -1,0 +1,34 @@
+---
+import { cn } from "@/lib/utils";
+import { useLocalePath } from "@/utils/i18n";
+
+type Props = {
+    variant?: "ac" | "acu" | "acm" | "acc";
+    href: string;
+} & astroHTML.JSX.AnchorHTMLAttributes;
+
+const classes = {
+    ac: "hover:bg-muted/80 hover:text-secondary hover:shadow-sm",
+    acu: "hover:bg-acu-muted/80 hover:text-acu-secondary hover:shadow-sm font-semibold",
+    acm: "hover:bg-acm-muted/80 hover:text-acm-secondary hover:shadow-sm font-semibold",
+    acc: "hover:bg-acc-muted/80 hover:text-acc-secondary hover:shadow-sm font-semibold",
+};
+
+const { class: className, variant = "ac", href, ...props } = Astro.props;
+
+const variantClasses = classes[variant];
+
+const { localePath } = useLocalePath(Astro.url);
+---
+
+<a
+    class={cn(
+        "block text-base font-semibold transition-all px-4 py-3 rounded-xl duration-300 ease-out text-muted-foreground",
+        variantClasses,
+        className,
+    )}
+    href={localePath(href)}
+    {...props}
+>
+    <slot />
+</a>

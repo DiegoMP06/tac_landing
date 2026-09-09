@@ -1,0 +1,21 @@
+---
+import { BrandsEnum } from "@/enums";
+import type { Brand } from "@/types";
+
+type Props = {
+    variant?: Brand;
+};
+
+const { variant = BrandsEnum.DEFAULT } = Astro.props;
+
+const iconMap: Record<Brand, { href: string; type: string }> = {
+    [BrandsEnum.DEFAULT]: { href: "/ac.svg", type: "image/svg+xml" },
+    [BrandsEnum.ACC]: { href: "/acc.svg", type: "image/svg+xml" },
+    [BrandsEnum.ACM]: { href: "/acm.svg", type: "image/svg+xml" },
+    [BrandsEnum.ACU]: { href: "/acu.svg", type: "image/svg+xml" },
+};
+
+const icon = iconMap[variant] ?? iconMap[BrandsEnum.DEFAULT];
+---
+
+<link rel="icon" type={icon.type} href={icon.href} />

@@ -1,0 +1,82 @@
+---
+import SingleAppLayout from "@/layouts/app/SingleAppLayout.astro";
+import { useTranslations, useLocalePath } from "@/utils/i18n";
+import { FileQuestion, Home, ArrowLeft } from "lucide-react";
+
+const { locale, localePath } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+---
+
+<SingleAppLayout title={t("AC.pages.not-found.title")}>
+    <div
+        class="relative min-h-[75vh] flex items-center justify-center py-16 px-6 overflow-hidden"
+    >
+        <!-- Ambient Glowing Light Orbs -->
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-125 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow"
+        >
+        </div>
+        <div
+            class="absolute -top-10 right-1/4 size-80 bg-primary/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300"
+        >
+        </div>
+
+        <div
+            class="max-w-2xl w-full mx-auto relative z-10 text-center space-y-8 scroll-reveal-scale"
+        >
+            <!-- Glassmorphic Error Container -->
+            <div
+                class="p-8 sm:p-12 rounded-3xl border border-border/80 bg-card/70 backdrop-blur-xl shadow-2xl space-y-6"
+            >
+                <!-- Floating Icon Badge -->
+                <div
+                    class="inline-flex items-center justify-center size-20 rounded-3xl bg-secondary/15 text-secondary border border-secondary/30 shadow-md group hover:scale-110 hover:rotate-3 transition-transform duration-500"
+                >
+                    <FileQuestion className="size-10 stroke-[2.2]" />
+                </div>
+
+                <!-- Code Badge -->
+                <div class="space-y-2">
+                    <h1
+                        class="text-7xl sm:text-9xl font-heading font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-secondary via-foreground to-secondary drop-shadow-sm leading-none"
+                    >
+                        {t("AC.pages.not-found.code")}
+                    </h1>
+                    <h2
+                        class="text-2xl sm:text-3xl font-heading font-extrabold text-foreground tracking-tight"
+                    >
+                        {t("AC.pages.not-found.title")}
+                    </h2>
+                </div>
+
+                <!-- Text Description -->
+                <p
+                    class="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto font-normal"
+                >
+                    {t("AC.pages.not-found.text")}
+                </p>
+
+                <!-- Action Buttons -->
+                <div
+                    class="pt-4 flex flex-wrap items-center justify-center gap-4"
+                >
+                    <a
+                        href={localePath("/")}
+                        class="px-7 py-3.5 rounded-2xl bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 text-sm font-bold tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 group cursor-pointer"
+                    >
+                        <Home className="size-4" />
+                        <span>{t("AC.pages.not-found.redirect")}</span>
+                    </a>
+
+                    <a
+                        href={localePath("/contact")}
+                        class="px-7 py-3.5 rounded-2xl bg-card/50 hover:bg-card/80 border border-border hover:border-secondary/60 text-foreground hover:text-secondary text-sm font-bold tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 backdrop-blur-md shadow-xs cursor-pointer"
+                    >
+                        <ArrowLeft className="size-4" />
+                        <span>Contacto</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</SingleAppLayout>

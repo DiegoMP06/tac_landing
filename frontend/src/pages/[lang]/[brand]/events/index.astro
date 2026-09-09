@@ -1,0 +1,44 @@
+---
+import ListEventsSection from "@/components/app/events/ListEventsSection.astro";
+import { PageTypeEnum } from "@/enums/pages";
+import AppLayout from "@/layouts/app/AppLayout.astro";
+import { BrandSchema } from "@/schemas";
+import { useLocalePath } from "@/utils/i18n";
+import { actions } from "astro:actions";
+
+const idDict = {
+    acu: "60",
+    acc: "57",
+    acm: "59",
+};
+
+const { brand } = Astro.params;
+
+const brandValidate = BrandSchema.safeParse(brand);
+
+if (!brandValidate.success) {
+    return Astro.redirect("/404");
+}
+
+const entityId = idDict[brandValidate.data];
+
+const { locale } = useLocalePath(Astro.url);
+
+const { data: page, error } = await Astro.callAction(
+    actions.pages.getAndIndexPage,
+    {
+        entityId,
+        locale,
+        brand: brandValidate.data,
+        type: PageTypeEnum.DEFAULT,
+    },
+);
+
+if (error) {
+    return Astro.redirect("/404");
+}
+---
+
+<AppLayout page={page} variant={brandValidate.data}>
+    <ListEventsSection variant={brandValidate.data} />
+</AppLayout>

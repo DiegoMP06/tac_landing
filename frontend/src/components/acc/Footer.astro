@@ -1,0 +1,102 @@
+---
+import { useTranslations } from "@/utils/i18n";
+import MainFooter from "../app/MainFooter.astro";
+import Icon from "@/assets/acc/icon.svg";
+import FooterNavLink from "../app/FooterNavLink.astro";
+
+const { lang } = Astro.params;
+
+const t = useTranslations(lang as never);
+---
+
+<MainFooter>
+    <div>
+        <a href="/acc">
+            <h3
+                class="flex gap-2 items-center text-lg font-bold text-acc-foreground"
+            >
+                <img
+                    src={Icon.src}
+                    alt={t("ACC.utils.icon.alt")}
+                    class="size-12 w-12 h-12 aspect-square rounded-full"
+                    width={Icon.width}
+                    height={Icon.height}
+                    loading="lazy"
+                />
+
+                The Americas Chambers of Commerce
+            </h3>
+        </a>
+
+        <p class="text-muted-foreground prose-sm">
+            {t("ACC.footer.nav.phrase")}
+        </p>
+    </div>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acc-muted-foreground">
+            The Americas Chambers of Commerce
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/acc/about" variant="acc"
+                >{t("ACC.footer.nav.links.about")}</FooterNavLink
+            >
+
+            <FooterNavLink href="/acc/programs" variant="acc"
+                >{t("ACC.footer.nav.links.programs")}</FooterNavLink
+            >
+
+            <FooterNavLink href="/acc/events" variant="acc"
+                >{t("ACC.footer.nav.links.events")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acc-muted-foreground">
+            The Americas Conference
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink href="/"
+                >{t("ACC.footer.nav.links.home")}</FooterNavLink
+            >
+            <FooterNavLink href="/contact"
+                >{t("ACC.footer.nav.links.contact")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <nav class="flex flex-col gap-4">
+        <h3 class="text-sm font-semibold text-acc-muted-foreground">
+            {t("ACC.footer.nav.links.family")}
+        </h3>
+
+        <div class="flex flex-col gap-2">
+            <FooterNavLink variant="acu" href="/acu"
+                >{t("ACC.footer.nav.links.acu")}</FooterNavLink
+            >
+            <FooterNavLink variant="acc" href="/acc"
+                >{t("ACC.footer.nav.links.acc")}</FooterNavLink
+            >
+            <FooterNavLink variant="acm" href="/acm"
+                >{t("ACC.footer.nav.links.acm")}</FooterNavLink
+            >
+        </div>
+    </nav>
+
+    <div
+        slot="copy"
+        class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 md:justify-between"
+    >
+        <p class="text-muted-foreground text-xs font-semibold">
+            {t("ACC.footer.copy.rights")}
+            &copy;{new Date().getFullYear()}
+        </p>
+
+        <p class="text-acc-muted-foreground text-xs font-semibold">
+            ACC · A Commerce Platform
+        </p>
+    </div>
+</MainFooter>

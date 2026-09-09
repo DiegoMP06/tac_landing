@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+    <path fill="#0d0c22" d="M0 0h1200v630H0z" />
+    <path fill="none" stroke="#6366f1" stroke-width=".5"
+        d="M150 0v630M300 0v630M450 0v630M600 0v630M750 0v630M900 0v630M1050 0v630M0 105h1200M0 210h1200M0 315h1200M0 420h1200M0 525h1200"
+        opacity=".05" />
+    <circle cx="980" cy="315" r="340" fill="#0f0e2e" opacity=".9" />
+    <ellipse cx="980" cy="315" fill="none" stroke="#3730a3" stroke-width="1" opacity=".28" rx="340" ry="102" />
+    <ellipse cx="980" cy="315" fill="none" stroke="#3730a3" stroke-width=".8" opacity=".18" rx="340" ry="202" />
+    <path stroke="#3730a3" stroke-width="1" d="M640 315h680" opacity=".26" />
+    <ellipse cx="980" cy="315" fill="none" stroke="#3730a3" stroke-width=".7" opacity=".18" rx="136" ry="340" />
+    <g fill="none" opacity=".14">
+        <circle cx="980" cy="315" r="110" stroke="#4338ca" stroke-width=".8" />
+        <circle cx="980" cy="315" r="230" stroke="#3730a3" stroke-width=".6" />
+        <circle cx="980" cy="315" r="310" stroke="#312e81" stroke-width=".5" />
+    </g>
+    <path stroke="#818cf8" stroke-linecap="round" stroke-width="11" d="m980 120-92 310m92-310 92 310" opacity=".88" />
+    <path stroke="#818cf8" stroke-linecap="round" stroke-width="9" d="M928 306h104" opacity=".88" />
+    <path fill="none" stroke="#c7d2fe" stroke-linecap="round" stroke-width="7" d="M1320-30a340 340 0 1 0 0 690"
+        opacity=".42" />
+    <circle cx="980" cy="315" r="340" fill="none" stroke="#4338ca" stroke-width="1.5" opacity=".32" />
+    <path fill="#4f46e5" d="M80 130h130v2H80z" /><text x="80" y="168" fill="#818cf8"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" letter-spacing="4">EXCELLENCE · RESEARCH ·
+        COLLABORATION</text><text x="80" y="252" fill="#fff" font-family="Georgia, 'Times New Roman', serif"
+        font-size="72" font-weight="700" letter-spacing="-2">The Americas</text><text x="80" y="336" fill="#818cf8"
+        font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-2">Conference
+        of</text><text x="80" y="420" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="72"
+        font-weight="700" letter-spacing="-2">Universities</text>
+    <path stroke="#312e81" stroke-width="1" d="M80 450h250" /><text x="80" y="480" fill="#a5b4fc"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" letter-spacing="1">Advancing academic
+        excellence across the Americas</text><text x="80" y="580" fill="#312e81"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" letter-spacing="3">ACU · THE AMERICAS
+        CONFERENCE OF UNIVERSITIES</text>
+    <path fill="#4f46e5" d="m80 600 4 7-4 7-4-7Z" />
+    <path fill="#4338ca" d="m98 600 4 7-4 7-4-7Z" />
+    <path fill="#3730a3" d="m116 600 4 7-4 7-4-7Z" />
+</svg>

@@ -1,0 +1,44 @@
+---
+import ListProgramsSection from "@/components/app/programs/ListProgramsSection.astro";
+import { PageTypeEnum } from "@/enums/pages";
+import AppLayout from "@/layouts/app/AppLayout.astro";
+import { BrandSchema } from "@/schemas";
+import { useLocalePath } from "@/utils/i18n";
+import { actions } from "astro:actions";
+
+const idDict = {
+    acu: "64",
+    acc: "61",
+    acm: "63",
+};
+
+const { brand } = Astro.params;
+
+const brandValidate = BrandSchema.safeParse(brand);
+
+if (!brandValidate.success) {
+    return Astro.redirect("/404");
+}
+
+const entityId = idDict[brandValidate.data];
+
+const { locale } = useLocalePath(Astro.url);
+
+const { data: page, error } = await Astro.callAction(
+    actions.pages.getAndIndexPage,
+    {
+        entityId,
+        locale,
+        brand: brandValidate.data,
+        type: PageTypeEnum.DEFAULT,
+    },
+);
+
+if (error || !page) {
+    return Astro.redirect("/404");
+}
+---
+
+<AppLayout page={page} variant={brandValidate.data}>
+    <ListProgramsSection variant={brandValidate.data} />
+</AppLayout>

@@ -1,0 +1,45 @@
+---
+import type { Brand } from "@/types";
+import type { ListEvents } from "@/types/events";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { actions } from "astro:actions";
+import EventItem from "./EventItem.astro";
+
+type Props = {
+    variant?: Brand;
+};
+
+const { variant = "default" } = Astro.props;
+const { locale } = useLocalePath(Astro.url);
+
+const { data, error } = await Astro.callAction(
+    actions.events.getAndIndexAllEvents,
+    {
+        brand: variant,
+        locale,
+    },
+);
+
+if (error) {
+    return Astro.redirect("/404");
+}
+const t = useTranslations(locale);
+
+const events = data as ListEvents;
+---
+
+{
+    events.length > 0 ? (
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {events.map((event) => (
+                <EventItem event={event} brand={variant} />
+            ))}
+        </div>
+    ) : (
+        <div class="my-20">
+            <p class="text-center text-muted-foreground">
+                {t("AC.utils.events.empty")}
+            </p>
+        </div>
+    )
+}

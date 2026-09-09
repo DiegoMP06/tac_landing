@@ -1,0 +1,75 @@
+---
+import ACFooter from "@/components/ac/Footer.astro";
+import ACHeader from "@/components/ac/Header.astro";
+import ACUFooter from "@/components/acu/Footer.astro";
+import ACUHeader from "@/components/acu/Header.astro";
+import ACCFooter from "@/components/acc/Footer.astro";
+import ACCHeader from "@/components/acc/Header.astro";
+import ACMFooter from "@/components/acm/Footer.astro";
+import ACMHeader from "@/components/acm/Header.astro";
+import CTASection from "@/components/app/extras/CTASection.astro";
+import Hero from "@/components/app/Hero.astro";
+import MainContent from "@/components/app/MainContent.astro";
+import { BrandsEnum } from "@/enums";
+import Layout from "@/layouts/Layout.astro";
+import type { Brand } from "@/types";
+import type { Page } from "@/types/pages";
+
+type Props = {
+    page: Page;
+    variant?: Brand;
+};
+
+const { page, variant = BrandsEnum.DEFAULT } = Astro.props;
+
+const Titles = {
+    [BrandsEnum.DEFAULT]: "The Americas Conference",
+    [BrandsEnum.ACM]: "The Americas Conference of Universities",
+    [BrandsEnum.ACC]: "The Americas Conference of Colleges",
+    [BrandsEnum.ACU]: "The Americas Conference of Universities",
+};
+---
+
+<Layout title={`${Titles[variant]} | ${page.title.rendered}`} variant={variant}>
+    {
+        (() => {
+            switch (variant) {
+                case BrandsEnum.ACM:
+                    return <ACMHeader />;
+                case BrandsEnum.ACC:
+                    return <ACCHeader />;
+                case BrandsEnum.ACU:
+                    return <ACUHeader />;
+                default:
+                    return <ACHeader />;
+            }
+        })()
+    }
+
+    <div class="flex-1">
+        <Hero page={page} variant={variant} />
+
+        <slot name="count_down" />
+
+        <MainContent page={page} variant={variant} />
+
+        <slot />
+
+        <CTASection cta={page.acf.cta} variant={variant} />
+    </div>
+
+    {
+        (() => {
+            switch (variant) {
+                case BrandsEnum.ACM:
+                    return <ACMFooter />;
+                case BrandsEnum.ACC:
+                    return <ACCFooter />;
+                case BrandsEnum.ACU:
+                    return <ACUFooter />;
+                default:
+                    return <ACFooter />;
+            }
+        })()
+    }
+</Layout>

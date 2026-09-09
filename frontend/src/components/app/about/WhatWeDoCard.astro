@@ -1,0 +1,73 @@
+---
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+import type { TitleAndContentCard } from "@/types/pages";
+
+type Props = {
+    index: number;
+    total: number;
+    card: TitleAndContentCard;
+    variant?: Brand;
+};
+
+const styles = {
+    acu: {
+        container: "bg-acu-card/60 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-xl hover:shadow-acu-secondary/10",
+        indexLabel: "text-acu-secondary/60 group-hover:text-acu-secondary",
+        title: "text-acu-foreground group-hover:text-acu-secondary",
+        content: "text-acu-foreground/75 dark:text-acu-muted-foreground",
+        acronym: "ACU",
+    },
+    acm: {
+        container: "bg-acm-card/60 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-xl hover:shadow-acm-secondary/10",
+        indexLabel: "text-acm-secondary/60 group-hover:text-acm-secondary",
+        title: "text-acm-foreground group-hover:text-acm-secondary",
+        content: "text-acm-foreground/75 dark:text-acm-muted-foreground",
+        acronym: "ACM",
+    },
+    acc: {
+        container: "bg-acc-card/60 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-xl hover:shadow-acc-secondary/10",
+        indexLabel: "text-acc-secondary/60 group-hover:text-acc-secondary",
+        title: "text-acc-foreground group-hover:text-acc-secondary",
+        content: "text-acc-foreground/75 dark:text-acc-muted-foreground",
+        acronym: "ACC",
+    },
+    default: {
+        container: "bg-card border-border hover:border-secondary/80 hover:shadow-xl hover:shadow-secondary/10",
+        indexLabel: "text-secondary/60 group-hover:text-secondary",
+        title: "text-foreground group-hover:text-secondary",
+        content: "text-muted-foreground",
+        acronym: "AC",
+    },
+};
+
+const { card, index, total, variant = "default" } = Astro.props;
+
+const currentStyles = styles[variant];
+const number =
+    index !== total ? index.toString().padStart(2, "0") : currentStyles.acronym;
+---
+
+<div
+    class={cn(
+        `group p-7 rounded-2xl border transition-all duration-300 hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between`,
+        currentStyles.container,
+    )}
+>
+    <div>
+        <p
+            class={cn(
+                `font-heading text-4xl sm:text-5xl font-extrabold mb-3 tracking-tight transition-colors duration-300`,
+                currentStyles.indexLabel,
+            )}
+        >
+            {number}
+        </p>
+
+        <h4 class={cn(`text-lg md:text-xl font-heading font-bold mb-3 transition-colors duration-200 leading-snug`, currentStyles.title)}>
+            {card.title}
+        </h4>
+
+        <p class={cn(`text-sm leading-relaxed font-normal`, currentStyles.content)}>{card.content}</p>
+    </div>
+</div>
