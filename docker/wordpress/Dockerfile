@@ -1,4 +1,4 @@
-FROM php:8.5-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 USER root
 
@@ -13,23 +13,7 @@ RUN mkdir -p /var/www/html \
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache \
-    unzip \
-    zip \
-    libzip-dev \
-    postgresql-dev \
-    git \
-    bash \
-    libstdc++ \
-    libc6-compat \
-    gcompat \
-    freetype-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
-    libwebp-dev \
-    imagemagick-dev \
-    icu-dev \
-    $PHPIZE_DEPS \
+RUN apk add --no-cache unzip zip libzip-dev postgresql-dev git bash libstdc++ libc6-compat gcompat freetype-dev libjpeg-turbo-dev libpng-dev libwebp-dev imagemagick-dev icu-dev $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install pdo pdo_mysql zip mysqli gd exif intl \
     && pecl install imagick \

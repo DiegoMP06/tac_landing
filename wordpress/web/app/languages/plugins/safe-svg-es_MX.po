@@ -2,40 +2,56 @@
 # This file is distributed under the same license as the Plugins - Safe SVG - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-07-23 17:21:43+0000\n"
+"PO-Revision-Date: 2026-09-28 15:31:27+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: es_MX\n"
 "Project-Id-Version: Plugins - Safe SVG - Stable (latest release)\n"
 
-#: includes/safe-svg-settings.php:190
+#: includes/safe-svg-sanitizer.php:296
+msgid "The SVG could not be sanitized."
+msgstr "No se ha podido sanitizar el SVG."
+
+#: includes/safe-svg-sanitizer.php:247 includes/safe-svg-sanitizer.php:286
+msgid "The SVG file could not be read."
+msgstr "No se ha podido leer el archivo SVG."
+
+#: includes/safe-svg-sanitizer.php:237
+msgid "The requested attachment is not an SVG."
+msgstr "El archivo adjunto que has solicitado no es un SVG."
+
+#: includes/safe-svg-sanitizer.php:229
+msgid "Invalid SVG attachment."
+msgstr "Archivo adjunto SVG no válido."
+
+#: includes/safe-svg-settings.php:194
 msgid "Turning this on will allow SVG files larger than 10MB to be uploaded. This can impact performance and is not recommended unless needed."
 msgstr "Activándolo permitirá subir los archivos SVG mayores de 10 MB. Esto puede afectar al rendimiento y no se recomienda a menos que se necesite."
 
-#: includes/safe-svg-settings.php:188
+#: includes/safe-svg-settings.php:192
 msgid "Allow large SVG files"
 msgstr "Permitir archivos SVG grandes"
 
-#: includes/safe-svg-settings.php:55
+#: includes/safe-svg-settings.php:59
 msgid "Large Files"
 msgstr "Archivos grandes"
 
-#: safe-svg.php:288
+#: safe-svg.php:282
 msgid "Sorry, you are not allowed to upload SVG files."
 msgstr "Lo siento, no tienes permisos para subir archivos SVG."
 
-#: includes/safe-svg-settings.php:120
+#: includes/safe-svg-settings.php:124
 msgid "Select which user roles can upload SVG files."
 msgstr "Selecciona qué perfiles de usuario pueden subir archivos SVG."
 
-#: includes/safe-svg-settings.php:47
+#: includes/safe-svg-settings.php:51
 msgid "User Roles"
 msgstr "Perfiles de usuario"
 
-#: includes/safe-svg-settings.php:40
+#: includes/safe-svg-settings.php:44
 msgid "Safe SVG Settings"
 msgstr "Ajustes de Safe SVG"
 
@@ -54,8 +70,8 @@ msgctxt "block title"
 msgid "Safe SVG"
 msgstr "Safe SVG"
 
-#: includes/blocks.php:55 dist/safe-svg-block.js:1
-#: includes/blocks/safe-svg/edit.js:229
+#: includes/blocks.php:59 dist/safe-svg-block.js:1
+#: includes/blocks/safe-svg/edit.js:351
 msgid "SafeSvg"
 msgstr "SafeSvg"
 
@@ -69,26 +85,26 @@ msgstr "Permite las subidas de SVG y sanéalas para detener las vulnerabilidades
 msgid "https://wordpress.org/plugins/safe-svg/"
 msgstr "https://es-mx.wordpress.org/plugins/safe-svg/"
 
-#: safe-svg.php:415
+#: safe-svg.php:387
 msgid "Large"
 msgstr "Grande"
 
-#: safe-svg.php:414 dist/safe-svg-block.js:1
-#: includes/blocks/safe-svg/edit.js:152
+#: safe-svg.php:386 dist/safe-svg-block.js:1
+#: includes/blocks/safe-svg/edit.js:196
 msgid "Medium"
 msgstr "Mediana"
 
-#: safe-svg.php:413 dist/safe-svg-block.js:1
-#: includes/blocks/safe-svg/edit.js:155
+#: safe-svg.php:385 dist/safe-svg-block.js:1
+#: includes/blocks/safe-svg/edit.js:199
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#: safe-svg.php:412 dist/safe-svg-block.js:1
-#: includes/blocks/safe-svg/edit.js:149
+#: safe-svg.php:384 dist/safe-svg-block.js:1
+#: includes/blocks/safe-svg/edit.js:193
 msgid "Full Size"
 msgstr "Tamaño completo"
 
-#: safe-svg.php:297
+#: safe-svg.php:291
 msgid "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded"
 msgstr "Lo siento, pero este archivo no se ha podido sanear, por lo que, por razones de seguridad, no ha sido subido."
 

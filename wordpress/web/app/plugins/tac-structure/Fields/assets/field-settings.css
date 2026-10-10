@@ -1,0 +1,70 @@
+/** field-settings.css */
+
+.custom-repeater-subfields-wrapper {
+    max-width: 1000px;
+}
+
+.custom-repeater-subfields-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #dfdfe1;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    table-layout: fixed;
+}
+
+.custom-repeater-subfields-table thead th {
+    background: #f6f7f7;
+    border-bottom: 1px solid #dfdfe1;
+    color: #1d2327;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.custom-repeater-subfields-table tbody tr {
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.custom-repeater-subfields-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.custom-repeater-subfields-table td {
+    padding: 6px 10px;
+    vertical-align: middle;
+}
+
+.custom-repeater-subfields-table input[type="text"],
+.custom-repeater-subfields-table select {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Columna de eliminar, angosta y centrada, igual que en el repetidor */
+.custom-repeater-subfields-table th.acf-row-handle.remove,
+.custom-repeater-subfields-table td.acf-row-handle.remove {
+    width: 34px;
+    min-width: 34px;
+    text-align: center;
+}
+
+.custom-repeater-subfields-table td.acf-row-handle.remove a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.custom-repeater-subfields-wrapper .add-subfield-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.custom-repeater-cols-json-wrapper {
+    display: none !important;
+}

@@ -1,0 +1,10 @@
+{
+    "name": "tac/structure",
+    "description": "CPTs, taxonomies, ACF field groups y REST exposure para TAC",
+    "type": "wordpress-muplugin",
+    "autoload": {
+        "psr-4": {
+            "TAC\\Structure\\": ""
+        }
+    }
+}

@@ -1,0 +1,152 @@
+/* repeater.css  */
+
+.custom-repeater-wrapper {
+    max-width: 100%;
+}
+
+.repeater-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Cada item del repetidor = una tarjeta. Los "rows" ahora son esto. */
+.repeater-item {
+    background: #fff;
+    border: 1px solid #dfdfe1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.repeater-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f6f7f7;
+    border-bottom: 1px solid #dfdfe1;
+    padding: 6px 10px;
+}
+
+.repeater-item-header .row-number {
+    font-weight: 600;
+    font-size: 12px;
+    color: #8c8f94;
+}
+
+.repeater-item-header .remove-repeater-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #b32d2e;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.repeater-item-header .remove-repeater-row:hover {
+    color: #8a2222;
+}
+
+.repeater-item-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Cada sub-campo = una fila de dos "columnas": etiqueta | campo.
+   Esto es lo que pediste como "estructura en columnas". */
+.repeater-field-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.repeater-field-label {
+    flex: 0 0 160px;
+    max-width: 160px;
+    padding-top: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+.repeater-field-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    /* evita que el editor WYSIWYG desborde el contenedor */
+}
+
+.repeater-field-input input[type="text"],
+.repeater-field-input input[type="number"],
+.repeater-field-input input[type="url"],
+.repeater-field-input input[type="email"],
+.repeater-field-input textarea,
+.repeater-field-input select {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.repeater-field-input textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+/* En pantallas angostas, apila etiqueta arriba del campo */
+@media (max-width: 640px) {
+    .repeater-field-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .repeater-field-label {
+        flex: none;
+        max-width: 100%;
+        padding-top: 0;
+    }
+}
+
+.repeater-actions {
+    margin-top: 12px;
+}
+
+.repeater-actions .acf-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Campo de imagen */
+.custom-repeater-image-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.custom-repeater-image-field .image-preview-wrap {
+    min-height: 20px;
+}
+
+.custom-repeater-image-field .image-preview {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    border: 1px solid #dfdfe1;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.custom-repeater-image-field .button {
+    align-self: flex-start;
+    margin-right: 4px;
+}
+
+/* Envoltura del editor WYSIWYG: le damos espacio de sobra */
+.custom-repeater-wysiwyg-wrap {
+    width: 100%;
+}
+
+.custom-repeater-wysiwyg-wrap .wp-editor-wrap,
+.custom-repeater-wysiwyg-wrap .wp-editor-container {
+    width: 100%;
+}
