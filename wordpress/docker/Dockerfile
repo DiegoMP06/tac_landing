@@ -24,9 +24,9 @@ WORKDIR /var/www/html
 
 COPY --from=composer_build /app /var/www/html
 
-COPY nginx.prod.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.prod.conf /etc/nginx/http.d/default.conf
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
 RUN mkdir -p /var/www/html/web/app/uploads \
