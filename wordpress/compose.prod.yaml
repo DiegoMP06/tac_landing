@@ -5,13 +5,36 @@ services:
             dockerfile: docker/Dockerfile
         restart: always
         environment:
-            DB_NAME: ${DB_NAME:-landing-page}
-            DB_USER: ${DB_USER:-mariadb}
+            DB_NAME: ${DB_NAME:-tac_wordpress_db}
+            DB_USER: ${DB_USER:-tac_wordpress_user}
             DB_PASSWORD: ${DB_PASSWORD}
             DB_HOST: ${DB_HOST}
+            DB_PREFIX: ${DB_PREFIX:-wp_}
+
             WP_ENV: ${WP_ENV:-production}
             WP_HOME: ${WP_HOME}
             WP_SITEURL: ${WP_SITEURL}
+
+            WP_DEBUG: ${WP_DEBUG:-false}
+            WP_DEBUG_DISPLAY: ${WP_DEBUG_DISPLAY:-false}
+            WP_DEBUG_LOG: ${WP_DEBUG_LOG:-true}
+
+            AUTH_KEY: ${AUTH_KEY}
+            SECURE_AUTH_KEY: ${SECURE_AUTH_KEY}
+            LOGGED_IN_KEY: ${LOGGED_IN_KEY}
+            NONCE_KEY: ${NONCE_KEY}
+            AUTH_SALT: ${AUTH_SALT}
+            SECURE_AUTH_SALT: ${SECURE_AUTH_SALT}
+            LOGGED_IN_SALT: ${LOGGED_IN_SALT}
+            NONCE_SALT: ${NONCE_SALT}
+
+            WP_ALLOW_MULTISITE: ${WP_ALLOW_MULTISITE:-true}
+            MULTISITE: ${MULTISITE:-true}
+            SUBDOMAIN_INSTALL: ${SUBDOMAIN_INSTALL:-false}
+            DOMAIN_CURRENT_SITE: ${DOMAIN_CURRENT_SITE}
+            PATH_CURRENT_SITE: ${PATH_CURRENT_SITE:-/}
+            SITE_ID_CURRENT_SITE: ${SITE_ID_CURRENT_SITE:-1}
+            BLOG_ID_CURRENT_SITE: ${BLOG_ID_CURRENT_SITE:-1}
         volumes:
             - tac_wordpress_uploads:/var/www/html/web/app/uploads
         networks:
