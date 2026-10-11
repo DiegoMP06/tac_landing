@@ -13,6 +13,7 @@ services:
             API_URL: ${API_URL}
             WORDPRESS_API_URL: ${WORDPRESS_API_URL:-${API_URL}}
             GEMINI_API_KEY: ${GEMINI_API_KEY}
+            RUN_MIGRATIONS: ${RUN_MIGRATIONS}
         expose:
             - "4321"
         networks:
