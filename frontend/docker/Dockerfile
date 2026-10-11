@@ -2,7 +2,9 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-RUN corepack enable
+RUN apk add --no-cache libc6-compat
+
+RUN npm install -g pnpm@9
 
 COPY package.json pnpm-lock.yaml ./
 
