@@ -3,14 +3,13 @@ services:
         build:
             context: .
             dockerfile: docker/Dockerfile
-        container_name: tac_wordpress_app
         restart: always
         environment:
-            DB_NAME: ${MYSQL_DATABASE}
-            DB_USER: ${MYSQL_USER}
-            DB_PASSWORD: ${MYSQL_PASSWORD}
+            DB_NAME: ${DB_NAME:-landing-page}
+            DB_USER: ${DB_USER:-mariadb}
+            DB_PASSWORD: ${DB_PASSWORD}
             DB_HOST: ${DB_HOST}
-            WP_ENV: production
+            WP_ENV: ${WP_ENV:-production}
             WP_HOME: ${WP_HOME}
             WP_SITEURL: ${WP_SITEURL}
         volumes:
