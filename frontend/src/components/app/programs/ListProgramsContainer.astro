@@ -4,6 +4,7 @@ import type { ListPrograms } from "@/types/programs";
 import { useLocalePath, useTranslations } from "@/utils/i18n";
 import { actions } from "astro:actions";
 import ProgramItem from "./ProgramItem.astro";
+import { Award } from "lucide-react";
 
 type Props = {
     variant?: Brand;
@@ -24,20 +25,24 @@ if (error) {
     return Astro.redirect("/404");
 }
 const t = useTranslations(locale);
-
 const programs = data as ListPrograms;
 ---
 
 {
     programs.length > 0 ? (
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
             {programs.map((program) => (
-                <ProgramItem program={program} brand={variant} />
+                <div class="h-full">
+                    <ProgramItem program={program} brand={variant} />
+                </div>
             ))}
         </div>
     ) : (
-        <div class="my-20">
-            <p class="text-center text-muted-foreground">
+        <div class="my-16 p-12 rounded-3xl border border-dashed border-border/80 text-center bg-card/40 max-w-md mx-auto">
+            <div class="size-12 rounded-2xl bg-muted/60 flex items-center justify-center mx-auto mb-3 text-muted-foreground">
+                <Award className="size-6" />
+            </div>
+            <p class="text-sm font-medium text-muted-foreground">
                 {t("AC.utils.programs.empty")}
             </p>
         </div>

@@ -10,7 +10,7 @@ export class HttpAdapterImpl implements HttpAdapter {
         const urlObj = new URL(url);
 
         for (const [key, value] of Object.entries(params)) {
-            urlObj.searchParams.set(key, value);
+            urlObj.searchParams.set(key, value as string);
         }
 
         return urlObj.toString();
@@ -22,7 +22,7 @@ export class HttpAdapterImpl implements HttpAdapter {
     ): Promise<HttpResponse<T>> {
         const response = await fetch(this.formatURL(url, config?.params), {
             method: "GET",
-            headers: config?.headers,
+            headers: config?.headers as HeadersInit,
         });
 
         if (!response.ok) {
@@ -42,13 +42,20 @@ export class HttpAdapterImpl implements HttpAdapter {
         data?: D,
         config?: RequestConfig,
     ): Promise<HttpResponse<T>> {
+        const isFormData = data instanceof FormData;
+        const headers: Record<string, string> = {
+            ...(config?.headers as Record<string, string>),
+        };
+
+        if (!isFormData) {
+            headers["Content-Type"] =
+                headers["Content-Type"] || "application/json";
+        }
+
         const response = await fetch(this.formatURL(url, config?.params), {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                ...config?.headers,
-            },
-            body: JSON.stringify(data),
+            headers,
+            body: isFormData ? data : JSON.stringify(data),
         });
 
         if (!response.ok) {
@@ -68,13 +75,20 @@ export class HttpAdapterImpl implements HttpAdapter {
         data?: D,
         config?: RequestConfig,
     ): Promise<HttpResponse<T>> {
+        const isFormData = data instanceof FormData;
+        const headers: Record<string, string> = {
+            ...(config?.headers as Record<string, string>),
+        };
+
+        if (!isFormData) {
+            headers["Content-Type"] =
+                headers["Content-Type"] || "application/json";
+        }
+
         const response = await fetch(this.formatURL(url, config?.params), {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                ...config?.headers,
-            },
-            body: JSON.stringify(data),
+            headers,
+            body: isFormData ? data : JSON.stringify(data),
         });
 
         if (!response.ok) {
@@ -95,7 +109,7 @@ export class HttpAdapterImpl implements HttpAdapter {
     ): Promise<HttpResponse<T>> {
         const response = await fetch(this.formatURL(url, config?.params), {
             method: "DELETE",
-            headers: config?.headers,
+            headers: config?.headers as HeadersInit,
         });
 
         if (!response.ok) {

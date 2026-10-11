@@ -1,5 +1,4 @@
 import { ChatbotRepositoryImpl } from "@/core/chatbot/repositories/ChatbotRepositoryImpl";
-import { ChannelEnum } from "@/enums/chat";
 import { defineAction } from "astro:actions";
 
 export const closeConversation = defineAction({
@@ -13,10 +12,8 @@ export const closeConversation = defineAction({
 
         const chatbotRepository = new ChatbotRepositoryImpl();
 
-        await chatbotRepository.closeConversation({
+        await chatbotRepository.closeConversationBySessionId({
             sessionToken,
-            channel: ChannelEnum.WEB,
-            phone: null,
         });
 
         cookies.delete("chat_session", { path: "/" });

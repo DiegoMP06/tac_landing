@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import MessageItem from "./MessageItem";
 import { generateUUID } from "@/utils/uuid";
 import type { StoreMessage } from "@/types/chat";
+import { actions } from "astro:actions";
 
 type ChatbotFormProps = {
     locale: Locale;
@@ -23,6 +24,7 @@ export default function ChatbotForm({ locale }: ChatbotFormProps) {
     const setIsLoading = useChatStore((state) => state.setIsLoading);
     const addMessage = useChatStore((state) => state.addMessage);
     const editMessage = useChatStore((state) => state.editMessage);
+    const setMessages = useChatStore((state) => state.setMessages);
 
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -121,6 +123,28 @@ export default function ChatbotForm({ locale }: ChatbotFormProps) {
         }
     };
 
+    const handleResetChat = async () => {
+        setIsLoading(true);
+        try {
+            await actions.chatbot.closeConversation();
+
+            setMessages([
+                {
+                    stored: false,
+                    message: {
+                        id: generateUUID(),
+                        content: t("chatbot.welcome"),
+                        role: MessageRoleEnum.ASSISTANT,
+                    },
+                },
+            ]);
+        } catch {
+            console.error("An error occurred while closing the conversation");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const canWrite = useMemo(
         () => loading || currentMessage.trim().length === 0,
         [loading, currentMessage],
@@ -143,24 +167,29 @@ export default function ChatbotForm({ locale }: ChatbotFormProps) {
 
                 <div className="flex items-center gap-2 pt-2 border-t border-border/30">
                     <button
-                        onClick={() => setMode(ChatModeEnum.MESSAGE)}
-                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition-all cursor-pointer shadow-sm active:scale-95"
-                    >
-                        <MessageCircle className="size-4" />
-                        <span>Mensaje de Texto</span>
-                    </button>
-
-                    <button
-                        onClick={() => setMode(ChatModeEnum.EMAIL)}
+                        onClick={() => setMode(ChatModeEnum.CONTACT)}
                         className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium border border-border bg-card hover:bg-accent rounded-xl transition-all cursor-pointer shadow-sm active:scale-95 text-foreground"
+                        disabled={loading}
                     >
                         <Mail className="size-4 text-primary" />
-                        <span>Contacto Email</span>
+                        <span>{t("chatbot.lead")}</span>
                     </button>
+
+                    {messages.length > 1 && (
+                        <button
+                            onClick={handleResetChat}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium border border-border bg-card hover:bg-accent rounded-xl transition-all cursor-pointer shadow-sm active:scale-95 text-foreground"
+                            disabled={loading}
+                        >
+                            <MessageCircle className="size-4 text-primary" />
+                            <span>{t("chatbot.newConversation")}</span>
+                        </button>
+                    )}
                 </div>
 
                 <div ref={bottomRef} />
             </div>
+
             <div className="p-4 bg-background/50 backdrop-blur-sm border-t border-border/50 shrink-0">
                 <div className="relative flex items-center shadow-sm rounded-full bg-background border border-border/60 focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
                     <textarea

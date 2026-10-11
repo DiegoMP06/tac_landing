@@ -1,8 +1,6 @@
 import { BrandsEnum } from "@/enums";
 import {
     ChatStatusEnum,
-    LeadsStatusEnum,
-    LeadTypeEnum,
     MessageRoleEnum,
 } from "@/enums/chat";
 import { LocalesEnum } from "@/enums/locale";
@@ -25,8 +23,6 @@ export const brandsEnum = pgEnum("brands", BrandsEnum);
 export const localesEnum = pgEnum("locales", LocalesEnum);
 export const chatStatusEnum = pgEnum("chat_status", ChatStatusEnum);
 export const messageRoleEnum = pgEnum("message_role", MessageRoleEnum);
-export const leadsStatusEnum = pgEnum("leads_status", LeadsStatusEnum);
-export const leadTypeEnum = pgEnum("lead_type", LeadTypeEnum);
 
 export const translationCache = pgTable(
     "translation_cache",
@@ -96,34 +92,6 @@ export const messages = pgTable("messages", {
         .references(() => conversations.id, { onDelete: "cascade" }),
 });
 
-export const leads = pgTable(
-    "leads",
-    {
-        id: uuid("id").primaryKey().defaultRandom(),
-        name: varchar("name", { length: 255 }).notNull(),
-        email: varchar("email", { length: 255 }).notNull(),
-        phone: varchar("phone", { length: 50 }).notNull(),
-        company: varchar("company", { length: 255 }),
-        type: leadTypeEnum("type").notNull().default(LeadTypeEnum.EMAIL),
-        status: leadsStatusEnum("status")
-            .default(LeadsStatusEnum.PENDING)
-            .notNull(),
-        customData: json("custom_data"),
-        conversationId: uuid("conversation_id")
-            .unique()
-            .references(() => conversations.id, { onDelete: "set null" }),
-        createdAt: timestamp("created_at").defaultNow(),
-        updatedAt: timestamp("updated_at").defaultNow(),
-    },
-    (table) => [
-        unique("leads_email_phone_conversation_id_idx").on(
-            table.email,
-            table.phone,
-            table.conversationId,
-        ),
-    ],
-);
-
 export const translationCacheRelations = relations(
     translationCache,
     ({ one }) => ({
@@ -143,19 +111,11 @@ export const embeddingsRelations = relations(embeddings, ({ one }) => ({
 
 export const conversationsRelations = relations(conversations, ({ many }) => ({
     messages: many(messages),
-    lead: many(leads),
 }));
 
 export const messagesRelations = relations(messages, ({ one }) => ({
     conversation: one(conversations, {
         fields: [messages.conversationId],
-        references: [conversations.id],
-    }),
-}));
-
-export const leadsRelations = relations(leads, ({ one }) => ({
-    conversation: one(conversations, {
-        fields: [leads.conversationId],
         references: [conversations.id],
     }),
 }));

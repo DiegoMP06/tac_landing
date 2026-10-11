@@ -1,13 +1,15 @@
-import { loadConversation } from "./chatbot/loadConversation";
+import { getAndIndexAllPosts } from "./blog/getAndIndexAllPosts";
+import { getAndIndexPost } from "./blog/getAndIndexPost";
 import { closeConversation } from "./chatbot/closeConversation";
+import { loadConversation } from "./chatbot/loadConversation";
 import { getAndIndexAllEvents } from "./events/getAndIndexAllEvents";
 import { getAndIndexEvent } from "./events/getAndIndexEvent";
 import { getAndIndexEventsWithoutBrand } from "./events/getAndIndexEventsWithoutBrand";
+import { sendLead } from "./leads/sendLead";
 import { getAndIndexPage } from "./pages/getAndIndexPage";
 import { getAndIndexAllPrograms } from "./programs/getAndIndexAllPrograms";
 import { getAndIndexProgram } from "./programs/getAndIndexProgram";
 import { getAndIndexProgramsWithoutBrand } from "./programs/getAndIndexProgramsWithoutBrand";
-import { createLead } from "./chatbot/createLead";
 
 export const server = {
     pages: {
@@ -26,6 +28,12 @@ export const server = {
     chatbot: {
         loadConversation,
         closeConversation,
-        createLead,
+    },
+    blog: {
+        getAndIndexAllPosts,
+        getAndIndexPost,
+    },
+    leads: {
+        sendLead,
     },
 };

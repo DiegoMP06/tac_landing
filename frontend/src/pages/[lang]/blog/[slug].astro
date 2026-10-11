@@ -1,0 +1,142 @@
+---
+import ExtrasLayout from "@/layouts/app/ExtrasLayout.astro";
+import { cn } from "@/lib/utils";
+import type { Post } from "@/types/blog";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { actions } from "astro:actions";
+import { ArrowLeft, BookOpen, ExternalLink, Newspaper } from "lucide-react";
+
+const { slug = "" } = Astro.params;
+
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+
+const { data, error } = await Astro.callAction(actions.blog.getAndIndexPost, {
+    slug,
+    locale,
+});
+
+if (error || !data) {
+    return Astro.redirect("/404");
+}
+
+const post = data as Post;
+
+const BRAND_THEMES = {
+    acu: {
+        btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-md shadow-acu-secondary/20",
+        badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
+        icon: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
+    },
+    acm: {
+        btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-md shadow-acm-secondary/20",
+        badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
+        icon: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
+    },
+    acc: {
+        btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-md shadow-acc-secondary/20",
+        badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
+        icon: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
+    },
+    default: {
+        btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-md shadow-secondary/20",
+        badge: "bg-secondary/20 text-secondary border-secondary/40",
+        icon: "bg-secondary/15 text-secondary border-secondary/30",
+    },
+};
+
+const brandVariant = post.site?.variant || "default";
+const brandStyle = BRAND_THEMES[brandVariant as keyof typeof BRAND_THEMES] || BRAND_THEMES.default;
+---
+
+<ExtrasLayout
+    {...{
+        title: post.site?.name || t("AC.pages.blog.title"),
+        subtitle: post.title.rendered,
+        description: post.acf.description || post.acf.subtitle,
+        featured_image: post.images,
+        variant: brandVariant,
+        badge: t("AC.pages.blog.badge"),
+    }}
+>
+    <div class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-10 lg:gap-12 items-start">
+            
+            <!-- Left Column: Article Body -->
+            <div class="space-y-16 min-w-0">
+                <article class="prose prose-base sm:prose-lg dark:prose-invert max-w-none text-foreground/90 leading-relaxed font-normal">
+                    <div set:html={post.content.rendered} />
+                </article>
+            </div>
+
+            <!-- Right Column: Sticky Sidebar -->
+            <aside class="sticky top-28 space-y-6">
+                <div class="rounded-3xl border border-border/80 bg-card/90 dark:bg-card/60 backdrop-blur-xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6">
+                    <h3 class="font-heading font-bold text-xl text-foreground pb-4 border-b border-border/60 flex items-center gap-2">
+                        <BookOpen className="size-5 text-muted-foreground" />
+                        <span>{t("AC.pages.blog.info")}</span>
+                    </h3>
+
+                    <div class="space-y-5">
+                        {post.acf.subtitle && (
+                            <div class="flex items-start gap-3.5">
+                                <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                                    <BookOpen className="size-4" />
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                        {t("AC.pages.blog.mainTopic")}
+                                    </p>
+                                    <p class="text-sm font-bold text-foreground mt-0.5">
+                                        {post.acf.subtitle}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {post.site?.name && (
+                            <div class="flex items-start gap-3.5">
+                                <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                                    <Newspaper className="size-4" />
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                        {t("AC.pages.blog.publishedBy")}
+                                    </p>
+                                    <p class="text-sm font-medium text-foreground mt-0.5 leading-snug">
+                                        {post.site.name}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {post.site?.url && (
+                            <div class="pt-2">
+                                <a
+                                    href={post.site.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class={cn("w-full py-3.5 px-4 min-h-[44px] rounded-xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]", brandStyle.btn)}
+                                >
+                                    <span>{t("AC.pages.blog.visitSite")}</span>
+                                    <ExternalLink className="size-4 group-hover:translate-x-0.5 transition-transform" />
+                                </a>
+                            </div>
+                        )}
+
+                        <div class="pt-4 border-t border-border/60">
+                            <a
+                                href={`/${locale}/blog`}
+                                class="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xs py-1"
+                            >
+                                <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                                <span>{t("AC.pages.blog.backToBlog")}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</ExtrasLayout>
+

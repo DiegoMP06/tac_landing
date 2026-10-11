@@ -8,7 +8,14 @@ import { BrandSchema } from "@/schemas";
 import type { Event } from "@/types/events";
 import { useLocalePath, useTranslations } from "@/utils/i18n";
 import { actions } from "astro:actions";
-import { Calendar, ExternalLink, Laptop, MapPin, Sparkles, Users } from "lucide-react";
+import {
+    Calendar,
+    ExternalLink,
+    Laptop,
+    MapPin,
+    Sparkles,
+    Users,
+} from "lucide-react";
 
 const { slug = "", brand } = Astro.params;
 
@@ -39,22 +46,22 @@ const event = data as Event;
 const BRAND_THEMES = {
     acu: {
         btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-md shadow-acu-secondary/20",
-        badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
+        badge: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
         icon: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
     },
     acm: {
         btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-md shadow-acm-secondary/20",
-        badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
+        badge: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
         icon: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
     },
     acc: {
         btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-md shadow-acc-secondary/20",
-        badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
+        badge: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
         icon: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
     },
     default: {
         btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-md shadow-secondary/20",
-        badge: "bg-secondary/20 text-secondary border-secondary/40",
+        badge: "bg-secondary/15 text-secondary border-secondary/30",
         icon: "bg-secondary/15 text-secondary border-secondary/30",
     },
 };
@@ -72,45 +79,70 @@ const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
         variant: brandValidate.data,
     }}
 >
-    <main class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">
-        <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-10 lg:gap-12 items-start">
-            
+    <div class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">
+        <div
+            class="grid grid-cols-1 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-10 lg:gap-14 items-start"
+        >
             <div class="space-y-16 min-w-0">
-                <article class="prose prose-lg dark:prose-invert max-w-none text-foreground/90 leading-relaxed">
+                <article
+                    class="prose prose-base sm:prose-lg dark:prose-invert max-w-none text-foreground/90 leading-relaxed font-normal"
+                >
                     <div set:html={event.content.rendered} />
                 </article>
 
-                <section class="space-y-6 pt-6 border-t border-border/80">
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class={cn("size-10 rounded-xl flex items-center justify-center shrink-0 border", brandStyle.icon)}>
+                <!-- Speakers Section -->
+                <section class="space-y-6 pt-8 border-t border-border/80">
+                    <div class="flex items-center justify-between gap-4 flex-wrap">
+                        <div class="flex items-center gap-3.5">
+                            <div
+                                class={cn(
+                                    "size-11 rounded-2xl flex items-center justify-center shrink-0 border shadow-xs",
+                                    brandStyle.icon,
+                                )}
+                            >
                                 <Users className="size-5" />
                             </div>
                             <div>
-                                <h3 class="font-heading font-bold text-2xl text-foreground">
+                                <h3
+                                    class="font-heading font-extrabold text-2xl sm:text-3xl text-foreground tracking-tight"
+                                >
                                     {t("AC.pages.events.speakers.title")}
                                 </h3>
-                                <p class="text-xs text-muted-foreground">Expertos y conferencistas destacados</p>
+                                <p class="text-xs sm:text-sm text-muted-foreground">
+                                    {t("AC.pages.events.speakers.subtitle")}
+                                </p>
                             </div>
                         </div>
 
-                        {event.acf.speakers.length > 0 && (
-                            <span class={cn("px-3 py-1 rounded-full text-xs font-semibold border", brandStyle.badge)}>
-                                {event.acf.speakers.length} {event.acf.speakers.length === 1 ? 'speaker' : 'speakers'}
-                            </span>
-                        )}
+                        {
+                            event.acf.speakers.length > 0 && (
+                                <span
+                                    class={cn(
+                                        "px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border shadow-xs",
+                                        brandStyle.badge,
+                                    )}
+                                >
+                                    {event.acf.speakers.length}{" "}
+                                    {event.acf.speakers.length === 1
+                                        ? t("AC.pages.events.speakers.singular")
+                                        : t("AC.pages.events.speakers.plural")}
+                                </span>
+                            )
+                        }
                     </div>
 
                     {
                         event.acf.speakers.length > 0 ? (
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-stretch">
                                 {event.acf.speakers.map((speaker) => (
-                                    <SpeakerItem speaker={speaker} />
+                                    <div class="h-full">
+                                        <SpeakerItem speaker={speaker} />
+                                    </div>
                                 ))}
                             </div>
                         ) : (
-                            <div class="p-10 rounded-2xl border border-dashed border-border text-center bg-card/40">
-                                <Users className="size-10 text-muted-foreground/50 mx-auto mb-3" />
+                            <div class="p-12 rounded-3xl border border-dashed border-border/80 text-center bg-card/40">
+                                <Users className="size-10 text-muted-foreground/40 mx-auto mb-3" />
                                 <p class="text-muted-foreground text-sm font-medium">
                                     {t("AC.pages.events.speakers.empty")}
                                 </p>
@@ -120,29 +152,40 @@ const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
                 </section>
 
                 <!-- Highlights Section -->
-                <section class="space-y-6 pt-6 border-t border-border/80">
-                    <div class="flex items-center gap-3">
-                        <div class={cn("size-10 rounded-xl flex items-center justify-center shrink-0 border", brandStyle.icon)}>
+                <section class="space-y-6 pt-8 border-t border-border/80">
+                    <div class="flex items-center gap-3.5">
+                        <div
+                            class={cn(
+                                "size-11 rounded-2xl flex items-center justify-center shrink-0 border shadow-xs",
+                                brandStyle.icon,
+                            )}
+                        >
                             <Sparkles className="size-5" />
                         </div>
                         <div>
-                            <h3 class="font-heading font-bold text-2xl text-foreground">
+                            <h3
+                                class="font-heading font-extrabold text-2xl sm:text-3xl text-foreground tracking-tight"
+                            >
                                 {t("AC.pages.events.highlights.title")}
                             </h3>
-                            <p class="text-xs text-muted-foreground">Aspectos clave del evento</p>
+                            <p class="text-xs sm:text-sm text-muted-foreground">
+                                {t("AC.pages.events.highlights.subtitle")}
+                            </p>
                         </div>
                     </div>
 
                     {
                         event.acf.highlights.length > 0 ? (
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-stretch">
                                 {event.acf.highlights.map((highlight) => (
-                                    <HighlightItem highlight={highlight} />
+                                    <div class="h-full">
+                                        <HighlightItem highlight={highlight} />
+                                    </div>
                                 ))}
                             </div>
                         ) : (
-                            <div class="p-10 rounded-2xl border border-dashed border-border text-center bg-card/40">
-                                <Sparkles className="size-10 text-muted-foreground/50 mx-auto mb-3" />
+                            <div class="p-12 rounded-3xl border border-dashed border-border/80 text-center bg-card/40">
+                                <Sparkles className="size-10 text-muted-foreground/40 mx-auto mb-3" />
                                 <p class="text-muted-foreground text-sm font-medium">
                                     {t("AC.pages.events.highlights.empty")}
                                 </p>
@@ -153,86 +196,134 @@ const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
             </div>
 
             <!-- Right Column: Glassmorphic Sticky Sidebar -->
-            <aside class="sticky top-24 space-y-6">
-                <div class="rounded-3xl border border-border/80 bg-card/90 backdrop-blur-xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6">
-                    <h3 class="font-heading font-bold text-xl text-foreground pb-4 border-b border-border/60 flex items-center gap-2">
+            <aside class="sticky top-28 space-y-6">
+                <div
+                    class="rounded-3xl border border-border/80 bg-card/85 dark:bg-card/50 backdrop-blur-xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6"
+                >
+                    <h3
+                        class="font-heading font-bold text-xl text-foreground pb-4 border-b border-border/60 flex items-center gap-2"
+                    >
                         <span>{t("AC.pages.events.info")}</span>
                     </h3>
 
                     <div class="space-y-5">
                         <!-- Dates -->
                         <div class="flex items-start gap-3.5">
-                            <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                            <div
+                                class={cn(
+                                    "size-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 border shadow-xs",
+                                    brandStyle.icon,
+                                )}
+                            >
                                 <Calendar className="size-4" />
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                <p
+                                    class="text-xs font-bold uppercase tracking-wider text-muted-foreground"
+                                >
                                     {t("AC.pages.events.date")}
                                 </p>
-                                <p class="text-sm font-bold text-foreground mt-0.5">
-                                    {event.acf.start_date} - {event.acf.end_date}
+                                <p
+                                    class="text-sm font-bold text-foreground mt-0.5 leading-snug"
+                                >
+                                    {event.acf.start_date} - {
+                                        event.acf.end_date
+                                    }
                                 </p>
                             </div>
                         </div>
 
                         <!-- Modality -->
                         <div class="flex items-start gap-3.5">
-                            <div class={cn("size-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 border", brandStyle.icon)}>
+                            <div
+                                class={cn(
+                                    "size-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 border shadow-xs",
+                                    brandStyle.icon,
+                                )}
+                            >
                                 <Laptop className="size-4" />
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                                    Modalidad
+                                <p
+                                    class="text-xs font-bold uppercase tracking-wider text-muted-foreground"
+                                >
+                                    {t("AC.pages.events.mode")}
                                 </p>
+
                                 <div class="mt-1">
-                                    <span class={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border", brandStyle.badge)}>
-                                        {event.acf.modality}
+                                    <span
+                                        class={cn(
+                                            "inline-flex items-center px-3 py-0.5 rounded-full text-xs font-bold border shadow-xs",
+                                            brandStyle.badge,
+                                        )}
+                                    >
+                                        {
+                                            t(
+                                                `AC.utils.modalities.${event.acf.modality}`,
+                                            )
+                                        }
                                     </span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Online Link (If available) -->
-                        {event.acf.online_link && (
-                            <div class="pt-2">
-                                <a
-                                    href={event.acf.online_link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class={cn("w-full py-3 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 group cursor-pointer", brandStyle.btn)}
-                                >
-                                    <span>Acceder al evento online</span>
-                                    <ExternalLink className="size-4 group-hover:translate-x-0.5 transition-transform" />
-                                </a>
-                            </div>
-                        )}
+                        {
+                            event.acf.online_link && (
+                                <div class="pt-2">
+                                    <a
+                                        href={event.acf.online_link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class={cn(
+                                            "min-h-[44px] w-full py-3 px-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+                                            brandStyle.btn,
+                                        )}
+                                    >
+                                        <span>
+                                            {t("AC.pages.events.onlineLink")}
+                                        </span>
+                                        <ExternalLink className="size-4 group-hover:translate-x-0.5 transition-transform" />
+                                    </a>
+                                </div>
+                            )
+                        }
 
                         <!-- Location -->
-                        {event.acf.location?.address && (
-                            <div class="flex items-start gap-3.5 pt-2 border-t border-border/60">
-                                <div class="size-9 rounded-lg bg-sky-500/10 text-sky-500 border border-sky-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                                    <MapPin className="size-4" />
+                        {
+                            event.acf.location?.address && (
+                                <div class="flex items-start gap-3.5 pt-3 border-t border-border/60">
+                                    <div
+                                        class={cn(
+                                            "size-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 border shadow-xs",
+                                            brandStyle.icon,
+                                        )}
+                                    >
+                                        <MapPin className="size-4" />
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                                            {t("AC.pages.events.location")}
+                                        </p>
+                                        <p class="text-sm font-medium text-foreground mt-0.5 leading-snug">
+                                            {event.acf.location.address}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                                        {t("AC.pages.events.location")}
-                                    </p>
-                                    <p class="text-sm font-medium text-foreground mt-0.5 leading-snug">
-                                        {event.acf.location.address}
-                                    </p>
-                                </div>
-                            </div>
-                        )}
+                            )
+                        }
                     </div>
 
                     <!-- Location Map -->
-                    {event.acf.location && (
-                        <div class="rounded-2xl overflow-hidden border border-border/60 shadow-sm">
-                            <LocationMap location={event.acf.location} />
-                        </div>
-                    )}
+                    {
+                        event.acf.location && (
+                            <div class="rounded-2xl overflow-hidden border border-border/60 shadow-xs">
+                                <LocationMap location={event.acf.location} />
+                            </div>
+                        )
+                    }
                 </div>
             </aside>
         </div>
-    </main>
+    </div>
 </ExtrasLayout>

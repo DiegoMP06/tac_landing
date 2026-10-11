@@ -1,4 +1,3 @@
-import type { DraftLead, Lead } from "./Lead";
 import { Message, type DraftMessage } from "./Message";
 
 type ConversationArgs = {
@@ -8,8 +7,9 @@ type ConversationArgs = {
     userAgent: string | null;
     locale: string;
     status: string;
+    createdAt?: Date;
+    updatedAt?: Date;
     messages?: Message[];
-    leads?: Lead[];
 };
 
 export type DraftConversation = Pick<
@@ -17,7 +17,6 @@ export type DraftConversation = Pick<
     "sessionToken" | "clientIp" | "userAgent" | "locale"
 > & {
     messages?: DraftMessage[];
-    leads?: DraftLead[];
 };
 
 export class Conversation {
@@ -27,8 +26,9 @@ export class Conversation {
     public userAgent: string | null;
     public locale: string;
     public status: string;
+    public createdAt?: Date;
+    public updatedAt?: Date;
     public messages: Message[];
-    public leads: Lead[];
 
     public static create(args: ConversationArgs): Conversation {
         return new Conversation(args);
@@ -41,8 +41,9 @@ export class Conversation {
         userAgent,
         locale,
         status,
+        createdAt,
+        updatedAt,
         messages,
-        leads,
     }: ConversationArgs) {
         this.id = id;
         this.sessionToken = sessionToken;
@@ -50,15 +51,12 @@ export class Conversation {
         this.userAgent = userAgent;
         this.locale = locale;
         this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.messages = messages ?? [];
-        this.leads = leads ?? [];
     }
 
-    addMessage(message: Message): void {
+    public addMessage(message: Message): void {
         this.messages.push(message);
-    }
-
-    addLead(lead: Lead): void {
-        this.leads.push(lead);
     }
 }

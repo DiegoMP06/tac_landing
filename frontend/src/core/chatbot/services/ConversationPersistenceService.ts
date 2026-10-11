@@ -12,14 +12,7 @@ type ConversationPersistenceServiceArgs = {
 };
 export type ConversationInfo = Pick<
     DraftConversation,
-    | "clientIp"
-    | "sessionToken"
-    | "userAgent"
-    | "channel"
-    | "email"
-    | "phone"
-    | "telegramChatId"
-    | "lead"
+    "clientIp" | "sessionToken" | "userAgent"
 >;
 
 type PersistArgs = {

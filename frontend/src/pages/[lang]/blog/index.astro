@@ -1,0 +1,30 @@
+---
+import ListPostsSection from "@/components/app/blog/ListPostsSection.astro";
+import { BrandsEnum } from "@/enums";
+import { PageTypeEnum } from "@/enums/pages";
+import AppLayout from "@/layouts/app/AppLayout.astro";
+import { useLocalePath } from "@/utils/i18n";
+import { actions } from "astro:actions";
+
+const entityId = "133";
+
+const { locale } = useLocalePath(Astro.url);
+
+const { data: page, error } = await Astro.callAction(
+    actions.pages.getAndIndexPage,
+    {
+        entityId,
+        locale,
+        brand: BrandsEnum.DEFAULT,
+        type: PageTypeEnum.DEFAULT,
+    },
+);
+
+if (error || !page) {
+    return Astro.redirect("/404");
+}
+---
+
+<AppLayout page={page}>
+    <ListPostsSection />
+</AppLayout>

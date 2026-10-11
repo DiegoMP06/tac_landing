@@ -6,6 +6,7 @@ import { useFeaturedImage } from "@/utils/image";
 import HeroIcon from "./HeroIcon.astro";
 import type { FeaturedImageAtt } from "@/types/images";
 import { ArrowRight } from "lucide-react";
+import { FeaturedImagesSizesEnum } from "@/enums/images";
 
 type Props = {
     page: Page;
@@ -14,48 +15,52 @@ type Props = {
 
 const STYLES = {
     acu: {
-        background: "bg-acu-background/70 border-acu-border/60",
-        title: "text-acu-secondary before:bg-acu-secondary font-bold",
+        background: "bg-acu-background/80 border-acu-border/60",
+        badge: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
+        title: "text-acu-secondary",
         subtitle: "text-acu-foreground dark:text-acu-50",
         description: "text-acu-foreground/80 dark:text-acu-200",
         btnPrimary: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-xs",
     },
     acc: {
-        background: "bg-acc-background/70 border-acc-border/60",
-        title: "text-acc-secondary before:bg-acc-secondary font-bold",
+        background: "bg-acc-background/80 border-acc-border/60",
+        badge: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
+        title: "text-acc-secondary",
         subtitle: "text-acc-foreground dark:text-acc-50",
         description: "text-acc-foreground/80 dark:text-acc-200",
         btnPrimary: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-xs",
     },
     acm: {
-        background: "bg-acm-background/70 border-acm-border/60",
-        title: "text-acm-secondary before:bg-acm-secondary font-bold",
+        background: "bg-acm-background/80 border-acm-border/60",
+        badge: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
+        title: "text-acm-secondary",
         subtitle: "text-acm-foreground dark:text-acm-50",
         description: "text-acm-foreground/80 dark:text-acm-200",
         btnPrimary: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-xs",
     },
     default: {
-        background: "bg-background/70  border-border/60",
-        title: "text-secondary before:bg-secondary font-bold",
+        background: "bg-background/80 border-border/60",
+        badge: "bg-secondary/15 text-secondary border-secondary/30",
+        title: "text-secondary",
         subtitle: "text-foreground dark:text-base-50",
         description: "text-muted-foreground",
         btnPrimary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-xs",
     },
 };
 
 const { page, variant = "default" } = Astro.props;
-const image = useFeaturedImage(page.images)() as FeaturedImageAtt;
+const image = useFeaturedImage(page.images)(FeaturedImagesSizesEnum.full) as FeaturedImageAtt;
 const currentStyles = STYLES[variant] || STYLES.default;
 const heroData = page.acf?.hero;
 ---
 
-<section class="relative overflow-hidden">
+<section class="relative overflow-hidden border-b border-border/60">
     <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover bg-fixed transform scale-105 filter saturate-90"
+        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover md:bg-fixed transform scale-105 filter saturate-90"
         style={{
             backgroundImage: `url(${image?.url})`,
         }}
@@ -63,18 +68,19 @@ const heroData = page.acf?.hero;
     </div>
     <div
         class={cn(
-            `absolute inset-0 z-20 border-b backdrop-blur-md transition-colors duration-300`,
+            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/50 via-background/65 to-background/80",
             currentStyles.background,
         )}
     >
     </div>
 
+    <!-- Ambient glowing lights -->
     <div
-        class="absolute top-1/4 left-1/4 size-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow"
+        class="absolute top-1/4 left-1/4 size-96 md:size-125 bg-primary/10 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow"
     >
     </div>
     <div
-        class="absolute bottom-10 right-1/3 size-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow delay-300"
+        class="absolute bottom-10 right-1/3 size-80 md:size-96 bg-secondary/15 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow delay-300"
     >
     </div>
 
@@ -82,32 +88,36 @@ const heroData = page.acf?.hero;
         <div
             transition:name="hero-content"
             transition:animate="slide"
-            class="max-w-6xl w-full mx-auto px-6 py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-8 items-center"
+            class="max-w-6xl w-full mx-auto px-6 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-8 items-center"
         >
-            <div class="max-w-2xl w-full space-y-4">
+            <div class="max-w-2xl w-full space-y-5">
+                <!-- Eyebrow Badge -->
                 <div class="inline-flex items-center gap-3 scroll-reveal">
-                    <h1
+                    <span
                         class={cn(
-                            `relative ml-10 font-primary text-xs tracking-widest uppercase font-bold before:content-[''] before:w-8 before:inline-block before:absolute before:h-0.5 before:-left-10 before:top-1/2 before:-translate-y-1/2`,
-                            currentStyles.title,
+                            "font-primary text-xs tracking-widest uppercase font-bold inline-flex items-center gap-2 px-3.5 py-1 rounded-full border backdrop-blur-xs shadow-xs",
+                            currentStyles.badge,
                         )}
                     >
+                        <span class="size-1.5 rounded-full bg-current animate-pulse"></span>
                         {page.title.rendered}
-                    </h1>
+                    </span>
                 </div>
 
-                <h2
+                <!-- Main Headline -->
+                <h1
                     class={cn(
-                        `text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight leading-[1.15] scroll-reveal delay-100`,
+                        "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold tracking-tight leading-[1.12] text-balance scroll-reveal delay-100",
                         currentStyles.subtitle,
                     )}
                 >
                     {heroData?.subtitle}
-                </h2>
+                </h1>
 
+                <!-- Lead Supporting Copy -->
                 <p
                     class={cn(
-                        `text-base sm:text-lg leading-relaxed pt-2 max-w-xl font-normal scroll-reveal delay-200`,
+                        "text-base sm:text-lg leading-relaxed pt-1 max-w-xl font-normal scroll-reveal delay-200",
                         currentStyles.description,
                     )}
                 >
@@ -116,14 +126,14 @@ const heroData = page.acf?.hero;
 
                 <!-- Optional Primary & Secondary CTA Buttons -->
                 {((heroData?.redirect_text && heroData?.redirect_url) || (heroData?.secondary_redirect_text && heroData?.secondary_redirect_url)) && (
-                    <div class="pt-4 flex flex-wrap items-center gap-4 scroll-reveal delay-300">
+                    <div class="pt-3 flex flex-wrap items-center gap-4 scroll-reveal delay-300">
                         {heroData?.redirect_text && heroData?.redirect_url && (
                             <a
                                 href={heroData.redirect_url}
                                 target={heroData.redirect_url.startsWith("http") ? "_blank" : "_self"}
                                 rel="noopener noreferrer"
                                 class={cn(
-                                    "px-7 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group",
+                                    "min-h-[46px] px-7 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group shadow-md",
                                     currentStyles.btnPrimary,
                                 )}
                             >
@@ -138,7 +148,7 @@ const heroData = page.acf?.hero;
                                 target={heroData.secondary_redirect_url.startsWith("http") ? "_blank" : "_self"}
                                 rel="noopener noreferrer"
                                 class={cn(
-                                    "px-7 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
+                                    "min-h-[46px] px-7 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
                                     currentStyles.btnSecondary,
                                 )}
                             >
@@ -152,11 +162,7 @@ const heroData = page.acf?.hero;
             <div
                 class="flex justify-center lg:justify-end scroll-reveal-scale delay-300"
             >
-                <div
-                    class="hover:scale-105 transition-transform duration-500 ease-out"
-                >
-                    <HeroIcon variant={variant} />
-                </div>
+                <HeroIcon variant={variant} />
             </div>
         </div>
     </div>

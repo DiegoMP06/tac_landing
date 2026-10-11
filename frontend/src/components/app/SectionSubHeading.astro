@@ -8,10 +8,10 @@ type Props = {
 } & astroHTML.JSX.HTMLAttributes;
 
 const styles = {
-    acu: "text-acu-foreground",
-    acm: "text-acm-foreground",
-    acc: "text-acc-foreground",
-    default: "text-foreground",
+    acu: "text-acu-foreground dark:text-acu-50",
+    acm: "text-acm-foreground dark:text-acm-50",
+    acc: "text-acc-foreground dark:text-acc-50",
+    default: "text-foreground dark:text-base-50",
 };
 
 const { variant = "default", className = "", ...props } = Astro.props;
@@ -19,6 +19,13 @@ const { variant = "default", className = "", ...props } = Astro.props;
 const currentStyles = styles[variant] || styles.default;
 ---
 
-<h3 class={cn(`font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-8 leading-tight`, currentStyles, className)} {...props}>
+<h3
+    class={cn(
+        "font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] tracking-tight mb-6 sm:mb-8 leading-[1.18] text-balance",
+        currentStyles,
+        className,
+    )}
+    {...props}
+>
     <slot />
 </h3>

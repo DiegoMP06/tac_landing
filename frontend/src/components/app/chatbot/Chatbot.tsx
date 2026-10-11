@@ -3,10 +3,9 @@ import { MessageRoleEnum } from "@/enums/chat";
 import { useChatStore } from "@/stores/chat";
 import type { Locale } from "@/types/locale";
 import { useTranslations } from "@/utils/i18n";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ChatbotBubble from "./ChatbotBubble";
 import ChatContent from "./ChatContent";
-import { actions } from "astro:actions";
 import { generateUUID } from "@/utils/uuid";
 
 type ChatbotProps = {
@@ -20,27 +19,11 @@ export default function Chatbot({ locale, conversation }: ChatbotProps) {
     const setMessages = useChatStore((state) => state.setMessages);
     const open = useChatStore((state) => state.open);
 
-    useEffect(() => {
-        const handleExit = () => {
-            if (document.visibilityState === "hidden") {
-                actions.chatbot.closeConversation().catch((error: Error) => {
-                    console.error("[Error al cerrar la conversación]: ", error);
-                });
-            }
-        };
-
-        document.addEventListener("visibilitychange", handleExit);
-
-        return () => {
-            document.removeEventListener("visibilitychange", handleExit);
-
-            actions.chatbot.closeConversation().catch((error: Error) => {
-                console.error("[Error al cerrar en unmount]: ", error);
-            });
-        };
-    }, []);
+    const initializedRef = useRef<boolean>(false);
 
     useEffect(() => {
+        if (initializedRef.current) return;
+
         if (conversation) {
             setMessages(
                 conversation.messages.map((message) => ({
@@ -48,9 +31,8 @@ export default function Chatbot({ locale, conversation }: ChatbotProps) {
                     message,
                 })),
             );
-        }
-
-        if (!conversation && messages.length === 0) {
+            initializedRef.current = true;
+        } else if (messages.length === 0) {
             setMessages([
                 {
                     stored: false,
@@ -61,8 +43,9 @@ export default function Chatbot({ locale, conversation }: ChatbotProps) {
                     },
                 },
             ]);
+            initializedRef.current = true;
         }
-    }, []);
+    }, [conversation, setMessages, t]);
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none font-sans">

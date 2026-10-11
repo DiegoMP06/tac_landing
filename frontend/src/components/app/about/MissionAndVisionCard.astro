@@ -12,9 +12,9 @@ type Props = {
 const styles = {
     acu: {
         container:
-            "bg-card/80 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-2xl hover:shadow-acu-secondary/15",
+            "bg-card/85 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-2xl hover:shadow-acu-secondary/15 before:bg-acu-secondary",
         iconContainer:
-            "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30 group-hover:bg-acu-secondary group-hover:text-acu-secondary-foreground group-hover:border-acu-secondary shadow-sm group-hover:shadow-lg group-hover:shadow-acu-secondary/25",
+            "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30 group-hover:bg-acu-secondary group-hover:text-acu-secondary-foreground group-hover:border-acu-secondary shadow-xs group-hover:shadow-lg group-hover:shadow-acu-secondary/25",
         badge: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
         title: "text-foreground group-hover:text-acu-secondary",
         content: "text-muted-foreground dark:text-acu-muted-foreground",
@@ -22,9 +22,9 @@ const styles = {
     },
     acm: {
         container:
-            "bg-card/80 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-2xl hover:shadow-acm-secondary/15",
+            "bg-card/85 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-2xl hover:shadow-acm-secondary/15 before:bg-acm-secondary",
         iconContainer:
-            "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30 group-hover:bg-acm-secondary group-hover:text-acm-secondary-foreground group-hover:border-acm-secondary shadow-sm group-hover:shadow-lg group-hover:shadow-acm-secondary/25",
+            "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30 group-hover:bg-acm-secondary group-hover:text-acm-secondary-foreground group-hover:border-acm-secondary shadow-xs group-hover:shadow-lg group-hover:shadow-acm-secondary/25",
         badge: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
         title: "text-foreground group-hover:text-acm-secondary",
         content: "text-muted-foreground dark:text-acm-muted-foreground",
@@ -32,9 +32,9 @@ const styles = {
     },
     acc: {
         container:
-            "bg-card/80 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-2xl hover:shadow-acc-secondary/15",
+            "bg-card/85 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-2xl hover:shadow-acc-secondary/15 before:bg-acc-secondary",
         iconContainer:
-            "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30 group-hover:bg-acc-secondary group-hover:text-acc-secondary-foreground group-hover:border-acc-secondary shadow-sm group-hover:shadow-lg group-hover:shadow-acc-secondary/25",
+            "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30 group-hover:bg-acc-secondary group-hover:text-acc-secondary-foreground group-hover:border-acc-secondary shadow-xs group-hover:shadow-lg group-hover:shadow-acc-secondary/25",
         badge: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
         title: "text-foreground group-hover:text-acc-secondary",
         content: "text-muted-foreground dark:text-acc-muted-foreground",
@@ -42,9 +42,9 @@ const styles = {
     },
     default: {
         container:
-            "bg-card/80 border-border/80 hover:border-secondary/80 hover:shadow-2xl hover:shadow-secondary/15",
+            "bg-card/85 dark:bg-card/40 border-border/80 hover:border-secondary/80 hover:shadow-2xl hover:shadow-secondary/15 before:bg-secondary",
         iconContainer:
-            "bg-secondary/15 text-secondary border-secondary/30 group-hover:bg-secondary group-hover:text-secondary-foreground group-hover:border-secondary shadow-sm group-hover:shadow-lg group-hover:shadow-secondary/25",
+            "bg-secondary/15 text-secondary border-secondary/30 group-hover:bg-secondary group-hover:text-secondary-foreground group-hover:border-secondary shadow-xs group-hover:shadow-lg group-hover:shadow-secondary/25",
         badge: "bg-secondary/15 text-secondary border-secondary/30",
         title: "text-foreground group-hover:text-secondary",
         content: "text-muted-foreground",
@@ -53,16 +53,16 @@ const styles = {
 };
 
 const { card, variant = "default", tag } = Astro.props;
-
 const currentStyles = styles[variant] || styles.default;
 ---
 
 <div
     class={cn(
-        `group relative p-8 sm:p-10 rounded-3xl border backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-2 flex flex-col justify-between overflow-hidden h-full shadow-sm`,
+        "group relative p-8 sm:p-10 lg:p-12 rounded-3xl border backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-2 flex flex-col justify-between overflow-hidden h-full shadow-xs hover:shadow-xl before:content-[''] before:absolute before:h-1 before:top-0 before:inset-x-0 before:transition-all before:duration-300 group-hover:before:h-1.5",
         currentStyles.container,
     )}
 >
+    <!-- Hover gradient sheen -->
     <div
         class={cn(
             "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none",
@@ -71,33 +71,33 @@ const currentStyles = styles[variant] || styles.default;
     >
     </div>
 
-    <div class="relative z-10 space-y-6 flex-1 flex flex-col justify-between">
+    <div class="relative z-10 flex-1 flex flex-col justify-between">
         <div>
             <div
                 class={cn(
-                    `size-14 rounded-2xl flex items-center justify-center border transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-3 mb-6`,
+                    "size-16 rounded-2xl flex items-center justify-center border transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-2 mb-8 shadow-xs",
                     currentStyles.iconContainer,
                 )}
             >
                 <span
-                    class="size-7 block [&>svg]:w-full [&>svg]:h-full [&>svg]:stroke-[2.2]"
+                    class="size-8 block [&>svg]:w-full [&>svg]:h-full [&>svg]:stroke-[2.2]"
                 >
                     <slot />
                 </span>
             </div>
 
-            <h4
+            <h3
                 class={cn(
-                    `text-2xl sm:text-3xl font-heading font-extrabold tracking-tight leading-snug mb-4 transition-colors duration-300`,
+                    "text-2xl sm:text-3xl font-heading font-extrabold tracking-tight leading-snug mb-4 transition-colors duration-300",
                     currentStyles.title,
                 )}
             >
                 {card.title}
-            </h4>
+            </h3>
 
             <p
                 class={cn(
-                    `text-base sm:text-lg leading-relaxed font-normal`,
+                    "text-base sm:text-lg leading-relaxed font-normal",
                     currentStyles.content,
                 )}
             >

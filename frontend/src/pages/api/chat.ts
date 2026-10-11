@@ -7,7 +7,7 @@ import { ChatbotContextService } from "@/core/chatbot/services/ChatbotContextSer
 import { ChatbotService } from "@/core/chatbot/services/ChatbotService";
 import { ConversationPersistenceService } from "@/core/chatbot/services/ConversationPersistenceService";
 import { LoggerAdapterImpl } from "@/core/shared/adapters/LoggerAdapterImpl";
-import { ChannelEnum, MessageRoleEnum } from "@/enums/chat";
+import { MessageRoleEnum } from "@/enums/chat";
 import { LocalesEnum } from "@/enums/locale";
 import { getClientIP } from "@/utils/ip";
 import { generateUUID } from "@/utils/uuid";
@@ -85,9 +85,7 @@ export const POST: APIRoute = async ({ request, clientAddress, cookies }) => {
         });
 
         const existingConversation = await chatbotRepository.findActiveSession({
-            channel: ChannelEnum.WEB,
             sessionToken,
-            phone: null,
         });
 
         const history: DraftMessage[] = existingConversation
@@ -110,13 +108,9 @@ export const POST: APIRoute = async ({ request, clientAddress, cookies }) => {
             history,
             newMessage,
             conversation: {
-                channel: ChannelEnum.WEB,
                 clientIp: ip,
                 sessionToken,
                 userAgent,
-                email: null,
-                phone: null,
-                telegramChatId: null,
             },
         });
 

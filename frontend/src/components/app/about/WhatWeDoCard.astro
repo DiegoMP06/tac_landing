@@ -12,62 +12,92 @@ type Props = {
 
 const styles = {
     acu: {
-        container: "bg-acu-card/60 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-xl hover:shadow-acu-secondary/10",
-        indexLabel: "text-acu-secondary/60 group-hover:text-acu-secondary",
+        container:
+            "bg-card/75 dark:bg-acu-card/40 border-acu-border/70 hover:border-acu-secondary/80 hover:shadow-xl hover:shadow-acu-secondary/15",
+        indexLabel: "text-acu-secondary/40 group-hover:text-acu-secondary",
         title: "text-acu-foreground group-hover:text-acu-secondary",
         content: "text-acu-foreground/75 dark:text-acu-muted-foreground",
+        glow: "from-acu-secondary/10 via-transparent to-transparent",
         acronym: "ACU",
     },
     acm: {
-        container: "bg-acm-card/60 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-xl hover:shadow-acm-secondary/10",
-        indexLabel: "text-acm-secondary/60 group-hover:text-acm-secondary",
+        container:
+            "bg-card/75 dark:bg-acm-card/40 border-acm-border/70 hover:border-acm-secondary/80 hover:shadow-xl hover:shadow-acm-secondary/15",
+        indexLabel: "text-acm-secondary/40 group-hover:text-acm-secondary",
         title: "text-acm-foreground group-hover:text-acm-secondary",
         content: "text-acm-foreground/75 dark:text-acm-muted-foreground",
+        glow: "from-acm-secondary/10 via-transparent to-transparent",
         acronym: "ACM",
     },
     acc: {
-        container: "bg-acc-card/60 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-xl hover:shadow-acc-secondary/10",
-        indexLabel: "text-acc-secondary/60 group-hover:text-acc-secondary",
+        container:
+            "bg-card/75 dark:bg-acc-card/40 border-acc-border/70 hover:border-acc-secondary/80 hover:shadow-xl hover:shadow-acc-secondary/15",
+        indexLabel: "text-acc-secondary/40 group-hover:text-acc-secondary",
         title: "text-acc-foreground group-hover:text-acc-secondary",
         content: "text-acc-foreground/75 dark:text-acc-muted-foreground",
+        glow: "from-acc-secondary/10 via-transparent to-transparent",
         acronym: "ACC",
     },
     default: {
-        container: "bg-card border-border hover:border-secondary/80 hover:shadow-xl hover:shadow-secondary/10",
-        indexLabel: "text-secondary/60 group-hover:text-secondary",
+        container:
+            "bg-card/75 dark:bg-card/40 border-border/80 hover:border-secondary/80 hover:shadow-xl hover:shadow-secondary/15",
+        indexLabel: "text-secondary/40 group-hover:text-secondary",
         title: "text-foreground group-hover:text-secondary",
         content: "text-muted-foreground",
+        glow: "from-secondary/10 via-transparent to-transparent",
         acronym: "AC",
     },
 };
 
 const { card, index, total, variant = "default" } = Astro.props;
-
-const currentStyles = styles[variant];
+const currentStyles = styles[variant] || styles.default;
 const number =
     index !== total ? index.toString().padStart(2, "0") : currentStyles.acronym;
 ---
 
 <div
     class={cn(
-        `group p-7 rounded-2xl border transition-all duration-300 hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between`,
+        "group h-full p-7 sm:p-8 rounded-2xl sm:rounded-3xl border backdrop-blur-xs transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-xl",
         currentStyles.container,
     )}
 >
-    <div>
-        <p
-            class={cn(
-                `font-heading text-4xl sm:text-5xl font-extrabold mb-3 tracking-tight transition-colors duration-300`,
-                currentStyles.indexLabel,
-            )}
-        >
-            {number}
-        </p>
+    <!-- Hover gradient sheen -->
+    <div
+        class={cn(
+            "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none",
+            currentStyles.glow,
+        )}
+    >
+    </div>
 
-        <h4 class={cn(`text-lg md:text-xl font-heading font-bold mb-3 transition-colors duration-200 leading-snug`, currentStyles.title)}>
-            {card.title}
-        </h4>
+    <div class="relative z-10 flex-1 flex flex-col justify-between">
+        <div>
+            <span
+                class={cn(
+                    "font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight tabular-nums transition-all duration-300 leading-none select-none mb-6 group-hover:scale-105 inline-block origin-left",
+                    currentStyles.indexLabel,
+                )}
+            >
+                {number}
+            </span>
 
-        <p class={cn(`text-sm leading-relaxed font-normal`, currentStyles.content)}>{card.content}</p>
+            <h3
+                class={cn(
+                    "text-xl sm:text-2xl font-heading font-bold mb-3.5 transition-colors duration-200 leading-snug",
+                    currentStyles.title,
+                )}
+            >
+                {card.title}
+            </h3>
+
+            <p
+                class={cn(
+                    "text-sm sm:text-base leading-relaxed font-normal",
+                    currentStyles.content,
+                )}
+            >
+                {card.content}
+            </p>
+        </div>
     </div>
 </div>

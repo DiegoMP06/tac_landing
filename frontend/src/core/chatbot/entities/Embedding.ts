@@ -5,6 +5,8 @@ export type EmbeddingArgs = {
     contentHash: string;
     dimensions: number;
     cacheId: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 
 export type DraftEmbedding = Pick<
@@ -19,6 +21,8 @@ export class Embedding {
     contentHash: string;
     dimensions: number;
     cacheId: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 
     public static create(args: EmbeddingArgs): Embedding {
         return new Embedding(args);
@@ -31,6 +35,8 @@ export class Embedding {
         contentHash,
         dimensions,
         cacheId,
+        createdAt,
+        updatedAt,
     }: EmbeddingArgs) {
         this.id = id;
         this.content = content;
@@ -38,6 +44,8 @@ export class Embedding {
         this.contentHash = contentHash;
         this.dimensions = dimensions;
         this.cacheId = cacheId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public isStale(currentHash: string): boolean {

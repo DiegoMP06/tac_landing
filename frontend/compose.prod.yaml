@@ -1,0 +1,23 @@
+services:
+    frontend:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        container_name: tac_frontend_app
+        restart: unless-stopped
+        environment:
+            NODE_ENV: production
+            PORT: 4321
+            HOST: 0.0.0.0
+            DATABASE_URL: ${DATABASE_URL}
+            API_URL: ${API_URL}
+            WORDPRESS_API_URL: ${WORDPRESS_API_URL:-${API_URL}}
+            GEMINI_API_KEY: ${GEMINI_API_KEY}
+        expose:
+            - "4321"
+        networks:
+            - coolify
+
+networks:
+    coolify:
+        external: true

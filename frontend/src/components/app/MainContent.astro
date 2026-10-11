@@ -6,6 +6,7 @@ import type { Page } from "@/types/pages";
 import { useFeaturedImage } from "@/utils/image";
 import { Picture } from "astro:assets";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Quote } from "lucide-react";
 
 type Props = {
     page: Page;
@@ -14,47 +15,53 @@ type Props = {
 
 const STYLES = {
     acu: {
-        title: "text-acu-secondary before:bg-acu-secondary font-bold",
-        subtitle: "text-acu-foreground",
-        content: "text-acu-muted-foreground",
-        phrase: "bg-acu-secondary/15 text-acu-secondary border-l-4 border-acu-secondary font-semibold",
+        title: "text-acu-secondary",
+        subtitle: "text-acu-foreground dark:text-acu-50",
+        content: "text-acu-foreground/80 dark:text-acu-muted-foreground",
+        phrase: "bg-acu-secondary/10 dark:bg-acu-secondary/15 border-acu-secondary text-acu-foreground dark:text-acu-100",
+        quoteIcon: "text-acu-secondary/40",
+        imageHalo: "from-acu-secondary/20 via-acu-primary/10 to-transparent",
     },
     acc: {
-        title: "text-acc-secondary before:bg-acc-secondary font-bold",
-        subtitle: "text-acc-foreground",
-        content: "text-acc-muted-foreground",
-        phrase: "bg-acc-secondary/15 text-acc-secondary border-l-4 border-acc-secondary font-semibold",
+        title: "text-acc-secondary",
+        subtitle: "text-acc-foreground dark:text-acc-50",
+        content: "text-acc-foreground/80 dark:text-acc-muted-foreground",
+        phrase: "bg-acc-secondary/10 dark:bg-acc-secondary/15 border-acc-secondary text-acc-foreground dark:text-acc-100",
+        quoteIcon: "text-acc-secondary/40",
+        imageHalo: "from-acc-secondary/20 via-acc-primary/10 to-transparent",
     },
     acm: {
-        title: "text-acm-secondary before:bg-acm-secondary font-bold",
-        subtitle: "text-acm-foreground",
-        content: "text-acm-muted-foreground",
-        phrase: "bg-acm-secondary/15 text-acm-secondary border-l-4 border-acm-secondary font-semibold",
+        title: "text-acm-secondary",
+        subtitle: "text-acm-foreground dark:text-acm-50",
+        content: "text-acm-foreground/80 dark:text-acm-muted-foreground",
+        phrase: "bg-acm-secondary/10 dark:bg-acm-secondary/15 border-acm-secondary text-acm-foreground dark:text-acm-100",
+        quoteIcon: "text-acm-secondary/40",
+        imageHalo: "from-acm-secondary/20 via-acm-primary/10 to-transparent",
     },
     default: {
-        title: "text-secondary before:bg-secondary font-bold",
-        subtitle: "text-foreground",
+        title: "text-secondary",
+        subtitle: "text-foreground dark:text-base-50",
         content: "text-muted-foreground",
-        phrase: "bg-secondary/15 text-secondary border-l-4 border-secondary font-semibold",
+        phrase: "bg-secondary/10 dark:bg-secondary/15 border-secondary text-foreground dark:text-base-100",
+        quoteIcon: "text-secondary/40",
+        imageHalo: "from-secondary/20 via-primary/10 to-transparent",
     },
 };
 
 const { page, variant = "default" } = Astro.props;
-
 const image = useFeaturedImage(page.images)("large") as FeaturedImageAtt;
-
-const currentStyles = STYLES[variant];
+const currentStyles = STYLES[variant] || STYLES.default;
 ---
 
-<main
+<section
     transition:animate="fade"
     transition:name="main-content"
     class="mx-auto max-w-6xl w-full my-20 md:my-28 px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center scroll-reveal"
 >
-    <div class="scroll-reveal-left space-y-4">
+    <div class="scroll-reveal-left space-y-5">
         <h2
             class={cn(
-                `font-primary text-xs tracking-widest relative ml-10 uppercase font-bold before:content-[''] before:w-8 before:inline-block before:absolute before:h-0.5 before:-left-10 before:top-1/2 before:-translate-y-1/2`,
+                "font-primary inline-flex items-center gap-3 uppercase text-xs sm:text-sm font-bold tracking-widest before:content-[''] before:w-6 before:h-0.5 before:bg-current before:rounded-full before:inline-block",
                 currentStyles.title,
             )}
         >
@@ -63,7 +70,7 @@ const currentStyles = STYLES[variant];
 
         <h3
             class={cn(
-                `font-heading font-extrabold text-3xl sm:text-4xl tracking-tight leading-snug`,
+                "font-heading font-extrabold text-3xl sm:text-4xl lg:text-[2.6rem] tracking-tight leading-[1.18] text-balance",
                 currentStyles.subtitle,
             )}
         >
@@ -72,43 +79,60 @@ const currentStyles = STYLES[variant];
 
         <div
             class={cn(
-                `prose prose-lg dark:prose-invert leading-relaxed font-normal pt-2`,
+                "prose prose-base sm:prose-lg dark:prose-invert max-w-none leading-relaxed font-normal pt-1",
                 currentStyles.content,
             )}
             set:html={page.content.rendered}
         />
 
-        <div
-            class={cn(
-                `mt-8 p-6 rounded-2xl border-l-4 italic font-semibold shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1`,
-                currentStyles.phrase,
-            )}
-        >
-            {page.acf.content.phrase}
-        </div>
+        {page.acf.content.phrase && (
+            <div
+                class={cn(
+                    "mt-6 p-6 sm:p-7 rounded-2xl border-l-4 italic shadow-xs backdrop-blur-xs transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 relative overflow-hidden",
+                    currentStyles.phrase,
+                )}
+            >
+                <Quote className={cn("size-8 absolute top-4 right-4 pointer-events-none", currentStyles.quoteIcon)} />
+                <p class="font-medium text-base sm:text-lg leading-relaxed relative z-10">
+                    "{page.acf.content.phrase}"
+                </p>
+            </div>
+        )}
     </div>
 
     <div class="scroll-reveal-right delay-200">
-        <div
-            class="group relative rounded-3xl overflow-hidden border border-border/80 shadow-2xl bg-card/60 backdrop-blur-md p-2"
-        >
-            <div class="rounded-2xl overflow-hidden aspect-square">
-                {
-                    image ? (
-                        <Picture
-                            src={image.url}
-                            width={image.width}
-                            height={image.height}
-                            alt={page.acf.hero.subtitle}
-                            formats={["avif", "webp"]}
-                            loading="eager"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                    ) : (
-                        <Skeleton className="rounded-2xl h-full aspect-square" />
-                    )
-                }
+        <div class="relative group">
+            <!-- Ambient backdrop glow -->
+            <div
+                class={cn(
+                    "absolute -inset-4 rounded-3xl bg-linear-to-br blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none",
+                    currentStyles.imageHalo,
+                )}
+            >
+            </div>
+
+            <!-- Picture Frame -->
+            <div
+                class="relative rounded-3xl overflow-hidden border border-border/80 shadow-2xl bg-card/60 backdrop-blur-md p-2.5 transition-transform duration-500 hover:scale-[1.01]"
+            >
+                <div class="rounded-2xl overflow-hidden aspect-4/3 sm:aspect-square">
+                    {
+                        image ? (
+                            <Picture
+                                src={image.url}
+                                width={image.width}
+                                height={image.height}
+                                alt={page.acf.content.subtitle || page.title.rendered}
+                                formats={["avif", "webp"]}
+                                loading="eager"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                            />
+                        ) : (
+                            <Skeleton className="rounded-2xl h-full aspect-square" />
+                        )
+                    }
+                </div>
             </div>
         </div>
     </div>
-</main>
+</section>

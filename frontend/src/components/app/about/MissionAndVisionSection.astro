@@ -14,53 +14,67 @@ type Props = {
 
 const styles = {
     acu: {
-        container: "bg-acu-card/30 border-b border-acu-border/60",
+        container: "bg-acu-background/50 dark:bg-acu-background/25 border-y border-acu-border/60",
+        orb1: "bg-acu-primary/10",
+        orb2: "bg-acu-secondary/15",
     },
     acm: {
-        container: "bg-acm-card/30 border-b border-acm-border/60",
+        container: "bg-acm-background/50 dark:bg-acm-background/25 border-y border-acm-border/60",
+        orb1: "bg-acm-primary/10",
+        orb2: "bg-acm-secondary/15",
     },
     acc: {
-        container: "bg-acc-card/30 border-b border-acc-border/60",
+        container: "bg-acc-background/50 dark:bg-acc-background/25 border-y border-acc-border/60",
+        orb1: "bg-acc-primary/10",
+        orb2: "bg-acc-secondary/15",
     },
     default: {
-        container: "bg-muted/40 border-b border-border/60",
+        container: "bg-muted/40 border-y border-border/60",
+        orb1: "bg-primary/10",
+        orb2: "bg-secondary/15",
     },
 };
 
 const { section, variant = "default" } = Astro.props;
-
-const currentStyles = styles[variant];
+const currentStyles = styles[variant] || styles.default;
 ---
 
 <section
     class={cn(
-        `py-20 md:py-28 scroll-reveal relative overflow-hidden`,
+        "py-20 md:py-28 scroll-reveal relative overflow-hidden",
         currentStyles.container,
     )}
 >
+    <!-- Ambient glowing light orbs -->
     <div
-        class="absolute top-1/2 left-1/4 -translate-y-1/2 size-96 bg-primary/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"
+        class={cn(
+            "absolute top-1/2 left-1/4 -translate-y-1/2 size-96 sm:size-125 rounded-full blur-3xl pointer-events-none animate-pulse-glow",
+            currentStyles.orb1,
+        )}
     >
     </div>
     <div
-        class="absolute bottom-10 right-1/4 size-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300"
+        class={cn(
+            "absolute bottom-10 right-1/4 size-80 sm:size-96 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300",
+            currentStyles.orb2,
+        )}
     >
     </div>
 
     <div
         class="px-6 mx-auto max-w-6xl w-full flex flex-col items-center relative z-10"
     >
-        <div class="scroll-reveal text-center">
+        <div class="scroll-reveal text-center max-w-3xl">
             <SectionHeading
                 variant={variant}
-                className="inline-block text-center"
+                className="text-center"
             >
                 {section.title}
             </SectionHeading>
 
             <SectionSubHeading
                 variant={variant}
-                className="text-center mt-3 mb-12"
+                className="text-center mt-3 mb-12 sm:mb-16"
             >
                 {section.subtitle}
             </SectionSubHeading>

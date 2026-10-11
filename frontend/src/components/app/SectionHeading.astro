@@ -8,24 +8,54 @@ type Props = {
 } & astroHTML.JSX.HTMLAttributes;
 
 const styles = {
-    acu: "text-acu-secondary dark:text-acu-secondary before:bg-acu-secondary",
-    acm: "text-acm-secondary dark:text-acm-secondary before:bg-acm-secondary",
-    acc: "text-acc-secondary dark:text-acc-secondary before:bg-acc-secondary",
-    default: "text-secondary dark:text-secondary before:bg-secondary",
+    acu: {
+        text: "text-acu-secondary",
+        pill: "bg-acu-secondary/10 border-acu-secondary/25 text-acu-secondary",
+    },
+    acm: {
+        text: "text-acm-secondary",
+        pill: "bg-acm-secondary/10 border-acm-secondary/25 text-acm-secondary",
+    },
+    acc: {
+        text: "text-acc-secondary",
+        pill: "bg-acc-secondary/10 border-acc-secondary/25 text-acc-secondary",
+    },
+    default: {
+        text: "text-secondary",
+        pill: "bg-secondary/10 border-secondary/25 text-secondary",
+    },
 };
 
 const { variant = "default", className = "", ...props } = Astro.props;
 
 const currentStyles = styles[variant] || styles.default;
+const isCentered = className.includes("text-center");
 ---
 
-<h2
-    class={cn(
-        `font-primary relative ml-10 uppercase text-xs sm:text-sm font-bold tracking-widest before:content-[''] before:w-8 before:inline-block before:absolute before:h-0.5 before:-left-10 before:top-1/2 before:-translate-y-1/2`,
-        currentStyles,
-        className,
-    )}
-    {...props}
->
-    <slot />
-</h2>
+{
+    isCentered ? (
+        <div class={cn("flex justify-center", className)}>
+            <h2
+                class={cn(
+                    "font-primary inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest border backdrop-blur-xs shadow-xs",
+                    currentStyles.pill,
+                )}
+                {...props}
+            >
+                <span class="size-1.5 rounded-full bg-current animate-pulse" />
+                <slot />
+            </h2>
+        </div>
+    ) : (
+        <h2
+            class={cn(
+                "font-primary inline-flex items-center gap-3 uppercase text-xs sm:text-sm font-bold tracking-widest before:content-[''] before:w-6 before:h-0.5 before:bg-current before:rounded-full before:inline-block",
+                currentStyles.text,
+                className,
+            )}
+            {...props}
+        >
+            <slot />
+        </h2>
+    )
+}

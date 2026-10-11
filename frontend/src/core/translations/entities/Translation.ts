@@ -1,3 +1,5 @@
+import { jsonToString } from "@/utils/json";
+
 export type TranslationArgs = {
     id: string;
     brand: string;
@@ -8,6 +10,8 @@ export type TranslationArgs = {
     translatedText: unknown;
     provider: string;
     hash: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 };
 
 export type DraftTranslation = Pick<
@@ -32,6 +36,8 @@ export class Translation {
     translatedText: unknown;
     provider: string;
     hash: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 
     public static create(args: TranslationArgs): Translation {
         return new Translation(args);
@@ -47,6 +53,8 @@ export class Translation {
         translatedText,
         provider,
         hash,
+        createdAt,
+        updatedAt,
     }: TranslationArgs) {
         this.id = id;
         this.brand = brand;
@@ -57,6 +65,8 @@ export class Translation {
         this.translatedText = translatedText;
         this.provider = provider;
         this.hash = hash;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public isStale(currentHash: string): boolean {
@@ -64,8 +74,6 @@ export class Translation {
     }
 
     public getTranslatedText(): string {
-        return typeof this.translatedText === "string"
-            ? this.translatedText
-            : JSON.stringify(this.translatedText);
+        return jsonToString(this.translatedText);
     }
 }

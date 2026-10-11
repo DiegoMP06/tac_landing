@@ -12,44 +12,47 @@ type Props = {
 
 const STYLES = {
     acu: {
-        background: "bg-acu-background/70 border-acu-border/60",
+        background: "bg-acu-background/80 border-acu-border/60",
         title: "text-acu-foreground dark:text-acu-50",
         description: "text-acu-foreground/80 dark:text-acu-200",
+        orb: "bg-acu-secondary/15",
         btnPrimary: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-xs",
     },
     acc: {
-        background: "bg-acc-background/70 border-acc-border/60",
+        background: "bg-acc-background/80 border-acc-border/60",
         title: "text-acc-foreground dark:text-acc-50",
         description: "text-acc-foreground/80 dark:text-acc-200",
+        orb: "bg-acc-secondary/15",
         btnPrimary: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-xs",
     },
     acm: {
-        background: "bg-acm-background/70 border-acm-border/60",
+        background: "bg-acm-background/80 border-acm-border/60",
         title: "text-acm-foreground dark:text-acm-50",
         description: "text-acm-foreground/80 dark:text-acm-200",
+        orb: "bg-acm-secondary/15",
         btnPrimary: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-xs",
     },
     default: {
-        background: "bg-background/70 border-border/60",
+        background: "bg-background/80 border-border/60",
         title: "text-foreground dark:text-base-50",
         description: "text-muted-foreground",
+        orb: "bg-secondary/15",
         btnPrimary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/50 dark:bg-card/30 hover:bg-card/80 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-sm",
+        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-xs",
     },
 };
 
 const { cta, variant = "default" } = Astro.props;
-
 const image = useFeaturedImage(cta.hero_image)("large") as FeaturedImageAtt;
 const currentStyles = STYLES[variant] || STYLES.default;
 ---
 
-<section class="relative overflow-hidden">
+<section class="relative overflow-hidden border-t border-border/60">
     <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover bg-fixed transform scale-105 filter saturate-90"
+        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover md:bg-fixed transform scale-105 filter saturate-90"
         style={{
             backgroundImage: `url(${image?.url})`,
         }}
@@ -57,19 +60,28 @@ const currentStyles = STYLES[variant] || STYLES.default;
     </div>
     <div
         class={cn(
-            `absolute border-t border-b z-20 inset-0 backdrop-blur-md transition-colors duration-300`,
+            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/95 via-background/85 to-background",
             currentStyles.background,
+        )}
+    >
+    </div>
+
+    <!-- Ambient glowing light -->
+    <div
+        class={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-96 sm:size-125 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow",
+            currentStyles.orb,
         )}
     >
     </div>
 
     <div class="relative z-30">
         <div
-            class="max-w-4xl w-full mx-auto px-6 py-20 lg:py-24 flex flex-col items-center text-center"
+            class="max-w-4xl w-full mx-auto px-6 py-20 lg:py-28 flex flex-col items-center text-center scroll-reveal"
         >
             <h3
                 class={cn(
-                    `font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight mb-6 leading-tight`,
+                    "font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight mb-6 leading-tight text-balance",
                     currentStyles.title,
                 )}
             >
@@ -78,7 +90,7 @@ const currentStyles = STYLES[variant] || STYLES.default;
 
             <div
                 class={cn(
-                    `text-base sm:text-lg leading-relaxed max-w-2xl font-normal mb-8`,
+                    "text-base sm:text-lg leading-relaxed max-w-2xl font-normal mb-8 text-balance",
                     currentStyles.description,
                 )}
             >
@@ -94,7 +106,7 @@ const currentStyles = STYLES[variant] || STYLES.default;
                             target={cta.redirect_url.startsWith("http") ? "_blank" : "_self"}
                             rel="noopener noreferrer"
                             class={cn(
-                                "px-8 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group",
+                                "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group shadow-md",
                                 currentStyles.btnPrimary,
                             )}
                         >
@@ -109,7 +121,7 @@ const currentStyles = STYLES[variant] || STYLES.default;
                             target={cta.secondary_redirect_url.startsWith("http") ? "_blank" : "_self"}
                             rel="noopener noreferrer"
                             class={cn(
-                                "px-8 py-3.5 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
+                                "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
                                 currentStyles.btnSecondary,
                             )}
                         >

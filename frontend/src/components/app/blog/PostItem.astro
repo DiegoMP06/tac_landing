@@ -1,0 +1,156 @@
+---
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import type { Brand } from "@/types";
+import type { Post } from "@/types/blog";
+import type { FeaturedImageAtt } from "@/types/images";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { useFeaturedImage } from "@/utils/image";
+import { Picture } from "astro:assets";
+import { ArrowRight, BookOpen, Newspaper } from "lucide-react";
+
+type Props = {
+    post: Post;
+    variant?: Brand;
+};
+
+const BRAND_THEMES = {
+    acu: {
+        accent: "hover:border-acu-secondary/80 hover:shadow-acu-secondary/15",
+        titleHover: "group-hover/link:text-acu-secondary",
+        badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
+        btn: "text-acu-secondary group-hover/link:translate-x-1",
+        actionLink: "text-acu-secondary hover:text-acu-secondary/80 font-bold",
+    },
+    acm: {
+        accent: "hover:border-acm-secondary/80 hover:shadow-acm-secondary/15",
+        titleHover: "group-hover/link:text-acm-secondary",
+        badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
+        btn: "text-acm-secondary group-hover/link:translate-x-1",
+        actionLink: "text-acm-secondary hover:text-acm-secondary/80 font-bold",
+    },
+    acc: {
+        accent: "hover:border-acc-secondary/80 hover:shadow-acc-secondary/15",
+        titleHover: "group-hover/link:text-acc-secondary",
+        badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
+        btn: "text-acc-secondary group-hover/link:translate-x-1",
+        actionLink: "text-acc-secondary hover:text-acc-secondary/80 font-bold",
+    },
+    default: {
+        accent: "hover:border-secondary/80 hover:shadow-secondary/15",
+        titleHover: "group-hover/link:text-secondary",
+        badge: "bg-secondary/20 text-secondary border-secondary/40",
+        btn: "text-secondary group-hover/link:translate-x-1",
+        actionLink: "text-secondary hover:text-secondary/80 font-bold",
+    },
+};
+
+const { post, variant } = Astro.props;
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+const image = useFeaturedImage(post.images)("medium_large") as FeaturedImageAtt;
+
+const brandKey = variant || post.site?.variant || "default";
+const brandStyle = BRAND_THEMES[brandKey as keyof typeof BRAND_THEMES] || BRAND_THEMES.default;
+const postUrl = `/${locale}/blog/${post.slug}`;
+---
+
+<div
+    class={cn(
+        "group h-full rounded-2xl border border-border/80 bg-card/90 dark:bg-card/50 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex flex-col justify-between relative",
+        brandStyle.accent,
+    )}
+>
+    <div class="relative overflow-hidden aspect-video bg-muted">
+        {
+            image ? (
+                <Picture
+                    src={image?.url}
+                    alt={post.title.rendered}
+                    width={image?.width}
+                    height={image?.height}
+                    formats={["avif", "webp"]}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+            ) : (
+                <Skeleton className="w-full h-full object-cover" />
+            )
+        }
+
+        <div
+            class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity"
+        >
+        </div>
+
+        <div class="absolute top-3 right-3 flex items-center gap-2 z-10">
+            <span
+                class={cn(
+                    "px-3 py-1 rounded-full text-xs font-bold border backdrop-blur-md shadow-xs transition-transform group-hover:scale-105 uppercase tracking-wider",
+                    brandStyle.badge,
+                )}
+            >
+                {t("AC.utils.blog.badge")}
+            </span>
+        </div>
+
+        {
+            post.site?.name && (
+                <div class="absolute bottom-3 left-3 right-3 flex items-center gap-3 text-xs text-white/90 z-10 font-medium">
+                    <span class="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
+                        <Newspaper className="size-3.5 text-white/80" />
+                        {post.site.name}
+                    </span>
+                </div>
+            )
+        }
+    </div>
+
+    <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
+        <div class="flex-1 space-y-3">
+            <a
+                href={postUrl}
+                class="block group/link focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+            >
+                <h3
+                    class={cn(
+                        "text-lg sm:text-xl font-heading font-bold text-foreground transition-colors duration-200 line-clamp-2 leading-snug",
+                        brandStyle.titleHover,
+                    )}
+                    set:html={post.title.rendered}
+                />
+            </a>
+
+            <p
+                class="text-sm text-muted-foreground line-clamp-3 leading-relaxed font-normal"
+            >
+                {post.acf.description || post.acf.subtitle}
+            </p>
+        </div>
+
+        <div
+            class="pt-4 border-t border-border/60 flex items-center justify-between gap-3 text-xs text-muted-foreground font-medium"
+        >
+            <div class="flex items-center gap-2 truncate" title={post.acf.subtitle || t("AC.utils.blog.defaultSubtitle")}>
+                <BookOpen className="size-4 shrink-0 opacity-70" />
+                <span class="truncate">{post.acf.subtitle || t("AC.utils.blog.defaultSubtitle")}</span>
+            </div>
+
+            <a
+                href={postUrl}
+                class={cn(
+                    "inline-flex items-center gap-1.5 text-xs font-bold shrink-0 hover:underline group/link focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xs",
+                    brandStyle.actionLink,
+                )}
+            >
+                <span>{t("AC.utils.blog.readMore")}</span>
+                <ArrowRight
+                    className={cn(
+                        "size-3.5 transition-transform duration-300",
+                        brandStyle.btn,
+                    )}
+                />
+            </a>
+        </div>
+    </div>
+</div>

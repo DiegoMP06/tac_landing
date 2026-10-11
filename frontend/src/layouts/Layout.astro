@@ -4,6 +4,7 @@ import "../styles/global.css";
 import LoadChatbotData from "@/components/app/chatbot/LoadChatbotData.astro";
 import Favicon from "@/components/app/Favicon.astro";
 import GetDefaultTheme from "@/components/app/GetDefaultTheme.astro";
+import ToasterContainer from "@/components/app/ToasterContainer";
 import type { Brand } from "@/types";
 import { useLocalePath } from "@/utils/i18n";
 import { ClientRouter } from "astro:transitions";
@@ -39,6 +40,8 @@ const { locale } = useLocalePath(Astro.url);
         <slot />
 
         <LoadChatbotData />
+
+        <ToasterContainer client:load transition:persist="toaster-container" />
 
         <script is:inline>
             (function () {

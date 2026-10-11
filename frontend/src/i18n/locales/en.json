@@ -1,12 +1,14 @@
 {
     "AC": {
         "header": {
+            "menu": "Menu",
             "nav": {
                 "home": "Home",
                 "about": "About Us",
                 "ACU": "Universities",
                 "ACM": "Mayors",
                 "ACC": "Commerce",
+                "blog": "Blog",
                 "contact": "Contact"
             }
         },
@@ -19,21 +21,24 @@
                         "about": "About ACU",
                         "programs": "ACU Programs",
                         "events": "ACU Events",
-                        "contact": "Contact"
+                        "contact": "Contact",
+                        "blog": "Blog"
                     },
                     "acm": {
                         "home": "ACM",
                         "about": "About ACM",
                         "programs": "ACM Programs",
                         "events": "ACM Events",
-                        "contact": "Contact"
+                        "contact": "Contact",
+                        "blog": "Blog"
                     },
                     "acc": {
                         "home": "ACC",
                         "about": "About ACC",
                         "programs": "ACC Programs",
                         "events": "ACC Events",
-                        "contact": "Contact"
+                        "contact": "Contact",
+                        "blog": "Blog"
                     }
                 }
             },
@@ -43,13 +48,33 @@
         },
         "utils": {
             "icon": {
-                "alt": "Icon of The Americas Conference of Universities"
+                "alt": "Icon of The Americas Conference"
             },
             "programs": {
-                "empty": "No Programs Available."
+                "empty": "No Programs Available.",
+                "viewMore": "Learn More",
+                "month": "month",
+                "months": "months",
+                "week": "week",
+                "weeks": "weeks",
+                "checkDates": "Check dates"
             },
             "events": {
-                "empty": "No Events Available."
+                "empty": "No Events Available.",
+                "viewEvent": "View Event",
+                "to": "to"
+            },
+            "blog": {
+                "empty": "No Posts Available.",
+                "badge": "Blog",
+                "readMore": "Read Article",
+                "defaultSubtitle": "Article"
+            },
+            "modalities": {
+                "in_person": "In-person",
+                "online": "Online",
+                "hybrid": "Hybrid",
+                "virtual": "Virtual"
             }
         },
         "pages": {
@@ -63,7 +88,24 @@
                 "title": "Unexpected Error",
                 "code": "500",
                 "text": "An unexpected error occurred, please try again later",
-                "redirect": "Click here to go to the home page"
+                "redirect": "Click here to go to the home page",
+                "retry": "Retry"
+            },
+            "home": {
+                "countdown": {
+                    "finishedTitle": "The offer has ended",
+                    "finishedSubtitle": "Stay tuned for our upcoming events and programs.",
+                    "days": "Days",
+                    "hours": "Hours",
+                    "minutes": "Minutes",
+                    "seconds": "Seconds"
+                },
+                "events": {
+                    "viewAll": "View all events"
+                },
+                "programs": {
+                    "viewAll": "View all programs"
+                }
             },
             "programs": {
                 "info": "Program Information",
@@ -71,27 +113,47 @@
                 "mode": "Format",
                 "location": "Location",
                 "target": "Target Audience",
+                "onlineLink": "View Online Program",
                 "benefits": {
                     "title": "Benefits",
-                    "empty": "No Benefits Available."
+                    "subtitle": "What you will get by participating",
+                    "empty": "No Benefits Available.",
+                    "singular": "benefit",
+                    "plural": "benefits"
                 },
                 "highlights": {
                     "title": "Highlights",
+                    "subtitle": "Key program highlights",
                     "empty": "No Highlights Available."
                 }
             },
             "events": {
                 "info": "Event Information",
                 "date": "Date",
+                "mode": "Format",
                 "location": "Location",
+                "onlineLink": "Access Online Event",
                 "speakers": {
                     "title": "Speakers",
-                    "empty": "No Speakers Available."
+                    "subtitle": "Featured experts and speakers",
+                    "empty": "No Speakers Available.",
+                    "singular": "speaker",
+                    "plural": "speakers"
                 },
                 "highlights": {
                     "title": "Highlights",
+                    "subtitle": "Key event highlights",
                     "empty": "No Highlights Available."
                 }
+            },
+            "blog": {
+                "title": "Blog",
+                "badge": "Post",
+                "info": "Post Details",
+                "mainTopic": "Main Topic",
+                "publishedBy": "Published by",
+                "visitSite": "Visit official site",
+                "backToBlog": "Back to all posts"
             }
         }
     },
@@ -103,6 +165,7 @@
                 "about": "About Us",
                 "programs": "Programs",
                 "events": "Events",
+                "blog": "Blog",
                 "contact": "Contact"
             }
         },
@@ -116,6 +179,7 @@
                     "acu": "Universities",
                     "acm": "Mayors",
                     "acc": "Commerce",
+                    "blog": "Blog",
                     "contact": "Contact",
                     "programs": "Programs",
                     "events": "Events"
@@ -139,6 +203,7 @@
                 "about": "About Us",
                 "programs": "Programs",
                 "events": "Events",
+                "blog": "Blog",
                 "contact": "Contact"
             }
         },
@@ -152,6 +217,7 @@
                     "acu": "Universities",
                     "acm": "Mayors",
                     "acc": "Commerce",
+                    "blog": "Blog",
                     "contact": "Contact",
                     "programs": "Programs",
                     "events": "Events"
@@ -175,6 +241,7 @@
                 "about": "About Us",
                 "programs": "Programs",
                 "events": "Events",
+                "blog": "Blog",
                 "contact": "Contact"
             }
         },
@@ -188,6 +255,7 @@
                     "acu": "Universities",
                     "acm": "Mayors",
                     "acc": "Commerce",
+                    "blog": "Blog",
                     "contact": "Contact",
                     "programs": "Programs",
                     "events": "Events"
@@ -208,8 +276,73 @@
         "placeholder": "Type your message...",
         "send": "Send",
         "welcome": "Hello! How can I help you today?",
-        "open": "Open Chatbot",
-        "close": "Close Chatbot",
-        "error": "An error occurred. Please try again."
+        "open": "Open Assistant",
+        "close": "Close Assistant",
+        "error": "An error occurred. Please try again.",
+        "newConversation": "New conversation",
+        "lead": "Direct Contact"
+    },
+    "sendEmail": {
+        "success": "A direct message was sent to the company, they will contact you soon. Thank you.",
+        "error": "An error occurred while sending the message, please try again.",
+        "back": "Back to chat",
+        "title": "Direct Contact Form",
+        "fields": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Your name",
+                "validation": {
+                    "required": "Name is required",
+                    "minLength": "Name must have at least 3 characters",
+                    "maxLength": "Name must have less than 50 characters"
+                }
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Ex: test@email.com",
+                "validation": {
+                    "required": "Email is required",
+                    "email": "Email is not valid"
+                }
+            },
+            "phone": {
+                "label": "Phone",
+                "placeholder": "Ex: +1-555-123-4567",
+                "validation": {
+                    "required": "Phone is required",
+                    "pattern": "Phone is not valid"
+                }
+            },
+            "company": {
+                "label": "Company",
+                "placeholder": "Your company",
+                "validation": {
+                    "required": "Company is required",
+                    "minLength": "Company must have at least 3 characters",
+                    "maxLength": "Company must have less than 50 characters"
+                }
+            },
+            "subject": {
+                "label": "Subject",
+                "placeholder": "Your subject",
+                "validation": {
+                    "required": "Subject is required",
+                    "minLength": "Subject must have at least 3 characters",
+                    "maxLength": "Subject must have less than 50 characters"
+                }
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Your message",
+                "validation": {
+                    "required": "Message is required",
+                    "minLength": "Message must have at least 3 characters",
+                    "maxLength": "Message must have less than 500 characters"
+                }
+            },
+            "submit": {
+                "label": "Send"
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
-export const TRANSLATION_MODEL = "openai/gpt-oss-120b";
-export const TRANSLATION_PROVIDER = "groq";
+export const TRANSLATION_MODEL = "gemini-3.1-flash-lite";
+export const TRANSLATION_PROVIDER = "gemini";
 export const TRANSLATION_TEMPERATURE = 0.5;
 
 export const SYSTEM_PROMPT =

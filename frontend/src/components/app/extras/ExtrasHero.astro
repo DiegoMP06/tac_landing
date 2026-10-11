@@ -1,5 +1,6 @@
 ---
 import { cn } from "@/lib/utils";
+import { FeaturedImagesSizesEnum } from "@/enums/images";
 import type { Brand } from "@/types";
 import type { FeaturedImageAtt, FeaturedImages } from "@/types/images";
 import { useFeaturedImage } from "@/utils/image";
@@ -15,29 +16,34 @@ type Props = {
 
 const STYLES = {
     acu: {
-        accent: "text-acu-secondary",
-        badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
-        line: "bg-acu-secondary",
+        badge: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30",
+        orb: "bg-acu-secondary/15",
     },
     acc: {
-        accent: "text-acc-secondary",
-        badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
-        line: "bg-acc-secondary",
+        badge: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30",
+        orb: "bg-acc-secondary/15",
     },
     acm: {
-        accent: "text-acm-secondary",
-        badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
-        line: "bg-acm-secondary",
+        badge: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30",
+        orb: "bg-acm-secondary/15",
     },
     default: {
-        accent: "text-secondary",
-        badge: "bg-secondary/20 text-secondary border-secondary/40",
-        line: "bg-secondary",
+        badge: "bg-secondary/15 text-secondary border-secondary/30",
+        orb: "bg-secondary/15",
     },
 };
 
-const { title, subtitle, description, featured_image, variant = "default", badge } = Astro.props;
-const image = useFeaturedImage(featured_image)() as FeaturedImageAtt;
+const {
+    title,
+    subtitle,
+    description,
+    featured_image,
+    variant = "default",
+    badge,
+} = Astro.props;
+const image = useFeaturedImage(featured_image)(
+    FeaturedImagesSizesEnum.full,
+) as FeaturedImageAtt;
 const currentStyles = STYLES[variant] || STYLES.default;
 ---
 
@@ -49,10 +55,19 @@ const currentStyles = STYLES[variant] || STYLES.default;
         }}
     >
     </div>
-    <div class="absolute inset-0 z-20 bg-linear-to-b from-background/50 via-background/70 to-background">
+    <div
+        class="absolute inset-0 z-20 backdrop-blur-xs transition-colors duration-300 bg-linear-to-b from-background/90 via-background/75 to-background"
+    >
     </div>
 
-    <div class="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-20"></div>
+    <!-- Ambient glowing light -->
+    <div
+        class={cn(
+            "absolute top-0 right-1/4 size-96 sm:size-125 rounded-full blur-3xl pointer-events-none z-20 animate-pulse-glow",
+            currentStyles.orb,
+        )}
+    >
+    </div>
 
     <div class="relative z-30">
         <div
@@ -60,24 +75,35 @@ const currentStyles = STYLES[variant] || STYLES.default;
         >
             <div class="max-w-3xl w-full space-y-4">
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span class={cn("inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border backdrop-blur-md", currentStyles.badge)}>
-                        <span class={cn("size-2 rounded-full animate-pulse", currentStyles.line)}></span>
+                    <span
+                        class={cn(
+                            "inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border backdrop-blur-xs shadow-xs",
+                            currentStyles.badge,
+                        )}
+                    >
+                        <span
+                            class="size-1.5 rounded-full bg-current animate-pulse"
+                        ></span>
                         {title}
                     </span>
-                    {badge && (
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground border border-border/60">
-                            {badge}
-                        </span>
-                    )}
+                    {
+                        badge && (
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border/60 shadow-xs">
+                                {badge}
+                            </span>
+                        )
+                    }
                 </div>
 
                 <h1
-                    class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-foreground tracking-tight leading-tight"
+                    class="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-foreground tracking-tight leading-[1.12] text-balance"
                 >
                     {subtitle}
                 </h1>
 
-                <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-normal pt-2">
+                <p
+                    class="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed font-normal pt-1 text-balance max-w-2xl"
+                >
                     {description}
                 </p>
             </div>

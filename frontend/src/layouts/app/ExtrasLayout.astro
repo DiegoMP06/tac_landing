@@ -1,8 +1,15 @@
 ---
-import Footer from "@/components/ac/Footer.astro";
-import Header from "@/components/ac/Header.astro";
+import ACFooter from "@/components/ac/Footer.astro";
+import ACHeader from "@/components/ac/Header.astro";
+import ACUFooter from "@/components/acu/Footer.astro";
+import ACUHeader from "@/components/acu/Header.astro";
+import ACCFooter from "@/components/acc/Footer.astro";
+import ACCHeader from "@/components/acc/Header.astro";
+import ACMFooter from "@/components/acm/Footer.astro";
+import ACMHeader from "@/components/acm/Header.astro";
 import CTASection from "@/components/app/extras/CTASection.astro";
 import ExtrasHero from "@/components/app/extras/ExtrasHero.astro";
+import { BrandsEnum } from "@/enums";
 import Layout from "@/layouts/Layout.astro";
 import type { Brand, CTAType } from "@/types";
 import type { FeaturedImages } from "@/types/images";
@@ -12,18 +19,46 @@ type Props = {
     description: string;
     subtitle: string;
     featured_image: FeaturedImages;
-    cta: CTAType;
+    cta?: CTAType;
     variant?: Brand;
     badge?: string;
 };
 
-const { title, description, subtitle, featured_image, cta, variant = "default", badge } = Astro.props;
+const {
+    title,
+    description,
+    subtitle,
+    featured_image,
+    cta,
+    variant = BrandsEnum.DEFAULT,
+    badge,
+} = Astro.props;
+
+const Titles = {
+    [BrandsEnum.DEFAULT]: "The Americas Conference",
+    [BrandsEnum.ACM]: "The Americas Conference of Mayors",
+    [BrandsEnum.ACC]: "The Americas Chambers of Commerce",
+    [BrandsEnum.ACU]: "The Americas Conference of Universities",
+};
 ---
 
-<Layout title={`The Americas Conference | ${title}`}>
-    <Header />
+<Layout title={`${Titles[variant]} | ${title}`} variant={variant}>
+    {
+        (() => {
+            switch (variant) {
+                case BrandsEnum.ACM:
+                    return <ACMHeader />;
+                case BrandsEnum.ACC:
+                    return <ACCHeader />;
+                case BrandsEnum.ACU:
+                    return <ACUHeader />;
+                default:
+                    return <ACHeader />;
+            }
+        })()
+    }
 
-    <div class="flex-1">
+    <main class="flex-1">
         <ExtrasHero
             {...{
                 title,
@@ -37,8 +72,21 @@ const { title, description, subtitle, featured_image, cta, variant = "default", 
 
         <slot />
 
-        <CTASection cta={cta} variant={variant} />
-    </div>
+        {cta && <CTASection cta={cta} variant={variant} />}
+    </main>
 
-    <Footer />
+    {
+        (() => {
+            switch (variant) {
+                case BrandsEnum.ACM:
+                    return <ACMFooter />;
+                case BrandsEnum.ACC:
+                    return <ACCFooter />;
+                case BrandsEnum.ACU:
+                    return <ACUFooter />;
+                default:
+                    return <ACFooter />;
+            }
+        })()
+    }
 </Layout>

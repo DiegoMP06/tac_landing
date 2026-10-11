@@ -10,13 +10,6 @@ export const MessageRoleEnum = {
     AGENT: "agent",
 } as const;
 
-export const LeadsStatusEnum = {
-    PENDING: "pending",
-    CONTACTED: "contacted",
-    QUALIFIED: "qualified",
-    NOT_QUALIFIED: "not_qualified",
-} as const;
-
 export const EmbedTaskTypeEnum = {
     QUERY: "query",
     DOCUMENT: "document",
@@ -25,12 +18,6 @@ export const EmbedTaskTypeEnum = {
 export const ChatModeEnum = {
     CHAT: "chat",
     CONTACT: "contact",
-} as const;
-
-export const LeadTypeEnum = {
-    EMAIL: "email",
-    WHATSAPP: "whatsapp",
-    TELEGRAM: "telegram",
 } as const;
 
 export const ResponseFormatEnum = {

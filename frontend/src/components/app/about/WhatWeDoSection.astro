@@ -11,25 +11,6 @@ type Props = {
     section: AboutPage["acf"]["what_we_do"];
 };
 
-const styles = {
-    acu: {
-        container: "bg-background",
-        content: "text-acu-foreground",
-    },
-    acm: {
-        container: "bg-background",
-        content: "text-acm-foreground",
-    },
-    acc: {
-        container: "bg-background",
-        content: "text-acc-foreground",
-    },
-    default: {
-        container: "bg-background",
-        content: "text-foreground",
-    },
-};
-
 const delays = [
     "delay-100",
     "delay-200",
@@ -40,31 +21,25 @@ const delays = [
 ];
 
 const { section, variant = "default" } = Astro.props;
-
-const currentStyles = styles[variant];
 ---
 
-<section class={cn("py-20 md:py-28 scroll-reveal", currentStyles.container)}>
+<section class="py-20 md:py-28 scroll-reveal bg-background">
     <div class="px-6 max-w-6xl w-full mx-auto">
-        <div
-            class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center mb-10 scroll-reveal"
-        >
-            <div>
-                <SectionHeading variant={variant}>
-                    {section.title}
-                </SectionHeading>
+        <div class="max-w-3xl mb-12 sm:mb-16 scroll-reveal">
+            <SectionHeading variant={variant}>
+                {section.title}
+            </SectionHeading>
 
-                <SectionSubHeading variant={variant} className="mt-3 mb-0">
-                    {section.subtitle}
-                </SectionSubHeading>
-            </div>
+            <SectionSubHeading variant={variant} className="mt-3 mb-0">
+                {section.subtitle}
+            </SectionSubHeading>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
             {
                 section.cards.map((card, index) => (
                     <div
-                        class={`scroll-reveal ${delays[index] || "delay-600"}`}
+                        class={`h-full scroll-reveal ${delays[index] || "delay-500"}`}
                     >
                         <WhatWeDoCard
                             card={card}

@@ -6,51 +6,67 @@ import SectionSubHeading from "../SectionSubHeading.astro";
 import type { Brand } from "@/types";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Clock } from "lucide-react";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
 
 interface Props {
     section: HomePage["acf"]["count_down"];
     variant?: Brand;
 }
 
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+
 const styles = {
     acu: {
-        container: "bg-acu-card/30 border-y border-acu-border/60",
+        container: "bg-acu-background/60 dark:bg-acu-background/30 border-y border-acu-border/60",
         digitCard:
-            "bg-card/90 dark:bg-acu-card/50 border-acu-secondary/30 hover:border-acu-secondary shadow-lg hover:shadow-acu-secondary/20",
-        digitText: "text-acu-secondary dark:text-acu-secondary",
+            "bg-card/80 dark:bg-acu-card/60 border-acu-border/80 hover:border-acu-secondary/80 shadow-md hover:shadow-xl hover:shadow-acu-secondary/15",
+        digitText: "text-acu-secondary",
         glow: "from-acu-secondary/15 via-transparent to-transparent",
+        orb1: "bg-acu-primary/10",
+        orb2: "bg-acu-secondary/15",
         finishedBanner:
-            "bg-acu-secondary/10 border-acu-secondary/30 text-acu-secondary",
-        btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25",
+            "bg-acu-secondary/10 border-acu-secondary/30 text-acu-foreground",
+        finishedIcon: "bg-acu-secondary/20 text-acu-secondary",
+        btn: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
     },
     acm: {
-        container: "bg-acm-card/30 border-y border-acm-border/60",
+        container: "bg-acm-background/60 dark:bg-acm-background/30 border-y border-acm-border/60",
         digitCard:
-            "bg-card/90 dark:bg-acm-card/50 border-acm-secondary/30 hover:border-acm-secondary shadow-lg hover:shadow-acm-secondary/20",
-        digitText: "text-acm-secondary dark:text-acm-secondary",
+            "bg-card/80 dark:bg-acm-card/60 border-acm-border/80 hover:border-acm-secondary/80 shadow-md hover:shadow-xl hover:shadow-acm-secondary/15",
+        digitText: "text-acm-secondary",
         glow: "from-acm-secondary/15 via-transparent to-transparent",
+        orb1: "bg-acm-primary/10",
+        orb2: "bg-acm-secondary/15",
         finishedBanner:
-            "bg-acm-secondary/10 border-acm-secondary/30 text-acm-secondary",
-        btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25",
+            "bg-acm-secondary/10 border-acm-secondary/30 text-acm-foreground",
+        finishedIcon: "bg-acm-secondary/20 text-acm-secondary",
+        btn: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
     },
     acc: {
-        container: "bg-acc-card/30 border-y border-acc-border/60",
+        container: "bg-acc-background/60 dark:bg-acc-background/30 border-y border-acc-border/60",
         digitCard:
-            "bg-card/90 dark:bg-acc-card/50 border-acc-secondary/30 hover:border-acc-secondary shadow-lg hover:shadow-acc-secondary/20",
-        digitText: "text-acc-secondary dark:text-acc-secondary",
+            "bg-card/80 dark:bg-acc-card/60 border-acc-border/80 hover:border-acc-secondary/80 shadow-md hover:shadow-xl hover:shadow-acc-secondary/15",
+        digitText: "text-acc-secondary",
         glow: "from-acc-secondary/15 via-transparent to-transparent",
+        orb1: "bg-acc-primary/10",
+        orb2: "bg-acc-secondary/15",
         finishedBanner:
-            "bg-acc-secondary/10 border-acc-secondary/30 text-acc-secondary",
-        btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25",
+            "bg-acc-secondary/10 border-acc-secondary/30 text-acc-foreground",
+        finishedIcon: "bg-acc-secondary/20 text-acc-secondary",
+        btn: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
     },
     default: {
         container: "bg-muted/40 border-y border-border/60",
         digitCard:
-            "bg-card/90 border-secondary/30 text-secondary hover:border-secondary shadow-lg hover:shadow-secondary/20",
-        digitText: "text-secondary dark:text-secondary",
+            "bg-card/80 border-border/80 hover:border-secondary/80 shadow-md hover:shadow-xl hover:shadow-secondary/15",
+        digitText: "text-secondary",
         glow: "from-secondary/15 via-transparent to-transparent",
-        finishedBanner: "bg-secondary/10 border-secondary/30 text-secondary",
-        btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25",
+        orb1: "bg-primary/10",
+        orb2: "bg-secondary/15",
+        finishedBanner: "bg-secondary/10 border-secondary/30 text-foreground",
+        finishedIcon: "bg-secondary/20 text-secondary",
+        btn: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
     },
 };
 
@@ -70,11 +86,17 @@ const currentStyles = styles[variant] || styles.default;
 >
     <!-- Ambient Glowing Light Orbs -->
     <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-125 bg-primary/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow"
+        class={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-96 sm:size-125 rounded-full blur-3xl pointer-events-none animate-pulse-glow",
+            currentStyles.orb1,
+        )}
     >
     </div>
     <div
-        class="absolute -bottom-10 right-10 size-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300"
+        class={cn(
+            "absolute -bottom-10 right-10 size-80 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-300",
+            currentStyles.orb2,
+        )}
     >
     </div>
 
@@ -86,7 +108,7 @@ const currentStyles = styles[variant] || styles.default;
         <div class="scroll-reveal max-w-3xl w-full">
             <SectionHeading
                 variant={variant}
-                className="inline-block text-center"
+                className="text-center"
             >
                 {section.title}
             </SectionHeading>
@@ -100,27 +122,33 @@ const currentStyles = styles[variant] || styles.default;
 
             {section.content && (
                 <p
-                    class="text-base sm:text-lg text-muted-foreground leading-relaxed font-normal mb-10 sm:mb-14 max-w-2xl mx-auto"
+                    class="text-base sm:text-lg text-muted-foreground leading-relaxed font-normal mb-10 sm:mb-14 max-w-2xl mx-auto text-balance"
                 >
                     {section.content}
                 </p>
             )}
-            
+
             <!-- Finished Banner State -->
             <div
                 id="finish-countdown"
-                class="hidden p-6 sm:p-8 rounded-3xl border backdrop-blur-xl text-center max-w-md mx-auto shadow-lg animate-scale-up"
+                class={cn(
+                    "hidden p-6 sm:p-8 rounded-3xl border backdrop-blur-xl text-center max-w-md mx-auto shadow-lg animate-scale-up",
+                    currentStyles.finishedBanner,
+                )}
             >
                 <div
-                    class="inline-flex items-center justify-center size-12 rounded-2xl bg-secondary/20 mb-3 text-secondary"
+                    class={cn(
+                        "inline-flex items-center justify-center size-12 rounded-2xl mb-3",
+                        currentStyles.finishedIcon,
+                    )}
                 >
                     <Clock className="size-6" />
                 </div>
-                <h4 class="text-xl font-heading font-bold text-foreground mb-1">
-                    La oferta ha finalizado
+                <h4 class="text-xl font-heading font-bold mb-1">
+                    {t("AC.pages.home.countdown.finishedTitle")}
                 </h4>
-                <p class="text-sm text-muted-foreground">
-                    Mantente atento a nuestros próximos eventos y programas.
+                <p class="text-sm opacity-80">
+                    {t("AC.pages.home.countdown.finishedSubtitle")}
                 </p>
             </div>
 
@@ -146,13 +174,13 @@ const currentStyles = styles[variant] || styles.default;
                     <span
                         id="countdown-days"
                         class={cn(
-                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tabular-nums tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
                             currentStyles.digitText,
                         )}>00</span
                     >
                     <span
                         class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
-                        >Días</span
+                        >{t("AC.pages.home.countdown.days")}</span
                     >
                 </div>
 
@@ -173,13 +201,13 @@ const currentStyles = styles[variant] || styles.default;
                     <span
                         id="countdown-hours"
                         class={cn(
-                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tabular-nums tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
                             currentStyles.digitText,
                         )}>00</span
                     >
                     <span
                         class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
-                        >Horas</span
+                        >{t("AC.pages.home.countdown.hours")}</span
                     >
                 </div>
 
@@ -200,13 +228,13 @@ const currentStyles = styles[variant] || styles.default;
                     <span
                         id="countdown-minutes"
                         class={cn(
-                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tabular-nums tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
                             currentStyles.digitText,
                         )}>00</span
                     >
                     <span
                         class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
-                        >Minutos</span
+                        >{t("AC.pages.home.countdown.minutes")}</span
                     >
                 </div>
 
@@ -227,13 +255,13 @@ const currentStyles = styles[variant] || styles.default;
                     <span
                         id="countdown-seconds"
                         class={cn(
-                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
+                            "text-4xl sm:text-5xl md:text-6xl font-heading font-black tabular-nums tracking-tight leading-none transition-transform duration-300 group-hover:scale-105",
                             currentStyles.digitText,
                         )}>00</span
                     >
                     <span
                         class="text-xs sm:text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 sm:mt-4"
-                        >Segundos</span
+                        >{t("AC.pages.home.countdown.seconds")}</span
                     >
                 </div>
             </div>
@@ -246,12 +274,12 @@ const currentStyles = styles[variant] || styles.default;
                         target={section.redirect_url.startsWith("http") ? "_blank" : "_self"}
                         rel="noopener noreferrer"
                         class={cn(
-                            "inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95 group",
+                            "min-h-[46px] inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-sm uppercase font-bold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden group",
                             currentStyles.btn,
                         )}
                     >
                         <span>{section.redirect_text}</span>
-                        <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </a>
                 </div>
             )}

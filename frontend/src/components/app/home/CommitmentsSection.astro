@@ -10,26 +10,26 @@ type Props = {
     variant?: Brand;
 };
 
-const delays = ["delay-150", "delay-300", "delay-450"];
+const delays = ["delay-100", "delay-200", "delay-300"];
 
 const { section, variant = "default" } = Astro.props;
 ---
 
 <section class="mx-auto max-w-6xl w-full my-20 md:my-28 px-6 scroll-reveal">
-    <div class="scroll-reveal">
+    <div class="scroll-reveal mb-10 sm:mb-12">
         <SectionHeading variant={variant}>
             {section.title}
         </SectionHeading>
 
-        <SectionSubHeading variant={variant}>
+        <SectionSubHeading variant={variant} className="mt-2 mb-0">
             {section.subtitle}
         </SectionSubHeading>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
         {
             section.cards.map((card, idx) => (
-                <div class={`scroll-reveal ${delays[idx] || "delay-450"}`}>
+                <div class={`h-full scroll-reveal ${delays[idx] || "delay-300"}`}>
                     <CommitmentCard variant={variant} card={card} />
                 </div>
             ))

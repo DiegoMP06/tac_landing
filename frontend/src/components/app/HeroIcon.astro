@@ -15,18 +15,22 @@ const ICON_ATT = {
     acu: {
         acronym: "ACU",
         name: "The Americas Conference of Universities",
+        altKey: "ACU.utils.icon.alt",
     },
     acc: {
         acronym: "ACC",
         name: "The Americas Chambers of Commerce",
+        altKey: "ACC.utils.icon.alt",
     },
     acm: {
         acronym: "ACM",
         name: "The Americas Conference of Mayors",
+        altKey: "ACM.utils.icon.alt",
     },
     default: {
         acronym: "AC",
         name: "The Americas Conference",
+        altKey: "AC.utils.icon.alt",
     },
 };
 
@@ -35,43 +39,49 @@ const { variant = "default" } = Astro.props;
 const STYLES = {
     acu: {
         icon: ACUIcon,
-        iconAcronym: "text-acu-900 dark:text-acu-200",
-        iconName: "text-acu-700 dark:text-acu-400",
+        halo: "from-acu-secondary/20 via-acu-secondary/5 to-transparent border-acu-secondary/30 shadow-acu-secondary/15",
     },
     acc: {
         icon: ACCIcon,
-        iconAcronym: "text-acc-900 dark:text-acc-200",
-        iconName: "text-acc-700 dark:text-acc-400",
+        halo: "from-acc-secondary/20 via-acc-secondary/5 to-transparent border-acc-secondary/30 shadow-acc-secondary/15",
     },
     acm: {
         icon: ACMIcon,
-        iconAcronym: "text-acm-900 dark:text-acm-200",
-        iconName: "text-acm-700 dark:text-acm-400",
+        halo: "from-acm-secondary/20 via-acm-secondary/5 to-transparent border-acm-secondary/30 shadow-acm-secondary/15",
     },
     default: {
         icon: DefaultIcon,
-        iconAcronym: "text-base-900 dark:text-base-200",
-        iconName: "text-base-700 dark:text-base-400",
+        halo: "from-secondary/20 via-secondary/5 to-transparent border-secondary/30 shadow-secondary/15",
     },
 };
 
 const { locale } = useLocalePath(Astro.url);
-
 const t = useTranslations(locale);
-
-const currentIconAtt = ICON_ATT[variant];
-
-const currentStyles = STYLES[variant];
+const currentStyles = STYLES[variant] || STYLES.default;
+const currentIconAtt = ICON_ATT[variant] || ICON_ATT.default;
 ---
 
-<div class="flex items-center md:justify-center">
-    <div>
+<div class="relative flex items-center justify-center">
+    <!-- Ambient back glow -->
+    <div
+        class="absolute inset-0 rounded-full bg-linear-to-br from-secondary/15 via-primary/10 to-transparent blur-2xl scale-110 pointer-events-none"
+    >
+    </div>
+
+    <!-- Glassmorphic Crest Frame -->
+    <div
+        class={cn(
+            "relative p-4 sm:p-6 rounded-full bg-card/60 dark:bg-card/30 backdrop-blur-md border shadow-2xl transition-transform duration-500 hover:scale-105",
+            currentStyles.halo,
+        )}
+    >
         <img
             src={currentStyles.icon.src}
-            alt={t("ACU.utils.icon.alt")}
+            alt={t(currentIconAtt.altKey as never)}
             width={currentStyles.icon.width}
             height={currentStyles.icon.height}
-            class="size-56 md:size-72 block aspect-square rounded-full"
+            class="size-52 sm:size-64 lg:size-72 block aspect-square rounded-full drop-shadow-md"
+            loading="eager"
         />
     </div>
 </div>

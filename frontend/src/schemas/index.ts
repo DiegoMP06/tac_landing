@@ -1,13 +1,8 @@
 import { BrandsEnum, SubBrands } from "@/enums";
+import { FeaturedImagesSizesEnum } from "@/enums/images";
 import { z } from "astro/zod";
 
-export const FeaturedImageSizesSchema = z.enum({
-    thumbnail: "thumbnail",
-    medium: "medium",
-    medium_large: "medium_large",
-    large: "large",
-    full: "full",
-});
+export const FeaturedImageSizesSchema = z.enum(FeaturedImagesSizesEnum);
 
 export const FeaturedImageAttSchema = z.object({
     url: z.string(),

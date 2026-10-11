@@ -4,9 +4,8 @@ import {
     CHATBOT_TEMPERATURE,
 } from "@/consts/chatbot";
 import { MessageRoleEnum, ResponseFormatEnum } from "@/enums/chat";
-import type { MessageRole } from "@/types/chat";
 import type { Locale } from "@/types/locale";
-import { Groq } from "groq-sdk";
+import { GoogleGenAI, type Content } from "@google/genai";
 import type { DraftMessage } from "../entities/Message";
 import {
     ChatProvider,
@@ -14,11 +13,12 @@ import {
     type StreamResponseArgs,
 } from "../interfaces/ChatProvider";
 
-const API_KEY = import.meta.env?.GROQ_API_KEY || process.env.GROQ_API_KEY || "";
+const API_KEY =
+    import.meta.env?.GEMINI_API_KEY || process.env.GEMINI_API_KEY || "";
 
 if (!API_KEY) {
     throw new Error(
-        "[ChatProviderImpl] GROQ_API_KEY no está configurada en las variables de entorno.",
+        "[ChatProviderImpl] GEMINI_API_KEY no está configurada en las variables de entorno.",
     );
 }
 
@@ -28,7 +28,7 @@ export class ChatProviderImpl extends ChatProvider {
     protected readonly temperature: number;
     protected readonly locale: Locale;
     protected readonly maxTokens: number;
-    private readonly client: Groq;
+    private readonly client: GoogleGenAI;
 
     constructor(locale: Locale) {
         super();
@@ -37,45 +37,45 @@ export class ChatProviderImpl extends ChatProvider {
         this.model = CHATBOT_MODEL;
         this.temperature = CHATBOT_TEMPERATURE;
         this.maxTokens = CHATBOT_MAX_TOKENS;
-        this.client = new Groq({ apiKey: this.apiKey });
+        this.client = new GoogleGenAI({ apiKey: this.apiKey });
     }
 
-    private formatMessages(
-        messages: DraftMessage[],
-    ): Groq.Chat.ChatCompletionMessageParam[] {
+    private formatMessages(messages: DraftMessage[]): Content[] {
         return messages
-            .map(({ role, content }) => ({
-                role: role as Exclude<MessageRole, "agent">,
-                content,
-            }))
             .filter(
-                (message) => (message.role as string) !== MessageRoleEnum.AGENT,
-            );
+                (message) =>
+                    message.role !== MessageRoleEnum.AGENT &&
+                    message.role !== MessageRoleEnum.SYSTEM,
+            )
+            .map(({ role, content }) => ({
+                role: role === MessageRoleEnum.USER ? "user" : "model",
+                parts: [{ text: content }],
+            }));
     }
 
     override async streamResponse({
         messages,
         systemPrompt,
     }: StreamResponseArgs): Promise<ReadableStream<Uint8Array>> {
-        const groqMessages: Groq.Chat.ChatCompletionMessageParam[] = [
-            { role: MessageRoleEnum.SYSTEM, content: systemPrompt },
-            ...this.formatMessages(messages),
-        ];
+        const geminiMessages = this.formatMessages(messages);
 
-        const stream = await this.client.chat.completions.create({
+        const responseStream = await this.client.models.generateContentStream({
             model: this.model,
-            messages: groqMessages,
-            temperature: this.temperature,
-            max_tokens: this.maxTokens,
-            stream: true,
+            contents: geminiMessages,
+            config: {
+                systemInstruction: systemPrompt,
+                temperature: this.temperature,
+                maxOutputTokens: this.maxTokens,
+                responseMimeType: "text/plain",
+            },
         });
 
         const encoder = new TextEncoder();
 
         return new ReadableStream<Uint8Array>({
             async start(controller) {
-                for await (const chunk of stream) {
-                    const text = chunk.choices[0]?.delta?.content;
+                for await (const chunk of responseStream) {
+                    const text = chunk.text;
                     if (text) {
                         controller.enqueue(encoder.encode(text));
                     }
@@ -90,22 +90,24 @@ export class ChatProviderImpl extends ChatProvider {
         systemPrompt,
         responseFormat = ResponseFormatEnum.TEXT,
     }: GetCompletionArgs): Promise<DraftMessage> {
-        const groqMessages: Groq.Chat.ChatCompletionMessageParam[] = [
-            { role: MessageRoleEnum.SYSTEM, content: systemPrompt },
-            ...this.formatMessages(messages),
-        ];
+        const geminiMessages = this.formatMessages(messages);
 
-        const completion = await this.client.chat.completions.create({
+        const response = await this.client.models.generateContent({
             model: this.model,
-            messages: groqMessages,
-            temperature: this.temperature,
-            max_tokens: this.maxTokens,
-            stream: false,
-            response_format: { type: responseFormat },
+            contents: geminiMessages,
+            config: {
+                systemInstruction: systemPrompt,
+                temperature: this.temperature,
+                maxOutputTokens: this.maxTokens,
+                responseMimeType:
+                    responseFormat === "json_object"
+                        ? "application/json"
+                        : "text/plain",
+            },
         });
 
-        const content = completion.choices[0]?.message?.content || "";
-        const tokensUsed = completion.usage?.total_tokens || 0;
+        const content = response.text || "";
+        const tokensUsed = response.usageMetadata?.totalTokenCount || 0;
 
         return {
             content,

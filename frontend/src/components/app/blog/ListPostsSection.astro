@@ -1,0 +1,14 @@
+---
+import type { Brand } from "@/types";
+import ListPostsContainer from "./ListPostsContainer.astro";
+
+type Props = {
+    variant?: Brand;
+};
+
+const { variant = "default" } = Astro.props;
+---
+
+<section class="px-6 my-16 sm:my-20 md:my-24 max-w-6xl w-full mx-auto">
+    <ListPostsContainer variant={variant} />
+</section>

@@ -24,8 +24,8 @@ const { page, variant = BrandsEnum.DEFAULT } = Astro.props;
 
 const Titles = {
     [BrandsEnum.DEFAULT]: "The Americas Conference",
-    [BrandsEnum.ACM]: "The Americas Conference of Universities",
-    [BrandsEnum.ACC]: "The Americas Conference of Colleges",
+    [BrandsEnum.ACM]: "The Americas Conference of Mayors",
+    [BrandsEnum.ACC]: "The Americas Chambers of Commerce",
     [BrandsEnum.ACU]: "The Americas Conference of Universities",
 };
 ---
@@ -46,7 +46,7 @@ const Titles = {
         })()
     }
 
-    <div class="flex-1">
+    <main class="flex-1">
         <Hero page={page} variant={variant} />
 
         <slot name="count_down" />
@@ -56,7 +56,7 @@ const Titles = {
         <slot />
 
         <CTASection cta={page.acf.cta} variant={variant} />
-    </div>
+    </main>
 
     {
         (() => {

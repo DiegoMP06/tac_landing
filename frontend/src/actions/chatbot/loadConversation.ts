@@ -1,5 +1,4 @@
 import { ChatbotRepositoryImpl } from "@/core/chatbot/repositories/ChatbotRepositoryImpl";
-import { ChannelEnum } from "@/enums/chat";
 import { defineAction } from "astro:actions";
 
 export const loadConversation = defineAction({
@@ -14,11 +13,18 @@ export const loadConversation = defineAction({
         try {
             const chatbotRepository = new ChatbotRepositoryImpl();
 
+            await chatbotRepository.closeInactiveConversation({
+                sessionToken,
+                hours: 1,
+            });
+
             const conversation = await chatbotRepository.findActiveSession({
                 sessionToken,
-                channel: ChannelEnum.WEB,
-                phone: null,
             });
+
+            if (!conversation) {
+                cookies.delete("chat_session", { path: "/" });
+            }
 
             return conversation;
         } catch (error) {

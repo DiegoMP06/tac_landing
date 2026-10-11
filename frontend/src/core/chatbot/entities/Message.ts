@@ -1,11 +1,11 @@
 export type MessageArgs = {
     id: string;
+    subject: string | null;
     role: string;
     content: string;
-    subject: string | null;
     tokensUsed: unknown;
     conversationId: string;
-    externalMessageId: string | null;
+    createdAt?: Date;
 };
 
 export type DraftMessage = Pick<MessageArgs, "role" | "content"> & {
@@ -19,7 +19,7 @@ export class Message {
     public subject: string | null;
     public tokensUsed: unknown;
     public conversationId: string;
-    public externalMessageId: string | null;
+    public createdAt?: Date;
 
     public static create(args: MessageArgs): Message {
         return new Message(args);
@@ -32,7 +32,7 @@ export class Message {
         subject,
         tokensUsed,
         conversationId,
-        externalMessageId,
+        createdAt,
     }: MessageArgs) {
         this.id = id;
         this.role = role;
@@ -40,6 +40,6 @@ export class Message {
         this.subject = subject;
         this.tokensUsed = tokensUsed;
         this.conversationId = conversationId;
-        this.externalMessageId = externalMessageId;
+        this.createdAt = createdAt;
     }
 }

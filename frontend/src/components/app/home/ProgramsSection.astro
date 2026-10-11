@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import type { Brand } from "@/types";
 import type { HomePage } from "@/types/pages";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
 import { ArrowRight } from "lucide-react";
 import SectionHeading from "../SectionHeading.astro";
 import SectionSubHeading from "../SectionSubHeading.astro";
@@ -16,25 +16,26 @@ type Props = {
 
 const styles = {
     acu: {
-        container: "bg-acu-card/30 border-acu-border/60",
-        btn: "bg-acu-secondary/15 text-acu-secondary border-acu-secondary/30 hover:bg-acu-secondary hover:text-acu-secondary-foreground hover:shadow-lg hover:shadow-acu-secondary/20",
+        container: "bg-acu-background/50 dark:bg-acu-background/20 border-acu-border/60",
+        btn: "bg-card/80 text-acu-secondary border-acu-secondary/30 hover:bg-acu-secondary hover:text-acu-secondary-foreground hover:shadow-lg hover:shadow-acu-secondary/20",
     },
     acm: {
-        container: "bg-acm-card/30 border-acm-border/60",
-        btn: "bg-acm-secondary/15 text-acm-secondary border-acm-secondary/30 hover:bg-acm-secondary hover:text-acm-secondary-foreground hover:shadow-lg hover:shadow-acm-secondary/20",
+        container: "bg-acm-background/50 dark:bg-acm-background/20 border-acm-border/60",
+        btn: "bg-card/80 text-acm-secondary border-acm-secondary/30 hover:bg-acm-secondary hover:text-acm-secondary-foreground hover:shadow-lg hover:shadow-acm-secondary/20",
     },
     acc: {
-        container: "bg-acc-card/30 border-acc-border/60",
-        btn: "bg-acc-secondary/15 text-acc-secondary border-acc-secondary/30 hover:bg-acc-secondary hover:text-acc-secondary-foreground hover:shadow-lg hover:shadow-acc-secondary/20",
+        container: "bg-acc-background/50 dark:bg-acc-background/20 border-acc-border/60",
+        btn: "bg-card/80 text-acc-secondary border-acc-secondary/30 hover:bg-acc-secondary hover:text-acc-secondary-foreground hover:shadow-lg hover:shadow-acc-secondary/20",
     },
     default: {
         container: "bg-muted/40 border-border/60",
-        btn: "bg-secondary/15 text-secondary border-secondary/30 hover:bg-secondary hover:text-secondary-foreground hover:shadow-lg hover:shadow-secondary/20",
+        btn: "bg-card/80 text-secondary border-secondary/30 hover:bg-secondary hover:text-secondary-foreground hover:shadow-lg hover:shadow-secondary/20",
     },
 };
 
 const { section, variant = BrandsEnum.DEFAULT } = Astro.props;
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 
 const currentStyles = styles[variant] || styles.default;
 const isDefault = variant === BrandsEnum.DEFAULT;
@@ -43,11 +44,11 @@ const programsUrl = `/${locale}/${variant}/programs`;
 
 <section
     class={cn(
-        `border-t border-b mt-20 md:mt-28 scroll-reveal relative overflow-hidden`,
+        "border-t border-b mt-20 md:mt-28 py-20 md:py-28 scroll-reveal relative overflow-hidden",
         currentStyles.container,
     )}
 >
-    <div class="px-6 py-20 max-w-6xl mx-auto w-full">
+    <div class="px-6 max-w-6xl mx-auto w-full">
         <div
             class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 scroll-reveal"
         >
@@ -56,7 +57,7 @@ const programsUrl = `/${locale}/${variant}/programs`;
                     {section.title}
                 </SectionHeading>
 
-                <SectionSubHeading variant={variant} className="mt-2">
+                <SectionSubHeading variant={variant} className="mt-2 mb-0">
                     {section.subtitle}
                 </SectionSubHeading>
             </div>
@@ -66,11 +67,11 @@ const programsUrl = `/${locale}/${variant}/programs`;
                     <a
                         href={programsUrl}
                         class={cn(
-                            "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-bold transition-all duration-300 shrink-0 group self-start md:self-auto shadow-xs",
+                            "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-bold transition-all duration-300 shrink-0 group self-start md:self-auto shadow-xs hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden",
                             currentStyles.btn,
                         )}
                     >
-                        <span>Ver todos los programas</span>
+                        <span>{t("AC.pages.home.programs.viewAll")}</span>
                         <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
                     </a>
                 )

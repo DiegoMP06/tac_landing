@@ -1,12 +1,14 @@
 {
     "AC": {
         "header": {
+            "menu": "Menu",
             "nav": {
                 "home": "Início",
                 "about": "Sobre Nós",
                 "ACU": "Universidades",
                 "ACM": "Governantes",
                 "ACC": "Comércio",
+                "blog": "Blog",
                 "contact": "Contato"
             }
         },
@@ -19,21 +21,24 @@
                         "about": "Sobre a ACU",
                         "programs": "Programas da ACU",
                         "events": "Eventos da ACU",
-                        "contact": "Contato"
+                        "contact": "Contato",
+                        "blog": "Blog"
                     },
                     "acm": {
                         "home": "ACM",
                         "about": "Sobre a ACM",
                         "programs": "Programas da ACM",
                         "events": "Eventos da ACM",
-                        "contact": "Contato"
+                        "contact": "Contato",
+                        "blog": "Blog"
                     },
                     "acc": {
                         "home": "ACC",
                         "about": "Sobre a ACC",
                         "programs": "Programas da ACC",
                         "events": "Eventos da ACC",
-                        "contact": "Contato"
+                        "contact": "Contato",
+                        "blog": "Blog"
                     }
                 }
             },
@@ -43,13 +48,33 @@
         },
         "utils": {
             "icon": {
-                "alt": "Ícone da The Americas Conference of Universities"
+                "alt": "Ícone da The Americas Conference"
             },
             "programs": {
-                "empty": "Nenhum Programa Disponível."
+                "empty": "Nenhum Programa Disponível.",
+                "viewMore": "Ver mais",
+                "month": "mês",
+                "months": "meses",
+                "week": "semana",
+                "weeks": "semanas",
+                "checkDates": "Consultar datas"
             },
             "events": {
-                "empty": "Nenhum Evento Disponível."
+                "empty": "Nenhum Evento Disponível.",
+                "viewEvent": "Ver evento",
+                "to": "a"
+            },
+            "blog": {
+                "empty": "Nenhuma Publicação Disponível.",
+                "badge": "Blog",
+                "readMore": "Ler artigo",
+                "defaultSubtitle": "Artigo"
+            },
+            "modalities": {
+                "in_person": "Presencial",
+                "online": "Online",
+                "hybrid": "Híbrido",
+                "virtual": "Virtual"
             }
         },
         "pages": {
@@ -63,7 +88,24 @@
                 "title": "Erro Inesperado",
                 "code": "500",
                 "text": "Ocorreu um erro inesperado, tente novamente mais tarde",
-                "redirect": "Clique aqui para ir à página inicial"
+                "redirect": "Clique aqui para ir à página inicial",
+                "retry": "Tentar novamente"
+            },
+            "home": {
+                "countdown": {
+                    "finishedTitle": "A oferta terminou",
+                    "finishedSubtitle": "Fique atento aos nossos próximos eventos e programas.",
+                    "days": "Dias",
+                    "hours": "Horas",
+                    "minutes": "Minutos",
+                    "seconds": "Segundos"
+                },
+                "events": {
+                    "viewAll": "Ver todos os eventos"
+                },
+                "programs": {
+                    "viewAll": "Ver todos os programas"
+                }
             },
             "programs": {
                 "info": "Informações do Programa",
@@ -71,27 +113,47 @@
                 "mode": "Modalidade",
                 "location": "Localização",
                 "target": "Público-alvo",
+                "onlineLink": "Ver programa online",
                 "benefits": {
                     "title": "Benefícios",
-                    "empty": "Nenhum Benefício Disponível."
+                    "subtitle": "O que você obterá ao participar",
+                    "empty": "Nenhum Benefício Disponível.",
+                    "singular": "benefício",
+                    "plural": "benefícios"
                 },
                 "highlights": {
                     "title": "Destaques",
+                    "subtitle": "Principais pontos do programa",
                     "empty": "Nenhum Destaque Disponível."
                 }
             },
             "events": {
                 "info": "Informações do Evento",
                 "date": "Data",
+                "mode": "Modalidade",
                 "location": "Localização",
+                "onlineLink": "Acessar o evento online",
                 "speakers": {
                     "title": "Palestrantes",
-                    "empty": "Nenhum Palestrante Disponível."
+                    "subtitle": "Especialistas e palestrantes de destaque",
+                    "empty": "Nenhum Palestrante Disponível.",
+                    "singular": "palestrante",
+                    "plural": "palestrantes"
                 },
                 "highlights": {
                     "title": "Destaques",
+                    "subtitle": "Aspectos principais do evento",
                     "empty": "Nenhum Destaque Disponível."
                 }
+            },
+            "blog": {
+                "title": "Blog",
+                "badge": "Publicação",
+                "info": "Detalhes da Publicação",
+                "mainTopic": "Tema Principal",
+                "publishedBy": "Publicado por",
+                "visitSite": "Visitar site oficial",
+                "backToBlog": "Voltar para todas as publicações"
             }
         }
     },
@@ -103,6 +165,7 @@
                 "about": "Sobre Nós",
                 "programs": "Programas",
                 "events": "Eventos",
+                "blog": "Blog",
                 "contact": "Contato"
             }
         },
@@ -116,6 +179,7 @@
                     "acu": "Universidades",
                     "acm": "Governantes",
                     "acc": "Comércio",
+                    "blog": "Blog",
                     "contact": "Contato",
                     "programs": "Programas",
                     "events": "Eventos"
@@ -139,6 +203,7 @@
                 "about": "Sobre Nós",
                 "programs": "Programas",
                 "events": "Eventos",
+                "blog": "Blog",
                 "contact": "Contato"
             }
         },
@@ -152,6 +217,7 @@
                     "acu": "Universidades",
                     "acm": "Governantes",
                     "acc": "Comércio",
+                    "blog": "Blog",
                     "contact": "Contato",
                     "programs": "Programas",
                     "events": "Eventos"
@@ -175,6 +241,7 @@
                 "about": "Sobre Nós",
                 "programs": "Programas",
                 "events": "Eventos",
+                "blog": "Blog",
                 "contact": "Contato"
             }
         },
@@ -188,6 +255,7 @@
                     "acu": "Universidades",
                     "acm": "Governantes",
                     "acc": "Comércio",
+                    "blog": "Blog",
                     "contact": "Contato",
                     "programs": "Programas",
                     "events": "Eventos"
@@ -208,8 +276,73 @@
         "placeholder": "Digite sua mensagem...",
         "send": "Enviar",
         "welcome": "Olá! Como posso ajudá-lo hoje?",
-        "open": "Abrir Chatbot",
-        "close": "Fechar Chatbot",
-        "error": "Ocorreu um erro. Por favor, tente novamente."
+        "open": "Abrir Assistente",
+        "close": "Fechar Assistente",
+        "error": "Ocorreu um erro. Por favor, tente novamente.",
+        "newConversation": "Nova conversa",
+        "lead": "Contato Direto"
+    },
+    "sendEmail": {
+        "success": "Uma mensagem direta foi enviada para a empresa, entraremos em contato em breve. Obrigado.",
+        "error": "Ocorreu um erro ao enviar a mensagem, tente novamente.",
+        "back": "Voltar ao chat",
+        "title": "Formulário de Contato Direto",
+        "fields": {
+            "name": {
+                "label": "Nome",
+                "placeholder": "Seu nome",
+                "validation": {
+                    "required": "O nome é obrigatório",
+                    "minLength": "O nome deve ter pelo menos 3 caracteres",
+                    "maxLength": "O nome deve ter menos de 50 caracteres"
+                }
+            },
+            "email": {
+                "label": "E-mail",
+                "placeholder": "Ex: teste@email.com",
+                "validation": {
+                    "required": "O e-mail é obrigatório",
+                    "email": "O e-mail não é válido"
+                }
+            },
+            "phone": {
+                "label": "Telefone",
+                "placeholder": "Ex: +55-11-91234-5678",
+                "validation": {
+                    "required": "O telefone é obrigatório",
+                    "pattern": "O telefone não é válido"
+                }
+            },
+            "company": {
+                "label": "Empresa",
+                "placeholder": "Sua empresa",
+                "validation": {
+                    "required": "A empresa é obrigatória",
+                    "minLength": "A empresa deve ter pelo menos 3 caracteres",
+                    "maxLength": "A empresa deve ter menos de 50 caracteres"
+                }
+            },
+            "subject": {
+                "label": "Assunto",
+                "placeholder": "Seu assunto",
+                "validation": {
+                    "required": "O assunto é obrigatório",
+                    "minLength": "O assunto deve ter pelo menos 3 caracteres",
+                    "maxLength": "O assunto deve ter menos de 50 caracteres"
+                }
+            },
+            "message": {
+                "label": "Mensagem",
+                "placeholder": "Sua mensagem",
+                "validation": {
+                    "required": "A mensagem é obrigatória",
+                    "minLength": "A mensagem deve ter pelo menos 3 caracteres",
+                    "maxLength": "A mensagem deve ter menos de 500 caracteres"
+                }
+            },
+            "submit": {
+                "label": "Enviar"
+            }
+        }
     }
 }

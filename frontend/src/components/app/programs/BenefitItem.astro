@@ -8,18 +8,26 @@ type Props = {
 const { benefit } = Astro.props;
 ---
 
-<div class="group p-6 rounded-2xl border border-border/80 bg-card/80 backdrop-blur-sm shadow-sm hover:shadow-xl hover:border-secondary/60 hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3">
-    <div class="flex items-center gap-3">
-        <div class="size-10 rounded-xl bg-secondary/15 text-secondary border border-secondary/30 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-            <span
-                class="size-5 block [&>svg]:h-full [&>svg]:w-full"
-                set:html={benefit.icon}
-            />
-        </div>
-        <h4 class="font-heading font-bold text-base text-foreground leading-snug group-hover:text-secondary transition-colors">{benefit.title}</h4>
+<div class="group p-6 sm:p-7 rounded-2xl sm:rounded-3xl border border-border/80 bg-card/85 backdrop-blur-sm shadow-xs hover:shadow-xl hover:border-secondary/60 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full relative overflow-hidden">
+    <!-- Hover gradient sheen -->
+    <div
+        class="absolute inset-0 bg-linear-to-br from-secondary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    >
     </div>
 
-    <p class="text-muted-foreground text-sm leading-relaxed font-normal">
-        {benefit.description}
-    </p>
+    <div class="relative z-10 space-y-3">
+        <div class="flex items-center gap-3.5">
+            <div class="size-11 rounded-2xl bg-secondary/15 text-secondary border border-secondary/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-xs">
+                <span
+                    class="size-5 block [&>svg]:h-full [&>svg]:w-full"
+                    set:html={benefit.icon}
+                />
+            </div>
+            <h4 class="font-heading font-bold text-base sm:text-lg text-foreground leading-snug group-hover:text-secondary transition-colors">{benefit.title}</h4>
+        </div>
+
+        <p class="text-muted-foreground text-sm sm:text-base leading-relaxed font-normal">
+            {benefit.description}
+        </p>
+    </div>
 </div>

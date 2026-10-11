@@ -2,9 +2,8 @@
 import type { Program } from "@/types/programs";
 import { useFeaturedImage } from "@/utils/image";
 import { Picture } from "astro:assets";
-import { MODALITIES } from "@/consts/programs";
 import { ArrowRight, Clock, Users } from "lucide-react";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
 import type { Brand } from "@/types";
 import { cn } from "@/lib/utils";
 import { BrandsEnum } from "@/enums";
@@ -18,28 +17,28 @@ type Props = {
 
 const BRAND_THEMES = {
     acu: {
-        accent: "hover:border-acu-secondary/80",
+        accent: "hover:border-acu-secondary/80 hover:shadow-acu-secondary/15",
         titleHover: "group-hover/link:text-acu-secondary",
         badge: "bg-acu-secondary/20 text-acu-secondary border-acu-secondary/40",
         btn: "text-acu-secondary group-hover/link:translate-x-1",
         actionLink: "text-acu-secondary hover:text-acu-secondary/80 font-bold",
     },
     acm: {
-        accent: "hover:border-acm-secondary/80",
+        accent: "hover:border-acm-secondary/80 hover:shadow-acm-secondary/15",
         titleHover: "group-hover/link:text-acm-secondary",
         badge: "bg-acm-secondary/20 text-acm-secondary border-acm-secondary/40",
         btn: "text-acm-secondary group-hover/link:translate-x-1",
         actionLink: "text-acm-secondary hover:text-acm-secondary/80 font-bold",
     },
     acc: {
-        accent: "hover:border-acc-secondary/80",
+        accent: "hover:border-acc-secondary/80 hover:shadow-acc-secondary/15",
         titleHover: "group-hover/link:text-acc-secondary",
         badge: "bg-acc-secondary/20 text-acc-secondary border-acc-secondary/40",
         btn: "text-acc-secondary group-hover/link:translate-x-1",
         actionLink: "text-acc-secondary hover:text-acc-secondary/80 font-bold",
     },
     default: {
-        accent: "hover:border-secondary/80",
+        accent: "hover:border-secondary/80 hover:shadow-secondary/15",
         titleHover: "group-hover/link:text-secondary",
         badge: "bg-secondary/20 text-secondary border-secondary/40",
         btn: "text-secondary group-hover/link:translate-x-1",
@@ -49,16 +48,18 @@ const BRAND_THEMES = {
 
 const { program, brand = BrandsEnum.DEFAULT } = Astro.props;
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 const image = useFeaturedImage(program.images)(
     "medium_large",
 ) as FeaturedImageAtt;
 
-const brandStyle = BRAND_THEMES[brand];
+const brandStyle = BRAND_THEMES[brand] || BRAND_THEMES.default;
+const programUrl = `/${locale}/${brand}/programs/${program.slug}`;
 ---
 
 <div
     class={cn(
-        "group rounded-2xl border border-border/80 bg-card overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col justify-between relative",
+        "group h-full rounded-2xl border border-border/80 bg-card/90 dark:bg-card/50 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex flex-col justify-between relative",
         brandStyle.accent,
     )}
 >
@@ -72,26 +73,26 @@ const brandStyle = BRAND_THEMES[brand];
                     height={image.height}
                     formats={["avif", "webp"]}
                     loading="lazy"
-                    class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
             ) : (
-                <Skeleton className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out" />
+                <Skeleton className="w-full h-full object-cover" />
             )
         }
 
         <div
-            class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"
+            class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity"
         >
         </div>
 
         <div class="absolute top-3 right-3 flex items-center gap-2 z-10">
             <span
                 class={cn(
-                    "px-3 py-1 rounded-full text-xs font-bold border backdrop-blur-md shadow-sm transition-transform group-hover:scale-105",
+                    "px-3 py-1 rounded-full text-xs font-bold border backdrop-blur-md shadow-xs transition-transform group-hover:scale-105",
                     brandStyle.badge,
                 )}
             >
-                {MODALITIES[program.acf.modality]}
+                {t(`AC.utils.modalities.${program.acf.modality}`)}
             </span>
         </div>
 
@@ -107,15 +108,15 @@ const brandStyle = BRAND_THEMES[brand];
         }
     </div>
 
-    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+    <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
         <div class="flex-1 space-y-3">
             <a
-                href={`/${locale}/${brand}/programs/${program.slug}`}
-                class="block group/link"
+                href={programUrl}
+                class="block group/link focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
             >
                 <h3
                     class={cn(
-                        "text-lg md:text-xl font-heading font-bold text-foreground transition-colors duration-300 line-clamp-2 leading-snug",
+                        "text-lg sm:text-xl font-heading font-bold text-foreground transition-colors duration-200 line-clamp-2 leading-snug",
                         brandStyle.titleHover,
                     )}
                     set:html={program.title.rendered}
@@ -130,21 +131,21 @@ const brandStyle = BRAND_THEMES[brand];
         </div>
 
         <div
-            class="pt-4 border-t border-border/60 flex items-center justify-between gap-2 text-xs text-muted-foreground font-medium"
+            class="pt-4 border-t border-border/60 flex items-center justify-between gap-3 text-xs text-muted-foreground font-medium"
         >
-            <div class="flex items-center gap-2 truncate">
+            <div class="flex items-center gap-2 truncate" title={program.acf.target_audience}>
                 <Users className="size-4 shrink-0 opacity-70" />
                 <span class="truncate">{program.acf.target_audience}</span>
             </div>
 
             <a
-                href={`/${locale}/${brand}/programs/${program.slug}`}
+                href={programUrl}
                 class={cn(
-                    "inline-flex items-center gap-1.5 text-xs font-bold shrink-0 hover:underline group/link",
+                    "inline-flex items-center gap-1.5 text-xs font-bold shrink-0 hover:underline group/link focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xs",
                     brandStyle.actionLink,
                 )}
             >
-                <span>Ver más</span>
+                <span>{t("AC.utils.programs.viewMore")}</span>
                 <ArrowRight
                     className={cn(
                         "size-3.5 transition-transform duration-300",

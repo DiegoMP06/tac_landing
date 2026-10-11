@@ -1,4 +1,4 @@
-export const CHATBOT_MODEL = "openai/gpt-oss-120b";
+export const CHATBOT_MODEL = "gemini-3.1-flash-lite";
 export const CHATBOT_TEMPERATURE = 0.7;
 export const CHATBOT_MAX_TOKENS = 1024;
 

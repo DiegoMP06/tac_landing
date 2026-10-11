@@ -1,27 +1,32 @@
-import type { CreateLeadInput } from "@/actions/chatbot/createLead";
 import { ChatModeEnum } from "@/enums/chat";
+import { EMAIL_REGEX, PHONE_REGEX } from "@/regex";
 import { useChatStore } from "@/stores/chat";
+import type { SendLeadArgs } from "@/types/leads";
 import type { Locale } from "@/types/locale";
+import { useTranslations } from "@/utils/i18n";
 import { actions } from "astro:actions";
 import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type LeadFormProps = {
     locale: Locale;
 };
 
 export default function LeadForm({ locale }: LeadFormProps) {
+    const setIsLoading = useChatStore((state) => state.setIsLoading);
     const setMode = useChatStore((state) => state.setMode);
-    const mode = useChatStore((state) => state.mode);
     const loading = useChatStore((state) => state.loading);
 
-    const defaultValues: CreateLeadInput = {
+    const t = useTranslations(locale);
+
+    const defaultValues: SendLeadArgs = {
         name: "",
         email: "",
-        phone: "",
-        message: "",
         company: "",
-        locale,
+        phone: "",
+        subject: "",
+        message: "",
     };
 
     const {
@@ -33,8 +38,22 @@ export default function LeadForm({ locale }: LeadFormProps) {
         defaultValues,
     });
 
-    const onLeadFormSubmit = async (data: CreateLeadInput) => {
-        const res = await actions.chatbot.createLead(data);
+    const onLeadFormSubmit = async (data: SendLeadArgs) => {
+        setIsLoading(true);
+        const {
+            data: { success },
+        } = await actions.leads.sendLead(data);
+
+        if (!success) {
+            toast.error(t("sendEmail.error"));
+            setIsLoading(false);
+            return;
+        }
+
+        reset();
+        toast.success(t("sendEmail.success"));
+        setMode(ChatModeEnum.CHAT);
+        setIsLoading(false);
     };
 
     return (
@@ -43,11 +62,11 @@ export default function LeadForm({ locale }: LeadFormProps) {
                 onClick={() => setMode(ChatModeEnum.CHAT)}
                 className="mb-4 inline-flex items-center text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-                <ArrowLeft className="mr-1 size-3.5" /> Volver al chat
+                <ArrowLeft className="mr-1 size-3.5" /> {t("sendEmail.back")}
             </button>
 
             <h4 className="text-sm font-semibold text-foreground mb-3">
-                Formulario de Contacto por E-Mail
+                {t("sendEmail.title")}
             </h4>
 
             <form
@@ -59,21 +78,33 @@ export default function LeadForm({ locale }: LeadFormProps) {
                         className="block text-xs font-medium text-muted-foreground"
                         htmlFor="name"
                     >
-                        Nombre
+                        {t("sendEmail.fields.name.label")}
                     </label>
+
                     <input
                         id="name"
                         {...register("name", {
-                            required: "El nombre es obligatorio.",
+                            required: t(
+                                "sendEmail.fields.name.validation.required",
+                            ),
                             minLength: {
                                 value: 2,
-                                message: "Mínimo 2 caracteres.",
+                                message: t(
+                                    "sendEmail.fields.name.validation.minLength",
+                                ),
+                            },
+                            maxLength: {
+                                value: 50,
+                                message: t(
+                                    "sendEmail.fields.name.validation.maxLength",
+                                ),
                             },
                         })}
                         type="text"
-                        placeholder="Tu nombre"
+                        placeholder={t("sendEmail.fields.name.placeholder")}
                         className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
                     />
+
                     {errors.name && (
                         <p className="mt-1 text-[11px] text-rose-500">
                             {errors.name.message}
@@ -86,19 +117,24 @@ export default function LeadForm({ locale }: LeadFormProps) {
                         className="block text-xs font-medium text-muted-foreground"
                         htmlFor="email"
                     >
-                        Email
+                        {t("sendEmail.fields.email.label")}
                     </label>
+
                     <input
                         id="email"
                         {...register("email", {
-                            required: "El email es obligatorio.",
+                            required: t(
+                                "sendEmail.fields.email.validation.required",
+                            ),
                             pattern: {
-                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "Email no válido.",
+                                value: EMAIL_REGEX,
+                                message: t(
+                                    "sendEmail.fields.email.validation.email",
+                                ),
                             },
                         })}
                         type="email"
-                        placeholder="tu@email.com"
+                        placeholder={t("sendEmail.fields.email.placeholder")}
                         className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
                     />
 
@@ -114,19 +150,24 @@ export default function LeadForm({ locale }: LeadFormProps) {
                         className="block text-xs font-medium text-muted-foreground"
                         htmlFor="phone"
                     >
-                        Teléfono
+                        {t("sendEmail.fields.phone.label")}
                     </label>
+
                     <input
                         id="phone"
                         {...register("phone", {
-                            required: "El teléfono es obligatorio.",
+                            required: t(
+                                "sendEmail.fields.phone.validation.required",
+                            ),
                             pattern: {
-                                value: /^[0-9]+$/,
-                                message: "Teléfono no válido.",
+                                value: PHONE_REGEX,
+                                message: t(
+                                    "sendEmail.fields.phone.validation.pattern",
+                                ),
                             },
                         })}
                         type="tel"
-                        placeholder="+57 300 000 0000"
+                        placeholder={t("sendEmail.fields.phone.placeholder")}
                         className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
                     />
 
@@ -142,14 +183,14 @@ export default function LeadForm({ locale }: LeadFormProps) {
                         className="block text-xs font-medium text-muted-foreground"
                         htmlFor="company"
                     >
-                        Compañía
+                        {t("sendEmail.fields.company.label")}
                     </label>
 
                     <input
                         id="company"
                         {...register("company")}
                         type="text"
-                        placeholder="Tu Compañía"
+                        placeholder={t("sendEmail.fields.company.placeholder")}
                         className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
                     />
 
@@ -163,24 +204,74 @@ export default function LeadForm({ locale }: LeadFormProps) {
                 <div>
                     <label
                         className="block text-xs font-medium text-muted-foreground"
+                        htmlFor="subject"
+                    >
+                        {t("sendEmail.fields.subject.label")}
+                    </label>
+
+                    <input
+                        id="subject"
+                        {...register("subject", {
+                            required: t(
+                                "sendEmail.fields.subject.validation.required",
+                            ),
+                            minLength: {
+                                value: 2,
+                                message: t(
+                                    "sendEmail.fields.subject.validation.minLength",
+                                ),
+                            },
+                            maxLength: {
+                                value: 50,
+                                message: t(
+                                    "sendEmail.fields.subject.validation.maxLength",
+                                ),
+                            },
+                        })}
+                        type="text"
+                        placeholder={t("sendEmail.fields.subject.placeholder")}
+                        className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
+                    />
+
+                    {errors.subject && (
+                        <p className="mt-1 text-[11px] text-rose-500">
+                            {errors.subject.message}
+                        </p>
+                    )}
+                </div>
+
+                <div>
+                    <label
+                        className="block text-xs font-medium text-muted-foreground"
                         htmlFor="message"
                     >
-                        Mensaje
+                        {t("sendEmail.fields.message.label")}
                     </label>
 
                     <textarea
                         id="message"
                         {...register("message", {
-                            required: "El mensaje es obligatorio.",
+                            required: t(
+                                "sendEmail.fields.message.validation.required",
+                            ),
                             minLength: {
                                 value: 5,
-                                message: "Mínimo 5 caracteres.",
+                                message: t(
+                                    "sendEmail.fields.message.validation.minLength",
+                                ),
+                            },
+                            maxLength: {
+                                value: 500,
+                                message: t(
+                                    "sendEmail.fields.message.validation.maxLength",
+                                ),
                             },
                         })}
                         rows={3}
-                        placeholder="¿En qué te ayudamos?"
+                        placeholder={t("sendEmail.fields.message.placeholder")}
                         className="mt-1 w-full resize-none rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none"
                     />
+
                     {errors.message && (
                         <p className="mt-1 text-[11px] text-rose-500">
                             {errors.message.message}
@@ -194,7 +285,7 @@ export default function LeadForm({ locale }: LeadFormProps) {
                         disabled={loading}
                         className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-medium text-primary-foreground shadow-md transition-all hover:opacity-90 disabled:opacity-50"
                     >
-                        Enviar
+                        {t("sendEmail.fields.submit.label")}
                     </button>
                 </div>
             </form>

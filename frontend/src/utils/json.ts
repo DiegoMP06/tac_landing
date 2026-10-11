@@ -1,4 +1,3 @@
-
 export function extractJSON(raw: string): string {
     let cleaned = raw
         .trim()
@@ -17,11 +16,11 @@ export function extractJSON(raw: string): string {
     return cleaned;
 }
 
-export function jsonToString<T extends object>(entity: T): string {
-    return JSON.stringify(entity);
+export function jsonToString<T = unknown>(value: T): string {
+    return typeof value === "string" ? value : JSON.stringify(value);
 }
 
-export function stringToJson<T>(value: unknown): T | unknown {
+export function stringToJson<T = unknown>(value: unknown): T {
     if (typeof value === "string") {
         try {
             return JSON.parse(value) as T;
@@ -31,4 +30,3 @@ export function stringToJson<T>(value: unknown): T | unknown {
     }
     return value as T;
 }
-
