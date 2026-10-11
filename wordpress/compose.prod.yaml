@@ -15,6 +15,8 @@ services:
             WP_HOME: ${WP_HOME}
             WP_SITEURL: ${WP_SITEURL}
 
+            FS_METHOD: ${FS_METHOD:-direct}
+
             WP_DEBUG: ${WP_DEBUG:-false}
             WP_DEBUG_DISPLAY: ${WP_DEBUG_DISPLAY:-false}
             WP_DEBUG_LOG: ${WP_DEBUG_LOG:-true}
@@ -37,11 +39,13 @@ services:
             BLOG_ID_CURRENT_SITE: ${BLOG_ID_CURRENT_SITE:-1}
         volumes:
             - tac_wordpress_uploads:/var/www/html/web/app/uploads
+            - tac_wordpress_plugins:/var/www/html/web/app/plugins
         networks:
             - coolify
 
 volumes:
     tac_wordpress_uploads:
+    tac_wordpress_plugins:
 
 networks:
     coolify:

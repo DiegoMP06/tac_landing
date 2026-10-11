@@ -7,6 +7,10 @@ web/app/mu-plugins/*/
 web/app/themes/twentytwentyfive/
 web/app/upgrade
 web/app/uploads/*
+web/app/uploads/sites/*/wpcf7_uploads
+web/app/uploads/sites/*/wpforms
+!web/app/uploads/2026
+!web/app/uploads/sites
 !web/app/uploads/.gitkeep
 web/app/cache/*
 
