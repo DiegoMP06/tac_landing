@@ -29,8 +29,14 @@ COPY docker/nginx.prod.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN mkdir -p /var/www/html/web/app/uploads \
-    && chown -R www-data:www-data /var/www/html/web/app/uploads /var/run /var/log/nginx \
-    && chmod -R 755 /var/www/html/web/app/uploads
+             /var/www/html/web/app/plugins \
+             /var/www/html/web/app/upgrade \
+             /var/www/html/web/app/cache \
+    && chown -R www-data:www-data /var/www/html/web/app /var/run /var/log/nginx \
+    && chmod -R 775 /var/www/html/web/app/uploads \
+                    /var/www/html/web/app/plugins \
+                    /var/www/html/web/app/upgrade \
+                    /var/www/html/web/app/cache
 
 EXPOSE 80
 
