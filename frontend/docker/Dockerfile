@@ -40,11 +40,12 @@ COPY --from=builder --chown=astro:nodejs /app/dist ./dist
 COPY --from=builder --chown=astro:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=astro:nodejs /app/package.json ./package.json
 
+COPY --from=builder --chown=astro:nodejs /app/tsconfig.json ./tsconfig.json
 COPY --from=builder --chown=astro:nodejs /app/drizzle.config.ts ./drizzle.config.ts
-COPY --from=builder --chown=astro:nodejs /app/src/db ./src/db
+COPY --from=builder --chown=astro:nodejs /app/src ./src
 
 USER astro
 
 EXPOSE 4321
 
-CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ] || [ \"$RUN_MIGRATIONS\" = \"1\" ]; then echo '==> [DB] Ejecutando migraciones...'; pnpm drizzle-kit push; fi && node ./dist/server/entry.mjs"]
+CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ] || [ \"$RUN_MIGRATIONS\" = \"1\" ]; then echo '==> [DB] RUN_MIGRATIONS activo. Ejecutando drizzle-kit push...'; pnpm drizzle-kit push; else echo '==> [DB] Migraciones omitidas (RUN_MIGRATIONS actual: \"$RUN_MIGRATIONS\").'; fi && node ./dist/server/entry.mjs"]
