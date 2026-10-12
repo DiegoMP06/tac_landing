@@ -48,4 +48,4 @@ USER astro
 
 EXPOSE 4321
 
-CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ] || [ \"$RUN_MIGRATIONS\" = \"1\" ]; then echo '==> [DB] RUN_MIGRATIONS activo. Ejecutando drizzle-kit push...'; pnpm drizzle-kit push; else echo '==> [DB] Migraciones omitidas (RUN_MIGRATIONS actual: \"$RUN_MIGRATIONS\").'; fi && node ./dist/server/entry.mjs"]
+CMD ["sh", "-c", "if [ \"$RUN_MIGRATIONS\" = \"true\" ] || [ \"$RUN_MIGRATIONS\" = \"1\" ]; then echo '==> [DB] RUN_MIGRATIONS activo. Ejecutando drizzle-kit push...'; pnpm drizzle-kit push --force; else echo '==> [DB] Migraciones omitidas (RUN_MIGRATIONS actual: \"$RUN_MIGRATIONS\").'; fi && node ./dist/server/entry.mjs"]
