@@ -4,6 +4,7 @@ import { FeaturedImagesSizesEnum } from "@/enums/images";
 import type { Brand } from "@/types";
 import type { FeaturedImageAtt, FeaturedImages } from "@/types/images";
 import { useFeaturedImage } from "@/utils/image";
+import { Picture } from "astro:assets";
 
 type Props = {
     title: string;
@@ -48,13 +49,25 @@ const currentStyles = STYLES[variant] || STYLES.default;
 ---
 
 <section class="relative overflow-hidden border-b border-border/80">
-    <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover filter blur-[2px] scale-105 opacity-100"
-        style={{
-            backgroundImage: `url(${image?.url})`,
-        }}
-    >
-    </div>
+    {
+        image && (
+            <Picture
+                src={image.url}
+                width={image.width}
+                height={image.height}
+                alt={title}
+                aria-hidden="true"
+                formats={["avif", "webp"]}
+                widths={[640, 960, 1280, 1920]}
+                sizes="100vw"
+                quality={60}
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="absolute inset-0 z-10 size-full object-cover object-center blur-[2px] scale-105"
+            />
+        )
+    }
     <div
         class="absolute inset-0 z-20 backdrop-blur-xs transition-colors duration-300 bg-linear-to-b from-background/90 via-background/75 to-background"
     >

@@ -10,6 +10,10 @@
                 "ACC": "Comercios",
                 "blog": "Blog",
                 "contact": "Contacto"
+            },
+            "theme": {
+                "dark": "Cambiar a tema oscuro",
+                "light": "Cambiar a tema claro"
             }
         },
         "footer": {

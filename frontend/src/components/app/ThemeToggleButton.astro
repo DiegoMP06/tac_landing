@@ -1,5 +1,9 @@
 ---
+import { useLocalePath, useTranslations } from "@/utils/i18n";
 import { Moon, Sun } from "lucide-react";
+
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 ---
 
 <script is:inline>
@@ -33,11 +37,21 @@ import { Moon, Sun } from "lucide-react";
     @click="toggle"
     class="p-2 rounded cursor-pointer hover:bg-accent border border-accent hover:shadow shadow-muted hover:border-muted-foreground transition-all ease-in-out duration-500"
 >
-    <span x-show="!dark" x-cloak>
+    <span
+        x-show="!dark"
+        x-cloak
+        aria-label={t("AC.header.theme.dark")}
+        title={t("AC.header.theme.dark")}
+    >
         <Moon className="size-6 text-muted-foreground" />
     </span>
 
-    <span x-show="dark" x-cloak>
+    <span
+        x-show="dark"
+        x-cloak
+        aria-label={t("AC.header.theme.light")}
+        title={t("AC.header.theme.light")}
+    >
         <Sun className="size-6 text-muted-foreground" />
     </span>
 </button>

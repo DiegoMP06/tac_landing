@@ -10,6 +10,10 @@
                 "ACC": "Commerce",
                 "blog": "Blog",
                 "contact": "Contact"
+            },
+            "theme": {
+                "dark": "Switch to dark mode",
+                "light": "Switch to light mode"
             }
         },
         "footer": {

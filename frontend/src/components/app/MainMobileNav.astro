@@ -11,6 +11,8 @@ const t = useTranslations(locale);
         type="button"
         @click="toggle"
         class="group p-2.5 rounded-xl cursor-pointer bg-background border border-border shadow-sm hover:shadow-md hover:bg-muted transition-all ease-out duration-300"
+        aria-label={t("AC.header.menu")}
+        title={t("AC.header.menu")}
     >
         <Menu
             className="size-6 text-foreground group-hover:scale-110 transition-transform duration-300"

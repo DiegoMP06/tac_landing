@@ -7,6 +7,7 @@ import HeroIcon from "./HeroIcon.astro";
 import type { FeaturedImageAtt } from "@/types/images";
 import { ArrowRight } from "lucide-react";
 import { FeaturedImagesSizesEnum } from "@/enums/images";
+import { Picture } from "astro:assets";
 
 type Props = {
     page: Page;
@@ -59,13 +60,25 @@ const heroData = page.acf?.hero;
 ---
 
 <section class="relative overflow-hidden border-b border-border/60">
-    <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover md:bg-fixed transform scale-105 filter saturate-90"
-        style={{
-            backgroundImage: `url(${image?.url})`,
-        }}
-    >
-    </div>
+    {
+        image && (
+            <Picture
+                src={image.url}
+                width={image.width}
+                height={image.height}
+                alt={page.title.rendered}
+                aria-hidden="true"
+                formats={["avif", "webp"]}
+                widths={[640, 960, 1280, 1920]}
+                sizes="100vw"
+                quality={60}
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="absolute inset-0 z-10 size-full object-cover object-center transform scale-105 saturate-90"
+            />
+        )
+    }
     <div
         class={cn(
             "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/50 via-background/65 to-background/80",

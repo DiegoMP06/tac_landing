@@ -12,7 +12,7 @@ const { data, error } = await Astro.callAction(
 ---
 
 <Chatbot
-    client:load
+    client:idle
     transition:persist="chatbot-ui"
     locale={locale}
     conversation={error ? null : data}
