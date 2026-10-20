@@ -4,7 +4,8 @@ import CountDownSection from "@/components/app/home/CountDownSection.astro";
 import { PageTypeEnum } from "@/enums/pages";
 import AppLayout from "@/layouts/app/AppLayout.astro";
 import { BrandSchema } from "@/schemas";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildBreadcrumbSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 
 const idDict = {
@@ -24,6 +25,7 @@ if (!brandValidate.success) {
 const entityId = idDict[brandValidate.data];
 
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 
 const { data: page, error } = await Astro.callAction(
     actions.pages.getAndIndexPage,
@@ -42,9 +44,25 @@ if (error || !page) {
 const {
     acf: { count_down },
 } = page;
+
+const breadcrumbs = buildBreadcrumbSchema([
+    { name: t("AC.header.nav.home"), url: `/${locale}` },
+    { name: page.title.rendered, url: `/${locale}/${brandValidate.data}` },
+]);
+
+const brandTitle = t(`seo.brands.${brandValidate.data}.title` as never);
+const brandDescription =
+    page.acf?.hero?.description ||
+    t(`seo.brands.${brandValidate.data}.description` as never);
 ---
 
-<AppLayout page={page} variant={brandValidate.data}>
+<AppLayout
+    page={page}
+    variant={brandValidate.data}
+    title={brandTitle}
+    description={brandDescription}
+    jsonLd={breadcrumbs}
+>
     {
         count_down?.enable && (
             <CountDownSection

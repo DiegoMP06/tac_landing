@@ -1,5 +1,6 @@
 ---
 import { Skeleton } from "@/components/ui/skeleton";
+import { FeaturedImagesSizesEnum } from "@/enums/images";
 import { cn } from "@/lib/utils";
 import type { Brand } from "@/types";
 import type { Event } from "@/types/events";
@@ -48,7 +49,9 @@ const BRAND_THEMES = {
 const { event, brand } = Astro.props;
 const { locale } = useLocalePath(Astro.url);
 const t = useTranslations(locale);
-const image = useFeaturedImage(event.images)("thumbnail") as FeaturedImageAtt;
+const image = useFeaturedImage(event.images)(
+    FeaturedImagesSizesEnum.thumbnail,
+) as FeaturedImageAtt;
 
 const brandStyle = BRAND_THEMES[brand] || BRAND_THEMES.default;
 const eventUrl = `/${locale}/${event.site.variant}/events/${event.slug}`;
@@ -105,7 +108,11 @@ const eventUrl = `/${locale}/${event.site.variant}/events/${event.slug}`;
             >
                 <Calendar className="size-3.5 text-white/80" />
                 {event.acf.start_date}
-                {event.acf.end_date ? ` ${t("AC.utils.events.to")} ${event.acf.end_date}` : ""}
+                {
+                    event.acf.end_date
+                        ? ` ${t("AC.utils.events.to")} ${event.acf.end_date}`
+                        : ""
+                }
             </span>
         </div>
     </div>
@@ -135,7 +142,10 @@ const eventUrl = `/${locale}/${event.site.variant}/events/${event.slug}`;
         <div
             class="pt-4 border-t border-border/60 flex items-center justify-between gap-3 text-xs text-muted-foreground font-medium"
         >
-            <div class="flex items-center gap-2 truncate" title={event.acf.location?.address}>
+            <div
+                class="flex items-center gap-2 truncate"
+                title={event.acf.location?.address}
+            >
                 <MapPin className="size-4 shrink-0 opacity-70" />
                 <span class="truncate">{event.acf.location?.address}</span>
             </div>

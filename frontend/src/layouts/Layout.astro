@@ -1,22 +1,46 @@
 ---
+import '@fontsource-variable/geist';
 import "../styles/global.css";
 
 import LoadChatbotData from "@/components/app/chatbot/LoadChatbotData.astro";
 import Favicon from "@/components/app/Favicon.astro";
 import GetDefaultTheme from "@/components/app/GetDefaultTheme.astro";
 import ToasterContainer from "@/components/app/ToasterContainer";
+import SEO from "@/components/SEO.astro";
+import JsonLd from "@/components/JsonLd.astro";
 import type { Brand } from "@/types";
 import { useLocalePath } from "@/utils/i18n";
 import { ClientRouter } from "astro:transitions";
 
 type Props = {
     title: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+    type?: "website" | "article";
+    noindex?: boolean;
+    canonical?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
     variant?: Brand;
+    jsonLd?: Record<string, any> | Array<Record<string, any>>;
 };
 
-const { title, variant = "default" } = Astro.props;
-const theme = Astro.cookies.get("theme")?.value;
+const {
+    title,
+    description,
+    image,
+    imageAlt,
+    type = "website",
+    noindex = false,
+    canonical,
+    publishedTime,
+    modifiedTime,
+    variant = "default",
+    jsonLd,
+} = Astro.props;
 
+const theme = Astro.cookies.get("theme")?.value;
 const { locale } = useLocalePath(Astro.url);
 ---
 
@@ -26,17 +50,30 @@ const { locale } = useLocalePath(Astro.url);
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
 
+        <SEO
+            title={title}
+            description={description}
+            image={image}
+            imageAlt={imageAlt}
+            type={type}
+            noindex={noindex}
+            canonical={canonical}
+            publishedTime={publishedTime}
+            modifiedTime={modifiedTime}
+            variant={variant}
+        />
+
         <Favicon variant={variant} />
 
         <meta name="generator" content={Astro.generator} />
 
         <ClientRouter />
 
-        <title>{title}</title>
+        {jsonLd && <JsonLd data={jsonLd} />}
 
         <GetDefaultTheme />
     </head>
-    <body class="bg-background min-h-screen flex flex-col">
+    <body class="bg-background min-h-screen flex flex-col font-sans antialiased">
         <slot />
 
         <LoadChatbotData />

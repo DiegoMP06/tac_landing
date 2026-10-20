@@ -4,12 +4,14 @@ import CountDownSection from "@/components/app/home/CountDownSection.astro";
 import { BrandsEnum } from "@/enums";
 import { PageTypeEnum } from "@/enums/pages";
 import AppLayout from "@/layouts/app/AppLayout.astro";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildOrganizationSchema, buildWebSiteSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 
 const entityId = "32";
 
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 
 const { data: page, error } = await Astro.callAction(
     actions.pages.getAndIndexPage,
@@ -28,9 +30,19 @@ if (error || !page) {
 const {
     acf: { count_down },
 } = page;
+
+const jsonLd = [
+    buildOrganizationSchema(t("seo.siteName"), t("seo.siteDescription")),
+    buildWebSiteSchema(t("seo.siteName"), locale),
+];
 ---
 
-<AppLayout page={page}>
+<AppLayout
+    page={page}
+    title={t("seo.pages.home.title")}
+    description={page.acf?.hero?.description || t("seo.pages.home.description")}
+    jsonLd={jsonLd}
+>
     {
         count_down?.enable && (
             <CountDownSection

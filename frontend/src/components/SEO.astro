@@ -1,0 +1,186 @@
+---
+import {
+    BRAND_THEME_COLORS,
+    DEFAULT_SITE_URL,
+    getAbsoluteUrl,
+    getAlternateUrls,
+    OG_LOCALE_MAP,
+    SUPPORTED_LOCALES,
+} from "@/config/seo";
+import { BrandsEnum } from "@/enums";
+import type { Brand } from "@/types";
+import type { Locale } from "@/types/locale";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+
+export type Props = {
+    title?: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+    type?: "website" | "article";
+    noindex?: boolean;
+    canonical?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
+    variant?: Brand;
+    alternates?: Array<{ locale: Locale; url: string }>;
+};
+
+const {
+    title: explicitTitle,
+    description: explicitDescription,
+    image,
+    imageAlt: explicitImageAlt,
+    type = "website",
+    noindex = false,
+    canonical,
+    publishedTime,
+    modifiedTime,
+    variant = BrandsEnum.DEFAULT,
+    alternates: customAlternates,
+} = Astro.props;
+
+const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
+
+const BrandTitles = {
+    [BrandsEnum.DEFAULT]: t("seo.siteName"),
+    [BrandsEnum.ACU]: t("seo.brands.acu.title"),
+    [BrandsEnum.ACM]: t("seo.brands.acm.title"),
+    [BrandsEnum.ACC]: t("seo.brands.acc.title"),
+};
+
+const BrandDescriptions = {
+    [BrandsEnum.DEFAULT]: t("seo.siteDescription"),
+    [BrandsEnum.ACU]: t("seo.brands.acu.description"),
+    [BrandsEnum.ACM]: t("seo.brands.acm.description"),
+    [BrandsEnum.ACC]: t("seo.brands.acc.description"),
+};
+
+const BrandImageAlts = {
+    [BrandsEnum.DEFAULT]: t("seo.ogImageAlt"),
+    [BrandsEnum.ACU]: t("seo.brands.acu.ogImageAlt"),
+    [BrandsEnum.ACM]: t("seo.brands.acm.ogImageAlt"),
+    [BrandsEnum.ACC]: t("seo.brands.acc.ogImageAlt"),
+};
+
+const siteName = BrandTitles[variant] || t("seo.siteName");
+const pageTitle = explicitTitle || siteName;
+const pageDescription =
+    explicitDescription ||
+    BrandDescriptions[variant] ||
+    t("seo.siteDescription");
+
+// Determine default OG image per brand & language
+const defaultOgPath = (() => {
+    switch (variant) {
+        case BrandsEnum.ACU:
+            return `/og/og-acu-${locale}.png`;
+        case BrandsEnum.ACM:
+            return `/og/og-acm-${locale}.png`;
+        case BrandsEnum.ACC:
+            return `/og/og-acc-${locale}.png`;
+        default:
+            return `/og/og-${locale}.png`;
+    }
+})();
+
+const rawImage = image || defaultOgPath;
+const absoluteImage = rawImage.startsWith("http")
+    ? rawImage
+    : getAbsoluteUrl(rawImage);
+
+const pageImageAlt =
+    explicitImageAlt ||
+    BrandImageAlts[variant] ||
+    t("seo.ogImageAlt");
+
+const imageType = absoluteImage.endsWith(".jpg") || absoluteImage.endsWith(".jpeg")
+    ? "image/jpeg"
+    : absoluteImage.endsWith(".webp")
+      ? "image/webp"
+      : "image/png";
+
+// Canonical URL without queries or hash
+const currentPath = Astro.url.pathname;
+const absoluteCanonical = canonical
+    ? (canonical.startsWith("http") ? canonical : getAbsoluteUrl(canonical))
+    : getAbsoluteUrl(currentPath);
+
+// Multilingual alternate URLs
+const { alternates: autoAlternates, xDefaultUrl } = getAlternateUrls(currentPath);
+const alternateLinks = customAlternates || autoAlternates;
+
+// Open Graph Locales
+const currentOgLocale = OG_LOCALE_MAP[locale] || "es_LA";
+const alternateOgLocales = SUPPORTED_LOCALES
+    .filter((loc) => loc !== locale)
+    .map((loc) => OG_LOCALE_MAP[loc]);
+
+// Theme colors
+const themeColors = BRAND_THEME_COLORS[variant] || BRAND_THEME_COLORS[BrandsEnum.DEFAULT];
+---
+
+<!-- Primary Meta Tags -->
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={pageDescription} />
+<link rel="canonical" href={absoluteCanonical} />
+<meta
+    name="robots"
+    content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}
+/>
+
+<!-- Theme Color Tokens -->
+<meta name="theme-color" content={themeColors.light} media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content={themeColors.dark} media="(prefers-color-scheme: dark)" />
+
+<!-- Multilingual / Hreflang Alternates -->
+{
+    alternateLinks.map((alt) => (
+        <link rel="alternate" hreflang={alt.locale} href={alt.url} />
+    ))
+}
+<link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:url" content={absoluteCanonical} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:locale" content={currentOgLocale} />
+{
+    alternateOgLocales.map((altOg) => (
+        <meta property="og:locale:alternate" content={altOg} />
+    ))
+}
+<meta property="og:image" content={absoluteImage} />
+<meta property="og:image:secure_url" content={absoluteImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={pageImageAlt} />
+<meta property="og:image:type" content={imageType} />
+
+{
+    type === "article" && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+    )
+}
+{
+    type === "article" && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+    )
+}
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={absoluteCanonical} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={absoluteImage} />
+<meta name="twitter:image:alt" content={pageImageAlt} />
+
+<!-- Performance preconnects -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

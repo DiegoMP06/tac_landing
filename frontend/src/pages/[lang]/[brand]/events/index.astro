@@ -3,7 +3,8 @@ import ListEventsSection from "@/components/app/events/ListEventsSection.astro";
 import { PageTypeEnum } from "@/enums/pages";
 import AppLayout from "@/layouts/app/AppLayout.astro";
 import { BrandSchema } from "@/schemas";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildBreadcrumbSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 
 const idDict = {
@@ -23,6 +24,7 @@ if (!brandValidate.success) {
 const entityId = idDict[brandValidate.data];
 
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 
 const { data: page, error } = await Astro.callAction(
     actions.pages.getAndIndexPage,
@@ -37,8 +39,19 @@ const { data: page, error } = await Astro.callAction(
 if (error) {
     return Astro.redirect("/404");
 }
+
+const breadcrumbs = buildBreadcrumbSchema([
+    { name: t("AC.header.nav.home"), url: `/${locale}` },
+    { name: brandValidate.data.toUpperCase(), url: `/${locale}/${brandValidate.data}` },
+    { name: page.title.rendered, url: `/${locale}/${brandValidate.data}/events` },
+]);
 ---
 
-<AppLayout page={page} variant={brandValidate.data}>
+<AppLayout
+    page={page}
+    variant={brandValidate.data}
+    description={page.acf?.hero?.description || t("seo.pages.events.description")}
+    jsonLd={breadcrumbs}
+>
     <ListEventsSection variant={brandValidate.data} />
 </AppLayout>

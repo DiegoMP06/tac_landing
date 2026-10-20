@@ -1,47 +1,9 @@
-<svg viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg">
-    <!-- Fondo blanco -->
-    <rect x="0" y="0" width="1254" height="1254" fill="#ffffff" />
-
-    <!-- Título superior -->
-    <text x="627" y="240" text-anchor="middle"
-        font-family="'Poppins', 'Segoe UI', Arial, sans-serif"
-        font-weight="700" font-size="60" fill="#0b1830">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254"><path fill="#fff" d="M0 0h1254v1254H0z"/><text x="627" y="240" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="60" font-weight="700" text-anchor="middle">
         The Americas Conference
-    </text>
-
-    <!-- Icono: una sola línea que se divide en 3 rectángulos huecos -->
-    <g fill="#1b5e34" transform="translate(61.5,62)">
-        <rect x="472" y="278" width="185" height="25" />
-        <rect x="472" y="278" width="25" height="449" />
-        <rect x="632" y="278" width="25" height="449" />
-
-        <rect x="421" y="435" width="180" height="26" />
-        <rect x="421" y="435" width="25" height="292" />
-        <rect x="577" y="435" width="25" height="233" />
-
-        <rect x="524" y="514" width="186" height="26" />
-        <rect x="524" y="514" width="25" height="154" />
-        <rect x="685" y="514" width="25" height="213" />
-
-        <rect x="524" y="655" width="77" height="25" />
-        <rect x="421" y="702" width="76" height="25" />
-        <rect x="632" y="702" width="78" height="25" />
-    </g>
-
-    <!-- Subtítulos -->
-    <text x="627" y="880" text-anchor="middle"
-        font-family="'Poppins', 'Segoe UI', Arial, sans-serif"
-        font-weight="700" font-size="54" fill="#0b1830">
+    </text><g fill="#1b5e34"><path d="M533.5 340h185v25h-185z"/><path d="M533.5 340h25v449h-25zm160 0h25v449h-25z"/><path d="M482.5 497h180v26h-180z"/><path d="M482.5 497h25v292h-25zm156 0h25v233h-25z"/><path d="M585.5 576h186v26h-186z"/><path d="M585.5 576h25v154h-25zm161 0h25v213h-25z"/><path d="M585.5 717h77v25h-77zm-103 47h76v25h-76zm211 0h78v25h-78z"/></g><text x="627" y="880" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
         Chamber of Commerce
-    </text>
-    <text x="627" y="944" text-anchor="middle"
-        font-family="'Poppins', 'Segoe UI', Arial, sans-serif"
-        font-weight="700" font-size="54" fill="#0b1830">
+    </text><text x="627" y="944" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
         Conference of Mayors
-    </text>
-    <text x="627" y="1008" text-anchor="middle"
-        font-family="'Poppins', 'Segoe UI', Arial, sans-serif"
-        font-weight="700" font-size="54" fill="#0b1830">
+    </text><text x="627" y="1008" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
         Conference of Universities
-    </text>
-</svg>
+    </text></svg>

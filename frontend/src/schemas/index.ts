@@ -33,6 +33,9 @@ export const FeaturedImagesSchema = z
 export const DefaultWordpressSchema = z.object({
     id: z.number(),
     slug: z.string(),
+    excerpt: z.object({
+        rendered: z.string(),
+    }).nullable().optional(),
     title: z.object({
         rendered: z.string(),
     }),
@@ -43,9 +46,11 @@ export const DefaultWordpressSchema = z.object({
         id: z.number(),
         name: z.string(),
         url: z.url(),
-        domain: z.string(),
+        domain: z.string().nullable().optional(),
         variant: z.enum(BrandsEnum),
     }),
+    date_gmt: z.string().optional(),
+    modified_gmt: z.string().optional(),
 });
 
 export const CtaSchema = z.object({

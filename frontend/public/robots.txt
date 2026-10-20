@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_actions/
+Disallow: /404
+Disallow: /500
+
+Sitemap: https://theamericasconference.io/sitemap.xml

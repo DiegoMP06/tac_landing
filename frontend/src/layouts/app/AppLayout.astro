@@ -18,9 +18,26 @@ import type { Page } from "@/types/pages";
 type Props = {
     page: Page;
     variant?: Brand;
+    title?: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+    noindex?: boolean;
+    canonical?: string;
+    jsonLd?: Record<string, any> | Array<Record<string, any>>;
 };
 
-const { page, variant = BrandsEnum.DEFAULT } = Astro.props;
+const {
+    page,
+    variant = BrandsEnum.DEFAULT,
+    title,
+    description,
+    image,
+    imageAlt,
+    noindex,
+    canonical,
+    jsonLd,
+} = Astro.props;
 
 const Titles = {
     [BrandsEnum.DEFAULT]: "The Americas Conference",
@@ -28,9 +45,25 @@ const Titles = {
     [BrandsEnum.ACC]: "The Americas Chambers of Commerce",
     [BrandsEnum.ACU]: "The Americas Conference of Universities",
 };
+
+const computedTitle = title || `${Titles[variant]} | ${page.title.rendered}`;
+const computedDescription =
+    description ||
+    page.acf?.hero?.description ||
+    page.acf?.content?.phrase;
+const computedImage = image;
 ---
 
-<Layout title={`${Titles[variant]} | ${page.title.rendered}`} variant={variant}>
+<Layout
+    title={computedTitle}
+    description={computedDescription}
+    image={computedImage}
+    imageAlt={imageAlt}
+    noindex={noindex}
+    canonical={canonical}
+    variant={variant}
+    jsonLd={jsonLd}
+>
     {
         (() => {
             switch (variant) {

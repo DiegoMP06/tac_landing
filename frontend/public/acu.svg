@@ -1,7 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <circle cx="256" cy="256" r="234" fill="#fbfbfd" stroke="#0a1e48" stroke-width="20" />
-    <text x="256" y="300" text-anchor="middle" fill="#0a1e48"
-        font-family="Georgia, 'Times New Roman', serif" font-size="118" font-weight="600"
-        letter-spacing="-2">ACU</text>
-    <rect x="166" y="324" width="180" height="10" rx="5" fill="#d8a72a" />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" aria-label="ACU — The Americas Conference of Universities" viewBox="0 0 800 800"><defs><clipPath id="americas" clipPathUnits="userSpaceOnUse"><path fill-rule="evenodd" d="M243 371v4h3v-4ZM103 248l-14 14-4 2v7l-2 2v11l-5 5v4l3 1 6-2 4-4 6-2v-2l7-5 8-2 11 4 12 15 2 13 2 2-1 22 2 3 8 5v12l4 3 1 4 8 5 4 6 7 2 4 4h9l4 2 3 4 8 2 5 8 5 4 8 3 4 4v4l-9 9v6l2 2 2 8 3 3v3l8 6v3l7 5 1 4v21l-5 7v10l-3 3v12l3 3v5l5 6 6 4v4l5 4h9v-2l3-3 7-2v-4l-4-3-3 1-7-5 1-8 3-6 6-4 6-9 9-8 1-10 5-4v-2l7-5 7-1 1-19 5-4 1-9-5-4-2-4-7-4-3 1-6-3-3-3v-3l-4-4v-2l-11-3-6-6-10 1-11-6-4-5-3 1-2 4-7 5-8-5v-10l-4-3v-4l7-5 4 2 3 4 4-1 2-3v-2l-12-10v-13l7-5 2-3v-5l14-19 4-2h10l3-4 4-2 5 3h3v-4l-5-5v-6l-3-1-14-14-4-6 3-12-15-11h-6l-7-5v-5l3-3 7-3 9 6 4-2 10 6 7 7v5l4 4v5l5 8h4l1-7 3-4 13-10 1-12-7-2-10-8-7-3h-4l-5 3-8-2-5 3-6-4-8 1-22-2-6 3v9l-13 10-7-5v-6l-3-3v-4h-3l-7 5h-5l-1 4-5 4v5l-14 10h-11l-16-9Zm104 96 4 4 1 10-9 8-7 2-6 4-7-3-3-3v-16l3-3 15-5h5Zm-9-71 10-7 6 1 3-2 7 5v13l-7 5-6-1-13-9Zm26-20 7 5v4l-9 6-7-5v-5l3-3Z" clip-rule="evenodd"/></clipPath><pattern id="mapDots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.55" fill="#0a1e48"/></pattern></defs><path fill="#fff" d="M0 0h800v800H0z"/><circle cx="400" cy="390" r="370" fill="#fff"/><g clip-path="url(#americas)"><path fill="url(#mapDots)" d="M65 215h250v335H65z"/></g><path stroke="#d8a72a" stroke-linecap="round" stroke-width="3.2" d="M330.5 236v296"/><g fill="#0a1e48"><text x="364" y="389" font-family="GFS Didot, Didot, Times New Roman, Times, serif" font-size="166" font-weight="400" letter-spacing="1">
+            ACU
+        </text><g font-family="Nimbus Sans, Arial, Helvetica, sans-serif" font-size="29" font-weight="500" letter-spacing="5.5"><text x="365" y="441">
+                THE AMERICAS
+            </text><text x="365" y="484">
+                CONFERENCE OF
+            </text><text x="365" y="526">
+                UNIVERSITIES
+            </text></g></g></svg>

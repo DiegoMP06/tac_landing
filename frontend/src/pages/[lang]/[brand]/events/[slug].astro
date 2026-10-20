@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { BrandSchema } from "@/schemas";
 import type { Event } from "@/types/events";
 import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildBreadcrumbSchema, buildEventSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 import {
     Calendar,
@@ -67,6 +68,29 @@ const BRAND_THEMES = {
 };
 
 const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
+
+const eventImage = event.images && !event.images.is_svg
+    ? (event.images.sizes?.large?.url || event.images.sizes?.full?.url)
+    : undefined;
+
+const jsonLd = [
+    buildEventSchema({
+        name: event.title.rendered,
+        description: event.acf.description,
+        startDate: event.acf.start_date,
+        endDate: event.acf.end_date,
+        url: Astro.url.href,
+        image: eventImage,
+        locationName: event.acf.location?.address,
+        isOnline: event.acf.modality === "online",
+    }),
+    buildBreadcrumbSchema([
+        { name: t("AC.header.nav.home"), url: `/${locale}` },
+        { name: brandValidate.data.toUpperCase(), url: `/${locale}/${brandValidate.data}` },
+        { name: t("seo.pages.events.title"), url: `/${locale}/${brandValidate.data}/events` },
+        { name: event.title.rendered, url: Astro.url.href },
+    ]),
+];
 ---
 
 <ExtrasLayout
@@ -77,6 +101,7 @@ const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
         featured_image: event.images,
         cta: event.acf.cta,
         variant: brandValidate.data,
+        jsonLd,
     }}
 >
     <div class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">

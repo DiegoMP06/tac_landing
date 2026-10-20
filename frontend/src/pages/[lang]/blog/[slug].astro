@@ -3,6 +3,7 @@ import ExtrasLayout from "@/layouts/app/ExtrasLayout.astro";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/blog";
 import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 import { ArrowLeft, BookOpen, ExternalLink, Newspaper } from "lucide-react";
 
@@ -47,6 +48,28 @@ const BRAND_THEMES = {
 
 const brandVariant = post.site?.variant || "default";
 const brandStyle = BRAND_THEMES[brandVariant as keyof typeof BRAND_THEMES] || BRAND_THEMES.default;
+
+const postImage = post.images && !post.images.is_svg
+    ? (post.images.sizes?.large?.url || post.images.sizes?.full?.url)
+    : undefined;
+
+const jsonLd = [
+    buildArticleSchema({
+        title: post.title.rendered,
+        description: post.acf.description || post.acf.subtitle || "",
+        image: postImage,
+        url: Astro.url.href,
+        publishedTime: post.date_gmt,
+        modifiedTime: post.modified_gmt,
+        locale,
+        authorName: post.site?.name,
+    }),
+    buildBreadcrumbSchema([
+        { name: t("AC.header.nav.home"), url: `/${locale}` },
+        { name: t("AC.header.nav.blog"), url: `/${locale}/blog` },
+        { name: post.title.rendered, url: Astro.url.href },
+    ]),
+];
 ---
 
 <ExtrasLayout
@@ -57,6 +80,10 @@ const brandStyle = BRAND_THEMES[brandVariant as keyof typeof BRAND_THEMES] || BR
         featured_image: post.images,
         variant: brandVariant,
         badge: t("AC.pages.blog.badge"),
+        type: "article",
+        publishedTime: post.date_gmt,
+        modifiedTime: post.modified_gmt,
+        jsonLd,
     }}
 >
     <div class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">

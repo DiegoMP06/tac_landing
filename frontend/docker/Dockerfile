@@ -2,7 +2,8 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat gcompat vips-dev build-base fontconfig font-dejavu
+
 RUN npm install -g pnpm@9
 
 COPY package.json pnpm-lock.yaml ./
@@ -18,6 +19,10 @@ ENV DATABASE_URL=$DATABASE_URL \
     WORDPRESS_API_URL=$WORDPRESS_API_URL \
     API_URL=$API_URL \
     GEMINI_API_KEY=$GEMINI_API_KEY
+    SITE_URL=$SITE_URL
+    IMAGE_HOST=$IMAGE_HOST
+    IMAGE_PROTOCOL=$IMAGE_PROTOCOL
+    IMAGE_DOMAIN=$IMAGE_DOMAIN
 
 COPY . .
 
@@ -32,7 +37,7 @@ ENV NODE_ENV=production \
     PORT=4321 \
     RUN_MIGRATIONS=false
 
-RUN apk add --no-cache libc6-compat && npm install -g pnpm@9
+RUN apk add --no-cache libc6-compat vips fontconfig font-dejavu && npm install -g pnpm@9
 
 RUN addgroup -g 1001 -S nodejs && adduser -u 1001 -S astro
 

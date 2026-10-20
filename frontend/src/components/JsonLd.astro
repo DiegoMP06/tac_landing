@@ -1,0 +1,13 @@
+---
+type Props = {
+    data: Record<string, any> | Array<Record<string, any>>;
+};
+
+const { data } = Astro.props;
+---
+
+<script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(data)}
+/>

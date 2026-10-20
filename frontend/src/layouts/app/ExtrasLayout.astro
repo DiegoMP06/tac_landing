@@ -22,6 +22,12 @@ type Props = {
     cta?: CTAType;
     variant?: Brand;
     badge?: string;
+    type?: "website" | "article";
+    publishedTime?: string;
+    modifiedTime?: string;
+    noindex?: boolean;
+    canonical?: string;
+    jsonLd?: Record<string, any> | Array<Record<string, any>>;
 };
 
 const {
@@ -32,6 +38,12 @@ const {
     cta,
     variant = BrandsEnum.DEFAULT,
     badge,
+    type = "website",
+    publishedTime,
+    modifiedTime,
+    noindex,
+    canonical,
+    jsonLd,
 } = Astro.props;
 
 const Titles = {
@@ -40,9 +52,25 @@ const Titles = {
     [BrandsEnum.ACC]: "The Americas Chambers of Commerce",
     [BrandsEnum.ACU]: "The Americas Conference of Universities",
 };
+
+const pageTitle = subtitle ? `${Titles[variant]} | ${subtitle}` : `${Titles[variant]} | ${title}`;
+const imageUrl = featured_image && !featured_image.is_svg
+    ? (featured_image.sizes?.large?.url || featured_image.sizes?.full?.url)
+    : undefined;
 ---
 
-<Layout title={`${Titles[variant]} | ${title}`} variant={variant}>
+<Layout
+    title={pageTitle}
+    description={description}
+    image={imageUrl}
+    type={type}
+    publishedTime={publishedTime}
+    modifiedTime={modifiedTime}
+    noindex={noindex}
+    canonical={canonical}
+    variant={variant}
+    jsonLd={jsonLd}
+>
     {
         (() => {
             switch (variant) {

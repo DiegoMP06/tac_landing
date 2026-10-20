@@ -5,9 +5,15 @@ import { ServerCrash, Home, RefreshCw } from "lucide-react";
 
 const { locale, localePath } = useLocalePath(Astro.url);
 const t = useTranslations(locale);
+
+Astro.response.status = 500;
 ---
 
-<SingleAppLayout title={t("AC.pages.server-error.title")}>
+<SingleAppLayout
+    title={t("seo.pages.serverError.title")}
+    description={t("seo.pages.serverError.description")}
+    noindex={true}
+>
     <div
         class="relative min-h-[75vh] flex items-center justify-center py-16 px-6 overflow-hidden"
     >

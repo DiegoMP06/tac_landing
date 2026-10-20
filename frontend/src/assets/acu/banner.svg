@@ -1,33 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480">
-    <path fill="#0d0c22" d="M0 0h1200v480H0z" />
-    <path fill="none" stroke="#6366f1" stroke-width=".5"
-        d="M100 0v480M200 0v480M300 0v480M400 0v480M500 0v480M600 0v480M700 0v480M800 0v480M900 0v480M1000 0v480M1100 0v480M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200"
-        opacity=".06" />
-    <circle cx="960" cy="240" r="300" fill="#0f0e2e" opacity=".85" />
-    <ellipse cx="960" cy="240" fill="none" stroke="#3730a3" stroke-width="1" opacity=".3" rx="300" ry="90" />
-    <ellipse cx="960" cy="240" fill="none" stroke="#3730a3" stroke-width=".8" opacity=".2" rx="300" ry="178" />
-    <path stroke="#3730a3" stroke-width="1" d="M660 240h600" opacity=".28" />
-    <ellipse cx="960" cy="240" fill="none" stroke="#3730a3" stroke-width=".7" opacity=".2" rx="120" ry="300" />
-    <circle cx="960" cy="240" r="100" fill="none" stroke="#4338ca" stroke-width=".8" opacity=".2" />
-    <circle cx="960" cy="240" r="200" fill="none" stroke="#3730a3" stroke-width=".6" opacity=".14" />
-    <circle cx="960" cy="240" r="270" fill="none" stroke="#312e81" stroke-width=".5" opacity=".1" />
-    <path stroke="#818cf8" stroke-linecap="round" stroke-width="10" d="m960 80-80 280m80-280 80 280" opacity=".9" />
-    <path stroke="#818cf8" stroke-linecap="round" stroke-width="8" d="M910 240h100" opacity=".9" />
-    <path fill="none" stroke="#c7d2fe" stroke-linecap="round" stroke-width="6" d="M1202-20a300 300 0 1 0 0 520"
-        opacity=".45" />
-    <circle cx="960" cy="240" r="300" fill="none" stroke="#4338ca" stroke-width="1.5" opacity=".35" />
-    <path fill="#4f46e5" d="M80 120h120v2H80z" /><text x="80" y="152" fill="#818cf8"
-        font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" letter-spacing="4">EXCELLENCE · RESEARCH ·
-        COLLABORATION</text><text x="80" y="218" fill="#fff" font-family="Georgia, 'Times New Roman', serif"
-        font-size="64" font-weight="700" letter-spacing="-2">The Americas</text><text x="80" y="290" fill="#818cf8"
-        font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" letter-spacing="-2">Conference
-        of</text><text x="80" y="362" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-size="64"
-        font-weight="700" letter-spacing="-2">Universities</text>
-    <path stroke="#312e81" stroke-width="1" d="M80 390h220" /><text x="80" y="416" fill="#a5b4fc"
-        font-family="'Helvetica Neue', Arial, sans-serif" font-size="14" letter-spacing="1">Advancing academic
-        excellence across the Americas</text>
-    <path fill="#4f46e5" d="m80 456 4 6-4 6-4-6Z" />
-    <path fill="#4338ca" d="m96 456 4 6-4 6-4-6Z" />
-    <path fill="#3730a3" d="m112 456 4 6-4 6-4-6Z" />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" aria-label="ACU — The Americas Conference of Universities" viewBox="0 0 1200 480"><defs><clipPath id="americas" clipPathUnits="userSpaceOnUse"><path fill-rule="evenodd" d="M243 371v4h3v-4ZM103 248l-14 14-4 2v7l-2 2v11l-5 5v4l3 1 6-2 4-4 6-2v-2l7-5 8-2 11 4 12 15 2 13 2 2-1 22 2 3 8 5v12l4 3 1 4 8 5 4 6 7 2 4 4h9l4 2 3 4 8 2 5 8 5 4 8 3 4 4v4l-9 9v6l2 2 2 8 3 3v3l8 6v3l7 5 1 4v21l-5 7v10l-3 3v12l3 3v5l5 6 6 4v4l5 4h9v-2l3-3 7-2v-4l-4-3-3 1-7-5 1-8 3-6 6-4 6-9 9-8 1-10 5-4v-2l7-5 7-1 1-19 5-4 1-9-5-4-2-4-7-4-3 1-6-3-3-3v-3l-4-4v-2l-11-3-6-6-10 1-11-6-4-5-3 1-2 4-7 5-8-5v-10l-4-3v-4l7-5 4 2 3 4 4-1 2-3v-2l-12-10v-13l7-5 2-3v-5l14-19 4-2h10l3-4 4-2 5 3h3v-4l-5-5v-6l-3-1-14-14-4-6 3-12-15-11h-6l-7-5v-5l3-3 7-3 9 6 4-2 10 6 7 7v5l4 4v5l5 8h4l1-7 3-4 13-10 1-12-7-2-10-8-7-3h-4l-5 3-8-2-5 3-6-4-8 1-22-2-6 3v9l-13 10-7-5v-6l-3-3v-4h-3l-7 5h-5l-1 4-5 4v5l-14 10h-11l-16-9Zm104 96 4 4 1 10-9 8-7 2-6 4-7-3-3-3v-16l3-3 15-5h5Zm-9-71 10-7 6 1 3-2 7 5v13l-7 5-6-1-13-9Zm26-20 7 5v4l-9 6-7-5v-5l3-3Z" clip-rule="evenodd"/></clipPath><pattern id="mapDots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.55" fill="#0a1e48"/></pattern></defs><path fill="#fff" d="M0 0h1200v480H0z"/><g clip-path="url(#americas)" transform="matrix(1.1 0 0 1.1 171 -180.2)"><path fill="url(#mapDots)" d="M65 215h250v335H65z"/></g><path stroke="#d8a72a" stroke-linecap="round" stroke-width="3.52" d="M534.55 79.4V405"/><g fill="#0a1e48"><text x="364" y="389" font-family="GFS Didot, Didot, Times New Roman, Times, serif" font-size="166" font-weight="400" letter-spacing="1" transform="matrix(1.1 0 0 1.1 171 -180.2)">
+                ACU
+            </text><g font-family="Nimbus Sans, Arial, Helvetica, sans-serif" font-size="29" font-weight="500" letter-spacing="5.5"><text x="365" y="441" transform="matrix(1.1 0 0 1.1 171 -180.2)">THE AMERICAS</text><text x="365" y="484" transform="matrix(1.1 0 0 1.1 171 -180.2)">CONFERENCE OF</text><text x="365" y="526" transform="matrix(1.1 0 0 1.1 171 -180.2)">UNIVERSITIES</text></g></g></svg>

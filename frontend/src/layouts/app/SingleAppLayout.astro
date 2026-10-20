@@ -2,15 +2,26 @@
 import Footer from "@/components/ac/Footer.astro";
 import Header from "@/components/ac/Header.astro";
 import Layout from "@/layouts/Layout.astro";
+import type { Brand } from "@/types";
 
 type Props = {
     title: string;
+    description?: string;
+    noindex?: boolean;
+    variant?: Brand;
+    jsonLd?: Record<string, any> | Array<Record<string, any>>;
 };
 
-const { title } = Astro.props;
+const { title, description, noindex, variant = "default", jsonLd } = Astro.props;
 ---
 
-<Layout title={`The Americas Conference | ${title}`}>
+<Layout
+    title={`The Americas Conference | ${title}`}
+    description={description}
+    noindex={noindex}
+    variant={variant}
+    jsonLd={jsonLd}
+>
     <Header />
 
     <div class="flex-1">

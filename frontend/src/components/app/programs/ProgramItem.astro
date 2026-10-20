@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { BrandsEnum } from "@/enums";
 import type { FeaturedImageAtt } from "@/types/images";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FeaturedImagesSizesEnum } from "@/enums/images";
 
 type Props = {
     program: Program;
@@ -50,11 +51,11 @@ const { program, brand = BrandsEnum.DEFAULT } = Astro.props;
 const { locale } = useLocalePath(Astro.url);
 const t = useTranslations(locale);
 const image = useFeaturedImage(program.images)(
-    "medium_large",
+    FeaturedImagesSizesEnum.thumbnail,
 ) as FeaturedImageAtt;
 
 const brandStyle = BRAND_THEMES[brand] || BRAND_THEMES.default;
-const programUrl = `/${locale}/${brand}/programs/${program.slug}`;
+const programUrl = `/${locale}/${program.site.variant}/programs/${program.slug}`;
 ---
 
 <div
@@ -133,7 +134,10 @@ const programUrl = `/${locale}/${brand}/programs/${program.slug}`;
         <div
             class="pt-4 border-t border-border/60 flex items-center justify-between gap-3 text-xs text-muted-foreground font-medium"
         >
-            <div class="flex items-center gap-2 truncate" title={program.acf.target_audience}>
+            <div
+                class="flex items-center gap-2 truncate"
+                title={program.acf.target_audience}
+            >
                 <Users className="size-4 shrink-0 opacity-70" />
                 <span class="truncate">{program.acf.target_audience}</span>
             </div>

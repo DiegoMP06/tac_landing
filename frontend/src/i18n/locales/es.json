@@ -344,5 +344,61 @@
                 "label": "Enviar"
             }
         }
+    },
+    "seo": {
+        "siteName": "The Americas Conference",
+        "siteDescription": "Plataforma continental que conecta a líderes, instituciones y gobiernos de toda América para impulsar la colaboración, la innovación y el progreso hemisférico.",
+        "ogImageAlt": "Insignia oficial de The Americas Conference",
+        "pages": {
+            "home": {
+                "title": "The Americas Conference | Conectando Líderes de América",
+                "description": "Únete a The Americas Conference: plataforma continental que vincula universidades, gobiernos y cámaras de comercio para el progreso hemisférico."
+            },
+            "about": {
+                "title": "Sobre Nosotros | The Americas Conference",
+                "description": "Conoce la misión y alcance de The Americas Conference impulsando la cooperación académica, la gestión municipal y el desarrollo comercial continental."
+            },
+            "contact": {
+                "title": "Contacto | The Americas Conference",
+                "description": "Comunícate con The Americas Conference para consultas sobre conferencias, alianzas institucionales, programas y eventos en todo el continente."
+            },
+            "blog": {
+                "title": "Blog y Publicaciones | The Americas Conference",
+                "description": "Explora análisis, noticias y artículos especializados sobre educación superior, políticas públicas locales y dinamismo comercial en las Américas."
+            },
+            "events": {
+                "title": "Eventos y Cumbres | The Americas Conference",
+                "description": "Descubre nuestros próximos eventos y cumbres hemisféricas que reúnen a líderes clave, mandatarios locales e instituciones de toda América."
+            },
+            "programs": {
+                "title": "Programas e Iniciativas | The Americas Conference",
+                "description": "Conoce los programas de formación, diplomados y proyectos estratégicos diseñados para transformar instituciones y comunidades."
+            },
+            "notFound": {
+                "title": "Página No Encontrada | The Americas Conference",
+                "description": "La página solicitada no está disponible. Explora nuestras conferencias, programas formativos y eventos en la página principal."
+            },
+            "serverError": {
+                "title": "Error del Servidor | The Americas Conference",
+                "description": "Ocurrió un error inesperado al procesar la solicitud. Por favor intenta de nuevo o regresa al inicio."
+            }
+        },
+        "brands": {
+            "acu": {
+                "title": "ACU | The Americas Conference of Universities",
+                "description": "Plataforma educativa de The Americas Conference que conecta a instituciones de educación superior para fomentar la cooperación académica.",
+                "ogImageAlt": "Insignia oficial de The Americas Conference of Universities"
+            },
+            "acm": {
+                "title": "ACM | The Americas Conference of Mayors",
+                "description": "Plataforma de gobernanza de The Americas Conference que vincula a alcaldes y líderes municipales para construir ciudades innovadoras y sostenibles.",
+                "ogImageAlt": "Insignia oficial de The Americas Conference of Mayors"
+            },
+            "acc": {
+                "title": "ACC | The Americas Chambers of Commerce",
+                "description": "Plataforma comercial de The Americas Conference que dinamiza las oportunidades de negocio, inversión y alianzas entre empresarios de las Américas.",
+                "ogImageAlt": "Insignia oficial de The Americas Chambers of Commerce"
+            }
+        }
     }
 }

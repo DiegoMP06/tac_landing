@@ -8,6 +8,7 @@ import { BrandSchema } from "@/schemas";
 import type { Program } from "@/types/programs";
 import { formatDateToUser } from "@/utils/date";
 import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildBreadcrumbSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 import {
     Award,
@@ -75,6 +76,15 @@ const BRAND_THEMES = {
 };
 
 const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
+
+const jsonLd = [
+    buildBreadcrumbSchema([
+        { name: t("AC.header.nav.home"), url: `/${locale}` },
+        { name: brandValidate.data.toUpperCase(), url: `/${locale}/${brandValidate.data}` },
+        { name: t("seo.pages.programs.title"), url: `/${locale}/${brandValidate.data}/programs` },
+        { name: program.title.rendered, url: Astro.url.href },
+    ]),
+];
 ---
 
 <ExtrasLayout
@@ -85,6 +95,7 @@ const brandStyle = BRAND_THEMES[brandValidate.data] || BRAND_THEMES.default;
         featured_image: program.images,
         cta: program.acf.cta,
         variant: brandValidate.data,
+        jsonLd,
     }}
 >
     <div class="my-12 md:my-20 mx-auto max-w-7xl w-full px-4 sm:px-6">

@@ -8,14 +8,18 @@ type Props = {
 
 const { variant = BrandsEnum.DEFAULT } = Astro.props;
 
-const iconMap: Record<Brand, { href: string; type: string }> = {
-    [BrandsEnum.DEFAULT]: { href: "/ac.svg", type: "image/svg+xml" },
-    [BrandsEnum.ACC]: { href: "/acc.svg", type: "image/svg+xml" },
-    [BrandsEnum.ACM]: { href: "/acm.svg", type: "image/svg+xml" },
-    [BrandsEnum.ACU]: { href: "/acu.svg", type: "image/svg+xml" },
+const brandSvgMap: Record<Brand, string> = {
+    [BrandsEnum.DEFAULT]: "/favicon.svg",
+    [BrandsEnum.ACC]: "/acc.svg",
+    [BrandsEnum.ACM]: "/acm.svg",
+    [BrandsEnum.ACU]: "/acu.svg",
 };
 
-const icon = iconMap[variant] ?? iconMap[BrandsEnum.DEFAULT];
+const primarySvg = brandSvgMap[variant] ?? "/favicon.svg";
 ---
 
-<link rel="icon" type={icon.type} href={icon.href} />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href={primarySvg} type="image/svg+xml" />
+<link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />

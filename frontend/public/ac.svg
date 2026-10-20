@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <circle cx="256" cy="256" r="234" fill="#fdfbf6" stroke="#1b5e34" stroke-width="20" />
-    <text x="256" y="300" text-anchor="middle" fill="#1b5e34"
-        font-family="Georgia, 'Times New Roman', serif" font-size="118" font-weight="600"
-        letter-spacing="-2">TAC</text>
-    <rect x="166" y="324" width="56" height="10" rx="5" fill="#0a1e48" />
-    <rect x="228" y="324" width="56" height="10" rx="5" fill="#c81012" />
-    <rect x="290" y="324" width="56" height="10" rx="5" fill="#544b45" />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254"><path fill="#fff" d="M0 0h1254v1254H0z"/><text x="627" y="240" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="60" font-weight="700" text-anchor="middle">
+        The Americas Conference
+    </text><g fill="#1b5e34"><path d="M533.5 340h185v25h-185z"/><path d="M533.5 340h25v449h-25zm160 0h25v449h-25z"/><path d="M482.5 497h180v26h-180z"/><path d="M482.5 497h25v292h-25zm156 0h25v233h-25z"/><path d="M585.5 576h186v26h-186z"/><path d="M585.5 576h25v154h-25zm161 0h25v213h-25z"/><path d="M585.5 717h77v25h-77zm-103 47h76v25h-76zm211 0h78v25h-78z"/></g><text x="627" y="880" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
+        Chamber of Commerce
+    </text><text x="627" y="944" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
+        Conference of Mayors
+    </text><text x="627" y="1008" fill="#0b1830" font-family="'Poppins', 'Segoe UI', Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">
+        Conference of Universities
+    </text></svg>

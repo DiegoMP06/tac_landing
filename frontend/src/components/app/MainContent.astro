@@ -124,7 +124,10 @@ const currentStyles = STYLES[variant] || STYLES.default;
                                 height={image.height}
                                 alt={page.acf.content.subtitle || page.title.rendered}
                                 formats={["avif", "webp"]}
-                                loading="eager"
+                                widths={[400, 640, 800, 1024]}
+                                sizes="(min-width: 1024px) 500px, calc(100vw - 68px)"
+                                loading="lazy"
+                                decoding="async"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                             />
                         ) : (

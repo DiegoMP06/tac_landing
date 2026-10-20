@@ -5,9 +5,15 @@ import { FileQuestion, Home, ArrowLeft } from "lucide-react";
 
 const { locale, localePath } = useLocalePath(Astro.url);
 const t = useTranslations(locale);
+
+Astro.response.status = 404;
 ---
 
-<SingleAppLayout title={t("AC.pages.not-found.title")}>
+<SingleAppLayout
+    title={t("seo.pages.notFound.title")}
+    description={t("seo.pages.notFound.description")}
+    noindex={true}
+>
     <div
         class="relative min-h-[75vh] flex items-center justify-center py-16 px-6 overflow-hidden"
     >

@@ -3,12 +3,14 @@ import ContactSection from "@/components/app/contact/ContactSection.astro";
 import { BrandsEnum } from "@/enums";
 import { PageTypeEnum } from "@/enums/pages";
 import AppLayout from "@/layouts/app/AppLayout.astro";
-import { useLocalePath } from "@/utils/i18n";
+import { useLocalePath, useTranslations } from "@/utils/i18n";
+import { buildBreadcrumbSchema } from "@/utils/jsonLd";
 import { actions } from "astro:actions";
 
 const entityId = "59";
 
 const { locale } = useLocalePath(Astro.url);
+const t = useTranslations(locale);
 
 const { data: page, error } = await Astro.callAction(
     actions.pages.getAndIndexPage,
@@ -23,8 +25,18 @@ const { data: page, error } = await Astro.callAction(
 if (error || !page) {
     return Astro.redirect("/404");
 }
+
+const breadcrumbs = buildBreadcrumbSchema([
+    { name: t("AC.header.nav.home"), url: `/${locale}` },
+    { name: t("AC.header.nav.contact"), url: `/${locale}/contact` },
+]);
 ---
 
-<AppLayout page={page}>
+<AppLayout
+    page={page}
+    title={t("seo.pages.contact.title")}
+    description={page.acf?.hero?.description || t("seo.pages.contact.description")}
+    jsonLd={breadcrumbs}
+>
     <ContactSection contact={page.acf.contact} />
 </AppLayout>
