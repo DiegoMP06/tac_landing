@@ -51,7 +51,7 @@ const { program, brand = BrandsEnum.DEFAULT } = Astro.props;
 const { locale } = useLocalePath(Astro.url);
 const t = useTranslations(locale);
 const image = useFeaturedImage(program.images)(
-    FeaturedImagesSizesEnum.thumbnail,
+    FeaturedImagesSizesEnum.medium,
 ) as FeaturedImageAtt;
 
 const brandStyle = BRAND_THEMES[brand] || BRAND_THEMES.default;

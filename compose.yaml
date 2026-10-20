@@ -1,88 +1,88 @@
 services:
-  wordpress_db:
-    image: mariadb:10.11-jammy
-    container_name: tac_wordpress_db
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-tac_wordpress_db}
-      MYSQL_USER: ${MYSQL_USER:-tac_wordpress_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
-    ports:
-      - "3306:3306"
-    volumes:
-      - tac_wordpress_mariadb_data:/var/lib/mysql
-    networks:
-      - tac_web
+    wordpress_db:
+        image: mariadb:10.11-jammy
+        container_name: tac_wordpress_db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+            MYSQL_DATABASE: ${MYSQL_DATABASE:-tac_wordpress_db}
+            MYSQL_USER: ${MYSQL_USER:-tac_wordpress_user}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
+        ports:
+            - "3306:3306"
+        volumes:
+            - tac_wordpress_mariadb_data:/var/lib/mysql
+        networks:
+            - tac_web
 
-  wordpress_php:
-    build:
-      context: ./docker/wordpress
-    container_name: tac_wordpress_php
-    restart: unless-stopped
-    working_dir: /var/www/html
-    volumes:
-      - ./wordpress:/var/www/html
-    depends_on:
-      - wordpress_db
-    networks:
-      - tac_web
-    user: "lomi:lomi"
+    wordpress_php:
+        build:
+            context: ./docker/wordpress
+        container_name: tac_wordpress_php
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - ./wordpress:/var/www/html
+        depends_on:
+            - wordpress_db
+        networks:
+            - tac_web
+        user: "lomi:lomi"
 
-  wordpress_server:
-    image: nginx:alpine
-    container_name: tac_wordpress_nginx
-    restart: unless-stopped
-    ports:
-      - "8000:80"
-    volumes:
-      - ./wordpress:/var/www/html
-      - ./docker/wordpress/nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - wordpress_php
-    networks:
-      - tac_web
+    wordpress_server:
+        image: nginx:alpine
+        container_name: tac_wordpress_nginx
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./wordpress:/var/www/html
+            - ./docker/wordpress/nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - wordpress_php
+        networks:
+            - tac_web
 
-  frontend:
-    build:
-      context: ./docker/frontend
-    container_name: tac_frontend
-    restart: unless-stopped
-    working_dir: /app
-    ports:
-      - "4321:4321"
-    environment:
-      NODE_ENV: development
-    volumes:
-      - ./frontend:/app
-    command: tail -f /dev/null
-    user: "lomi:lomi"
-    networks:
-      - tac_web
-      - tac_global_net
+    frontend:
+        build:
+            context: ./docker/frontend
+        container_name: tac_frontend
+        restart: unless-stopped
+        working_dir: /app
+        ports:
+            - "4321:4321"
+        environment:
+            NODE_ENV: development
+        volumes:
+            - ./frontend:/app
+        command: tail -f /dev/null
+        user: "lomi:lomi"
+        networks:
+            - tac_web
+            - tac_global_net
 
-  chat_db:
-    image: pgvector/pgvector:pg16
-    container_name: tac_chat_db
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${DB_USER:-tac_chat}
-      POSTGRES_PASSWORD: ${DB_PASS:-root}
-      POSTGRES_DB: ${DB_NAME:-tac_chat}
-    ports:
-      - "5432:5432"
-    volumes:
-      - tac_chat_db_data:/var/lib/postgresql/data
-    networks:
-      - tac_web
-      - tac_global_net
+    chat_db:
+        image: pgvector/pgvector:pg16
+        container_name: tac_chat_db
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: ${DB_USER:-tac_chat}
+            POSTGRES_PASSWORD: ${DB_PASS:-root}
+            POSTGRES_DB: ${DB_NAME:-tac_chat}
+        ports:
+            - "5432:5432"
+        volumes:
+            - tac_chat_db_data:/var/lib/postgresql/data
+        networks:
+            - tac_web
+            - tac_global_net
 
 volumes:
-  tac_wordpress_mariadb_data:
-  tac_chat_db_data:
+    tac_wordpress_mariadb_data:
+    tac_chat_db_data:
 
 networks:
-  tac_web:
-    driver: bridge
-  tac_global_net:
-    external: true
+    tac_web:
+        driver: bridge
+    tac_global_net:
+        external: true

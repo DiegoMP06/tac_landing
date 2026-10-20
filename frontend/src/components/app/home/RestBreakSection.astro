@@ -6,6 +6,7 @@ import SectionSubHeading from "../SectionSubHeading.astro";
 import type { HomePage } from "@/types/pages";
 import type { Brand } from "@/types";
 import type { FeaturedImageAtt } from "@/types/images";
+import { Picture } from "astro:assets";
 
 type Props = {
     section: HomePage["acf"]["rest_break"];
@@ -44,14 +45,27 @@ const currentStyles = styles[variant] || styles.default;
 ---
 
 <section class="relative overflow-hidden border-y border-border/80">
-    <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover md:bg-fixed transform scale-105 filter saturate-90 opacity-100"
-        style={{ backgroundImage: `url(${image?.url})` }}
-    >
-    </div>
+    {
+        image && (
+            <Picture
+                src={image.url}
+                width={image.width}
+                height={image.height}
+                alt={section.title}
+                aria-hidden="true"
+                formats={["avif", "webp"]}
+                widths={[640, 960, 1280]}
+                sizes="100vw"
+                quality={50}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 z-10 size-full object-cover object-center transform scale-105 saturate-90 opacity-100"
+            />
+        )
+    }
     <div
         class={cn(
-            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/95 via-background/85 to-background",
+            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/60 via-background/40 to-background/60",
             currentStyles.background,
         )}
     >

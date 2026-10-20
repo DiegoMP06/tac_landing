@@ -59,7 +59,6 @@
     "wpackagist-plugin/safe-svg": "^2.4",
     "wpackagist-plugin/wp-mail-smtp": "^4.10",
     "wpackagist-plugin/wp-rest-api-controller": "^2.1",
-    "wpackagist-plugin/wp-webhooks": "^3.4",
     "wpackagist-plugin/wptelegram": "^4.2",
     "wpackagist-theme/twentytwentyfive": "^1.5"
   },

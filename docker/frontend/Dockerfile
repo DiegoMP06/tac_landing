@@ -14,14 +14,7 @@ RUN mkdir -p /app \
 
 WORKDIR /app
 
-RUN apk add --no-cache \
-    bash \
-    git \
-    curl \
-    openssh \
-    libstdc++ \
-    libc6-compat \
-    gcompat
+RUN apk add --no-cache bash git curl openssh libstdc++ libc6-compat gcompat fontconfig font-dejavu
 
 RUN npm i -g pnpm@latest
 

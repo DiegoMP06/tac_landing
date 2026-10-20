@@ -4,6 +4,7 @@ import type { Brand, CTAType } from "@/types";
 import type { FeaturedImageAtt } from "@/types/images";
 import { useFeaturedImage } from "@/utils/image";
 import { ArrowRight } from "lucide-react";
+import { Picture } from "astro:assets";
 
 type Props = {
     cta: CTAType;
@@ -16,32 +17,40 @@ const STYLES = {
         title: "text-acu-foreground dark:text-acu-50",
         description: "text-acu-foreground/80 dark:text-acu-200",
         orb: "bg-acu-secondary/15",
-        btnPrimary: "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-xs",
+        btnPrimary:
+            "bg-acu-secondary text-acu-secondary-foreground hover:bg-acu-secondary/90 shadow-lg shadow-acu-secondary/25 border border-white/10",
+        btnSecondary:
+            "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acu-border/80 text-acu-foreground hover:border-acu-secondary/60 hover:text-acu-secondary backdrop-blur-md shadow-xs",
     },
     acc: {
         background: "bg-acc-background/80 border-acc-border/60",
         title: "text-acc-foreground dark:text-acc-50",
         description: "text-acc-foreground/80 dark:text-acc-200",
         orb: "bg-acc-secondary/15",
-        btnPrimary: "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-xs",
+        btnPrimary:
+            "bg-acc-secondary text-acc-secondary-foreground hover:bg-acc-secondary/90 shadow-lg shadow-acc-secondary/25 border border-white/10",
+        btnSecondary:
+            "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acc-border/80 text-acc-foreground hover:border-acc-secondary/60 hover:text-acc-secondary backdrop-blur-md shadow-xs",
     },
     acm: {
         background: "bg-acm-background/80 border-acm-border/60",
         title: "text-acm-foreground dark:text-acm-50",
         description: "text-acm-foreground/80 dark:text-acm-200",
         orb: "bg-acm-secondary/15",
-        btnPrimary: "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-xs",
+        btnPrimary:
+            "bg-acm-secondary text-acm-secondary-foreground hover:bg-acm-secondary/90 shadow-lg shadow-acm-secondary/25 border border-white/10",
+        btnSecondary:
+            "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-acm-border/80 text-acm-foreground hover:border-acm-secondary/60 hover:text-acm-secondary backdrop-blur-md shadow-xs",
     },
     default: {
         background: "bg-background/80 border-border/60",
         title: "text-foreground dark:text-base-50",
         description: "text-muted-foreground",
         orb: "bg-secondary/15",
-        btnPrimary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
-        btnSecondary: "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-xs",
+        btnPrimary:
+            "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25 border border-white/10",
+        btnSecondary:
+            "bg-card/60 dark:bg-card/40 hover:bg-card/90 border-border text-foreground hover:border-secondary/60 hover:text-secondary backdrop-blur-md shadow-xs",
     },
 };
 
@@ -51,16 +60,27 @@ const currentStyles = STYLES[variant] || STYLES.default;
 ---
 
 <section class="relative overflow-hidden border-t border-border/60">
-    <div
-        class="absolute inset-0 z-10 bg-center bg-no-repeat bg-cover md:bg-fixed transform scale-105 filter saturate-90"
-        style={{
-            backgroundImage: `url(${image?.url})`,
-        }}
-    >
-    </div>
+    {
+        image && (
+            <Picture
+                src={image.url}
+                width={image.width}
+                height={image.height}
+                alt={cta.title}
+                aria-hidden="true"
+                formats={["avif", "webp"]}
+                widths={[640, 960, 1024]}
+                sizes="100vw"
+                quality={50}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 z-10 size-full object-cover object-center transform scale-105 saturate-90"
+            />
+        )
+    }
     <div
         class={cn(
-            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/95 via-background/85 to-background",
+            "absolute inset-0 z-20 backdrop-blur-md transition-colors duration-300 bg-linear-to-b from-background/60 via-background/40 to-background/60",
             currentStyles.background,
         )}
     >
@@ -98,38 +118,53 @@ const currentStyles = STYLES[variant] || STYLES.default;
             </div>
 
             <!-- Optional Primary & Secondary CTA Buttons -->
-            {((cta.redirect_text && cta.redirect_url) || (cta.secondary_redirect_text && cta.secondary_redirect_url)) && (
-                <div class="flex flex-wrap items-center justify-center gap-4 mt-2">
-                    {cta.redirect_text && cta.redirect_url && (
-                        <a
-                            href={cta.redirect_url}
-                            target={cta.redirect_url.startsWith("http") ? "_blank" : "_self"}
-                            rel="noopener noreferrer"
-                            class={cn(
-                                "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group shadow-md",
-                                currentStyles.btnPrimary,
-                            )}
-                        >
-                            <span>{cta.redirect_text}</span>
-                            <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </a>
-                    )}
+            {
+                ((cta.redirect_text && cta.redirect_url) ||
+                    (cta.secondary_redirect_text &&
+                        cta.secondary_redirect_url)) && (
+                    <div class="flex flex-wrap items-center justify-center gap-4 mt-2">
+                        {cta.redirect_text && cta.redirect_url && (
+                            <a
+                                href={cta.redirect_url}
+                                target={
+                                    cta.redirect_url.startsWith("http")
+                                        ? "_blank"
+                                        : "_self"
+                                }
+                                rel="noopener noreferrer"
+                                class={cn(
+                                    "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 group shadow-md",
+                                    currentStyles.btnPrimary,
+                                )}
+                            >
+                                <span>{cta.redirect_text}</span>
+                                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-300" />
+                            </a>
+                        )}
 
-                    {cta.secondary_redirect_text && cta.secondary_redirect_url && (
-                        <a
-                            href={cta.secondary_redirect_url}
-                            target={cta.secondary_redirect_url.startsWith("http") ? "_blank" : "_self"}
-                            rel="noopener noreferrer"
-                            class={cn(
-                                "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
-                                currentStyles.btnSecondary,
+                        {cta.secondary_redirect_text &&
+                            cta.secondary_redirect_url && (
+                                <a
+                                    href={cta.secondary_redirect_url}
+                                    target={
+                                        cta.secondary_redirect_url.startsWith(
+                                            "http",
+                                        )
+                                            ? "_blank"
+                                            : "_self"
+                                    }
+                                    rel="noopener noreferrer"
+                                    class={cn(
+                                        "min-h-[46px] px-8 py-3 rounded-xl font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden cursor-pointer inline-flex items-center justify-center text-sm uppercase gap-2 border group",
+                                        currentStyles.btnSecondary,
+                                    )}
+                                >
+                                    <span>{cta.secondary_redirect_text}</span>
+                                </a>
                             )}
-                        >
-                            <span>{cta.secondary_redirect_text}</span>
-                        </a>
-                    )}
-                </div>
-            )}
+                    </div>
+                )
+            }
         </div>
     </div>
 </section>

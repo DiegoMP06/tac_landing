@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04fcb23a09868c5d9822e91bd6680664",
+    "content-hash": "39d015a68878c72a7a558605234e8f2a",
     "packages": [
         {
             "name": "composer/installers",
@@ -1202,24 +1202,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/wp-rest-api-controller/"
-        },
-        {
-            "name": "wpackagist-plugin/wp-webhooks",
-            "version": "3.4.3",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/wp-webhooks/",
-                "reference": "tags/3.4.3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-webhooks.3.4.3.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/wp-webhooks/"
         },
         {
             "name": "wpackagist-plugin/wptelegram",
